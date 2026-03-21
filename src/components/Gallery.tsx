@@ -4,19 +4,34 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useCallback, useEffect } from "react";
 
 const studioImages = [
+  { src: "/images/gallery/gallery-1.jpg", alt: "Arbeit 1" },
+  { src: "/images/gallery/gallery-2.jpg", alt: "Arbeit 2" },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Arbeit 3" },
+  { src: "/images/gallery/gallery-4.jpg", alt: "Arbeit 4" },
+  { src: "/images/gallery/gallery-5.jpg", alt: "Arbeit 5" },
+  { src: "/images/gallery/gallery-6.jpg", alt: "Arbeit 6" },
+  { src: "/images/gallery/gallery-7.jpg", alt: "Arbeit 7" },
+  { src: "/images/gallery/gallery-8.jpg", alt: "Arbeit 8" },
+  { src: "/images/gallery/gallery-9.jpg", alt: "Arbeit 9" },
+  { src: "/images/gallery/gallery-10.jpg", alt: "Arbeit 10" },
+  { src: "/images/gallery/gallery-11.jpg", alt: "Arbeit 11" },
+  { src: "/images/gallery/gallery-12.jpg", alt: "Arbeit 12" },
+  { src: "/images/gallery/gallery-13.jpg", alt: "Arbeit 13" },
+  { src: "/images/gallery/gallery-14.jpg", alt: "Arbeit 14" },
+  { src: "/images/gallery/gallery-15.jpg", alt: "Arbeit 15" },
+  { src: "/images/gallery/gallery-16.jpg", alt: "Arbeit 16" },
+  { src: "/images/gallery/gallery-17.jpg", alt: "Arbeit 17" },
+  { src: "/images/gallery/gallery-18.jpg", alt: "Arbeit 18" },
+  { src: "/images/gallery/gallery-19.jpg", alt: "Arbeit 19" },
+  { src: "/images/gallery/gallery-20.jpg", alt: "Arbeit 20" },
+  { src: "/images/gallery/gallery-21.jpg", alt: "Arbeit 21" },
+  { src: "/images/gallery/gallery-22.jpg", alt: "Arbeit 22" },
+  { src: "/images/gallery/gallery-23.jpg", alt: "Arbeit 23" },
   { src: "/gallery/arbeit1.png", alt: "Tattoo Arbeit 1" },
   { src: "/gallery/arbeit2.jpeg", alt: "Tattoo Arbeit 2" },
   { src: "/gallery/arbeit3.jpeg", alt: "Tattoo Arbeit 3" },
   { src: "/gallery/arbeit4.png", alt: "Tattoo Arbeit 4" },
   { src: "/gallery/arbeit6.png", alt: "Tattoo Arbeit 5" },
-  { src: "/gallery/tattoo1.jpg", alt: "Tattoo 1" },
-  { src: "/gallery/tattoo2.jpg", alt: "Tattoo 2" },
-  { src: "/gallery/tattoo3.jpeg", alt: "Tattoo 3" },
-  { src: "/gallery/tattoo4.jpg", alt: "Tattoo 4" },
-  { src: "/gallery/tattoo5.jpg", alt: "Tattoo 5" },
-  { src: "/gallery/piercing1.jpg", alt: "Piercing 1" },
-  { src: "/gallery/piercing2.jpg", alt: "Piercing 2" },
-  { src: "/gallery/piercing3.jpg", alt: "Piercing 3" },
 ];
 
 const guestImages = [
@@ -128,7 +143,7 @@ export default function Gallery() {
               key={img.src}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: i * 0.05, duration: 0.5 }}
+              transition={{ delay: Math.min(i * 0.03, 0.5), duration: 0.5 }}
               onClick={() => openLightbox(i)}
               className="aspect-square rounded-xl overflow-hidden cursor-pointer group relative"
             >
