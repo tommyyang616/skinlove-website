@@ -1,235 +1,159 @@
 "use client";
-
-import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-const contactInfo = [
-  {
-    icon: "📍",
-    label: "Adresse",
-    lines: ["Linzer Straße 52", "4614 Marchtrenk", "Oberösterreich"],
-    link: "https://maps.google.com/?q=Linzer+Straße+52,+4614+Marchtrenk",
-    linkLabel: "Auf Google Maps",
-  },
-  {
-    icon: "📞",
-    label: "Telefon / WhatsApp",
-    lines: ["+43 660 792 3606"],
-    link: "tel:+436607923606",
-    linkLabel: "Jetzt anrufen",
-  },
-  {
-    icon: "📸",
-    label: "Instagram",
-    lines: ["@skinlove.tattoo"],
-    link: "https://instagram.com/skinlove.tattoo",
-    linkLabel: "Instagram öffnen",
-  },
-  {
-    icon: "🕐",
-    label: "Öffnungszeiten",
-    lines: ["Mo–Fr: 9:00–18:00", "Sa: 9:00–14:00", "So: Geschlossen"],
-    link: null,
-    linkLabel: null,
-  },
+const SERVICES_OPTIONS = [
+  "Tattoo",
+  "Piercing",
+  "Lash Lifting",
+  "Brow Lifting",
+  "Lash & Brow Kombination",
+  "Permanent Make-up",
+  "Workshop",
+  "Sonstiges",
 ];
 
-export default function Contact() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [form, setForm] = useState({ name: "", phone: "", service: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+export default function Contact({ bookingOpen, onOpen, onClose }: {
+  bookingOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) {
+  const [success, setSuccess] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      setStatus("sent");
-      setForm({ name: "", phone: "", service: "", message: "" });
-    } catch {
-      setStatus("error");
-    }
+    const form = formRef.current;
+    if (!form) return;
+    const data = new FormData(form);
+    const name = data.get("name") as string;
+    const service = data.get("service") as string;
+    const msg = data.get("message") as string;
+    const phone = data.get("phone") as string;
+    const text = encodeURIComponent(`Terminanfrage von ${name}\nLeistung: ${service}\nTelefon: ${phone}\n\n${msg}`);
+    window.open(`https://wa.me/436607835346?text=${text}`, "_blank");
+    setSuccess(true);
   };
 
+  const closeModal = () => { onClose(); setTimeout(() => setSuccess(false), 400); };
+
   return (
-    <section id="contact" style={{ padding: "100px 0", background: "#222228" }}>
-      <div ref={ref} style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          style={{ marginBottom: "60px" }}
-        >
-          <p style={{ fontSize: "11px", letterSpacing: "5px", textTransform: "uppercase", color: "var(--pink)", marginBottom: "16px", fontFamily: "'Outfit', sans-serif" }}>
-            Kontakt
-          </p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 600, color: "#fff", marginBottom: "16px" }}>
-            Lass uns reden
-          </h2>
-          <p style={{ fontSize: "15px", color: "var(--text-dim)", maxWidth: "540px", lineHeight: 1.7 }}>
-            Kein Termin ohne Rückruf — ich melde mich bei dir!
-          </p>
-        </motion.div>
+    <>
+      <section id="contact">
+        <div className="section-inner">
+          <div className="section-header reveal">
+            <div className="section-eyebrow">Jetzt buchen</div>
+            <h2 className="section-title">Kontakt</h2>
+            <div className="section-line" />
+          </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px,1fr))", gap: "40px", alignItems: "start" }}>
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          >
-            {contactInfo.map((info, i) => (
-              <motion.div
-                key={info.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                style={{
-                  background: "var(--bg-card)",
-                  border: "1px solid rgba(255,255,255,.04)",
-                  padding: "24px",
-                  display: "flex",
-                  gap: "16px",
-                  alignItems: "flex-start",
-                }}
-              >
-                <span style={{ fontSize: "20px", flexShrink: 0, marginTop: "2px" }}>{info.icon}</span>
+          <div className="contact-grid reveal">
+            <div className="contact-info">
+              <h3>Komm vorbei oder meld dich</h3>
+              <div className="contact-item">
+                <div className="contact-icon">📍</div>
                 <div>
-                  <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--pink)", marginBottom: "8px", fontFamily: "'Outfit', sans-serif" }}>
-                    {info.label}
-                  </p>
-                  {info.lines.map((line, j) => (
-                    <p key={j} style={{ fontSize: "14px", color: "var(--text)", marginBottom: "2px" }}>{line}</p>
-                  ))}
-                  {info.link && (
-                    <a
-                      href={info.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: "12px", color: "var(--pink)", marginTop: "8px", display: "inline-block", letterSpacing: "1px", textTransform: "uppercase" }}
-                    >
-                      {info.linkLabel} →
-                    </a>
-                  )}
+                  <div className="contact-label">Adresse</div>
+                  <div className="contact-value">Marchtrenk, Oberösterreich</div>
                 </div>
-              </motion.div>
-            ))}
-
-            {/* Google Maps Embed */}
-            <div style={{ overflow: "hidden", border: "1px solid rgba(255,255,255,.04)" }}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2658.8!2d14.1145!3d48.1962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47740c5b4c3f8c91%3A0x4e5e8b8b4c3f8c91!2sLinzer+Str.+52%2C+4614+Marchtrenk!5e0!3m2!1sde!2sat!4v1"
-                width="100%"
-                height="220"
-                style={{ border: 0, display: "block", filter: "grayscale(0.4) invert(0.05)" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="SkinLove Standort"
-              />
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            style={{ background: "var(--bg-card)", border: "1px solid rgba(255,255,255,.04)", padding: "40px" }}
-          >
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.8rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
-              Rückruf-Anfrage
-            </h3>
-            <p style={{ fontSize: "13px", color: "var(--text-dim)", marginBottom: "32px", lineHeight: 1.6 }}>
-              Füll das Formular aus — ich ruf dich zurück. Kein Online-Buchen, dafür persönliche Beratung!
-            </p>
-
-            {status === "sent" ? (
-              <div style={{ textAlign: "center", padding: "40px 0" }}>
-                <div style={{ fontSize: "48px", color: "var(--pink)", marginBottom: "16px" }}>✓</div>
-                <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>
-                  Anfrage erhalten!
-                </h4>
-                <p style={{ fontSize: "14px", color: "var(--text-dim)" }}>Eve meldet sich bald bei dir. 💕</p>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                {[
-                  { name: "name", placeholder: "Dein Name *", type: "text", required: true },
-                  { name: "phone", placeholder: "Telefon / WhatsApp *", type: "tel", required: true },
-                  { name: "service", placeholder: "Gewünschte Leistung (Tattoo, Piercing…)", type: "text", required: false },
-                ].map((field) => (
-                  <input
-                    key={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    required={field.required}
-                    value={form[field.name as keyof typeof form]}
-                    onChange={(e) => setForm({ ...form, [field.name]: e.target.value })}
-                    style={{
-                      background: "rgba(255,255,255,.04)",
-                      border: "1px solid rgba(255,255,255,.08)",
-                      padding: "14px 18px",
-                      fontSize: "14px",
-                      color: "#fff",
-                      outline: "none",
-                      width: "100%",
-                    }}
-                  />
-                ))}
-                <textarea
-                  placeholder="Deine Nachricht oder Wunschmotiv"
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  style={{
-                    background: "rgba(255,255,255,.04)",
-                    border: "1px solid rgba(255,255,255,.08)",
-                    padding: "14px 18px",
-                    fontSize: "14px",
-                    color: "#fff",
-                    outline: "none",
-                    resize: "vertical",
-                    fontFamily: "'Inter', sans-serif",
-                    lineHeight: 1.6,
-                  }}
-                />
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  style={{
-                    background: "var(--pink)",
-                    color: "#fff",
-                    border: "none",
-                    padding: "18px",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    letterSpacing: "1.5px",
-                    textTransform: "uppercase",
-                    cursor: "pointer",
-                    transition: "all .3s",
-                    fontFamily: "'Outfit', sans-serif",
-                  }}
-                >
-                  {status === "loading" ? "Wird gesendet..." : "Rückruf anfordern"}
-                </button>
-                {status === "error" && (
-                  <p style={{ fontSize: "13px", color: "#ff6b6b", textAlign: "center" }}>
-                    Fehler beim Senden. Bitte direkt anrufen: +43 660 792 3606
-                  </p>
-                )}
-              </form>
-            )}
-          </motion.div>
+              <div className="contact-item">
+                <div className="contact-icon">📞</div>
+                <div>
+                  <div className="contact-label">Telefon</div>
+                  <div className="contact-value">
+                    <a href="tel:+436607835346">+43 660 7835346</a>
+                  </div>
+                </div>
+              </div>
+              <div className="contact-item">
+                <div className="contact-icon">📸</div>
+                <div>
+                  <div className="contact-label">Instagram</div>
+                  <div className="contact-value">
+                    <a href="https://instagram.com/skinlove.tattoo.piercing" target="_blank" rel="noopener noreferrer">
+                      @skinlove.tattoo.piercing
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="contact-item">
+                <div className="contact-icon">💬</div>
+                <div>
+                  <div className="contact-label">WhatsApp</div>
+                  <div className="contact-value">
+                    <a href="https://wa.me/436607835346" target="_blank" rel="noopener noreferrer">
+                      Direkt schreiben
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-form-side">
+              <h3>Termin vereinbaren</h3>
+              <a
+                href="https://wa.me/436607835346?text=Hallo%20Eve%2C%20ich%20möchte%20gerne%20einen%20Termin%20vereinbaren."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="wa-book-btn"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                </svg>
+                Via WhatsApp buchen
+              </a>
+              <button className="book-btn" onClick={onOpen}>
+                Buchungsformular öffnen
+              </button>
+              <p className="contact-note">
+                Ich melde mich in der Regel innerhalb von 24 Stunden.<br />
+                Für dringende Anfragen bitte direkt anrufen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking Modal */}
+      <div className={`booking-modal${bookingOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
+        <div className="booking-inner">
+          <button className="booking-close" onClick={closeModal}>×</button>
+
+          <div className={`booking-form${success ? " hide" : ""}`}>
+            <h2>Termin anfragen</h2>
+            <p>Füll das Formular aus – ich melde mich bei dir.</p>
+            <form ref={formRef} onSubmit={submit}>
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Dein Name" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Telefon / WhatsApp</label>
+                <input id="phone" name="phone" type="tel" placeholder="+43 ..." />
+              </div>
+              <div className="form-group">
+                <label htmlFor="service">Leistung</label>
+                <select id="service" name="service" required>
+                  <option value="">Bitte wählen…</option>
+                  {SERVICES_OPTIONS.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">Deine Nachricht / Wunschtermin</label>
+                <textarea id="message" name="message" placeholder="Beschreibe dein Wunsch-Tattoo, Piercing oder Anliegen…" />
+              </div>
+              <button type="submit" className="form-submit">Anfrage via WhatsApp senden</button>
+            </form>
+          </div>
+
+          <div className={`booking-success${success ? " show" : ""}`}>
+            <h3>Danke für deine Anfrage!</h3>
+            <p>WhatsApp wurde geöffnet. Ich melde mich so schnell wie möglich bei dir. 💖</p>
+          </div>
         </div>
       </div>
-    </section>
+    </>
   );
 }

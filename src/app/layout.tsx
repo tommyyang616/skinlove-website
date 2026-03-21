@@ -1,84 +1,27 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skinlove-website.vercel.app"),
-  title: "SkinLove Tattoo & Piercing – Marchtrenk",
-  description:
-    "Dein Studio für Tattoo, Piercing, Permanent Make-up & Microblading in Marchtrenk. Professionell, hygienisch, mit Herz. Inhaberin: Eve Paule.",
-  keywords: [
-    "Tattoo",
-    "Piercing",
-    "Microblading",
-    "Permanent Make-up",
-    "Marchtrenk",
-    "Oberösterreich",
-    "SkinLove",
-    "Eve Paule",
-    "Tattoo Studio",
-    "Workshop",
-  ],
-  openGraph: {
-    title: "SkinLove Tattoo & Piercing – Marchtrenk",
-    description:
-      "Dein Studio für Tattoo, Piercing, Permanent Make-up & Microblading in Marchtrenk.",
-    url: "https://skinlove-website.vercel.app",
-    siteName: "SkinLove Tattoo & Piercing",
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "SkinLove Tattoo & Piercing Studio",
-      },
-    ],
-    locale: "de_AT",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SkinLove Tattoo & Piercing – Marchtrenk",
-    description:
-      "Dein Studio für Tattoo, Piercing, Permanent Make-up & Microblading in Marchtrenk.",
-    images: ["/images/og-image.jpg"],
-  },
+  title: "SkinLove – Tattoo, Piercing & Lash Lifting | Marchtrenk",
+  description: "Professionelles Tattoo, Piercing und Lash Lifting bei Eve Paule in Marchtrenk, OÖ. Terminbuchung via WhatsApp.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="de"
-      className={`${cormorant.variable} ${inter.variable} ${outfit.variable}`}
-    >
-      <body className="font-[family-name:var(--font-inter)]">
-        {children}
-      </body>
+    <html lang="de">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Outfit:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

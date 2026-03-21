@@ -1,25 +1,21 @@
-import Link from "next/link";
-
+"use client";
 export default function Footer() {
   return (
-    <footer className="py-12 text-center" style={{ background: "var(--pink)" }}>
-      <div className="flex justify-center gap-6 mb-4">
-        <Link
-          href="/impressum"
-          className="text-xs tracking-[1px] uppercase text-white/80 hover:text-white transition-colors"
-        >
-          Impressum
-        </Link>
-        <Link
-          href="/datenschutz"
-          className="text-xs tracking-[1px] uppercase text-white/80 hover:text-white transition-colors"
-        >
-          Datenschutz
-        </Link>
+    <footer>
+      <div className="footer-inner">
+        <div className="footer-logo">
+          Skin<span>Love</span>
+        </div>
+        <div className="footer-links">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="https://instagram.com/skinlove.tattoo.piercing" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://wa.me/436607835346" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+        <div className="footer-copy">
+          © {new Date().getFullYear()} SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule
+        </div>
       </div>
-      <p className="text-xs text-white/70 tracking-[1px]">
-        © 2026 SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule
-      </p>
     </footer>
   );
 }

@@ -1,11 +1,9 @@
 "use client";
+import { useState } from "react";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-
-const piercingCategories = [
+const piercingData = [
   {
-    title: "Nase",
+    cat: "Nase",
     items: [
       { name: "Nasenflügel (Nostril) einfach", price: "53 €" },
       { name: "Bridge", price: "84 €" },
@@ -14,7 +12,7 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Ohr",
+    cat: "Ohr",
     items: [
       { name: "Lobe / Horizontal Lobe / Standard Lobe / Upper Lobe", price: "42 €" },
       { name: "Forward Helix / Helix Rim / Helix / AntiHelix-Sung", price: "55 €" },
@@ -25,15 +23,15 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Augenbraue & Surface",
+    cat: "Augenbraue & Surface",
     items: [
       { name: "Augenbraue", price: "60 €" },
       { name: "Anti Eyebrow", price: "62 €" },
-      { name: "Oberflächenpiercings (Nacken, Bauch, Brustbein, Finger, Arme...)", price: "72 €" },
+      { name: "Oberflächenpiercings (Nacken, Bauch, Brustbein, Finger, Arme…)", price: "72 €" },
     ],
   },
   {
-    title: "Bauchnabel",
+    cat: "Bauchnabel",
     items: [
       { name: "Standard / Unten / Seitlich", price: "65 €" },
       { name: "Doppelt (oben & unten)", price: "122 €" },
@@ -42,7 +40,7 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Zunge & Oral",
+    cat: "Zunge & Oral",
     items: [
       { name: "Zungen-Piercing (Standard)", price: "72 €" },
       { name: "Doppelt / Vertical / Snake / Zungenspitze", price: "88 €" },
@@ -51,7 +49,7 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Lippe",
+    cat: "Lippe",
     items: [
       { name: "Lippenbereich (Madonna, Labret, Medusa)", price: "64 €" },
       { name: "Angel Bites / Cyber Bites / Daliha Bites / Dimple / Vampire", price: "115 €" },
@@ -62,14 +60,14 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Brustwarze (ab 16 Jahre)",
+    cat: "Brustwarze (ab 16 Jahre)",
     items: [
       { name: "Horizontal / Vertikal", price: "72 €" },
       { name: "Beide gemeinsam (rechts & links)", price: "132 €" },
     ],
   },
   {
-    title: "Intim Damen (ab 16 Jahre)",
+    cat: "Intim Damen (ab 16 Jahre)",
     items: [
       { name: "Christina", price: "112 €" },
       { name: "Klitoris Vorhaut / Isabella / Hymen", price: "112 €" },
@@ -84,7 +82,7 @@ const piercingCategories = [
     ],
   },
   {
-    title: "Intim Herren (ab 16 Jahre)",
+    cat: "Intim Herren (ab 16 Jahre)",
     items: [
       { name: "Ampallang Piercing", price: "260 €" },
       { name: "Deep Dydoe Piercing", price: "260 €" },
@@ -96,19 +94,19 @@ const piercingCategories = [
       { name: "Oetang / Vorhaut Piercing", price: "130 €" },
       { name: "Pubic Piercing", price: "190 €" },
       { name: "Schaft-Ampallang Piercing", price: "260 €" },
-      { name: "Scrotal Ladder Piercing (3-4 Stück)", price: "290 €" },
+      { name: "Scrotal Ladder Piercing (3–4 Stück)", price: "290 €" },
     ],
   },
 ];
 
-const lashBrowItems = [
+const lashBrow = [
   { name: "Lash Lifting inkl. Färben & Keratin", price: "61 €" },
   { name: "Brow Lifting inkl. Färben & Keratin", price: "52 €" },
   { name: "Lash & Brow Lifting inkl. Färben, Keratin & Zupfen", price: "110 €" },
   { name: "Augenbrauen zupfen (nur in Kombination)", price: "15 €" },
 ];
 
-const extrasItems = [
+const extras = [
   { name: "Prontolind Spray", price: "10 €" },
   { name: "Prontolind Gel", price: "7 €" },
   { name: "Stecker kürzen", price: "6 €" },
@@ -118,117 +116,76 @@ const extrasItems = [
   { name: "Dermal Anker Entfernung (exkl. Schmuck & Pflege)", price: "60 €" },
 ];
 
+const TABS = ["Piercing", "Lash & Brow", "Extras"];
+
 export default function Pricing() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [openCat, setOpenCat] = useState<string | null>(null);
+  const [tab, setTab] = useState(0);
 
   return (
-    <section id="pricing" className="py-24 md:py-32" style={{ background: "#1e1e23" }}>
-      <div ref={ref} className="max-w-3xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-4">Preise</p>
-          <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-            Preisliste
-          </h2>
-          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
-        </motion.div>
-
-        {/* Piercing Categories */}
-        <div className="space-y-3 mb-8">
-          {piercingCategories.map((cat, i) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.05, duration: 0.4 }}
-              className="rounded-xl border border-white/5 overflow-hidden"
-              style={{ background: "var(--bg-card)" }}
-            >
-              <button
-                onClick={() => setOpenCat(openCat === cat.title ? null : cat.title)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left text-white font-medium hover:bg-white/5 transition-colors"
-              >
-                <span>{cat.title}</span>
-                <span className="text-[var(--pink)] text-lg">{openCat === cat.title ? "−" : "+"}</span>
-              </button>
-              {openCat === cat.title && (
-                <div className="px-5 pb-4 space-y-2">
-                  {cat.items.map((item) => (
-                    <div key={item.name} className="flex justify-between gap-4 text-sm">
-                      <span className="text-[var(--text-dim)]">{item.name}</span>
-                      <span className="text-white font-medium whitespace-nowrap">{item.price}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </motion.div>
+    <section id="pricing">
+      <div className="section-inner">
+        <div className="section-header reveal">
+          <div className="section-eyebrow">Transparenz</div>
+          <h2 className="section-title">Preisliste</h2>
+          <div className="section-line" />
+        </div>
+        <div className="pricing-tabs">
+          {TABS.map((t, i) => (
+            <button key={t} className={`pricing-tab${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>
+              {t}
+            </button>
           ))}
         </div>
 
-        {/* Lash & Brow */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="rounded-xl border border-white/5 p-5 mb-4"
-          style={{ background: "var(--bg-card)" }}
-        >
-          <h3 className="text-white font-semibold mb-4">Lash & Brow Lifting</h3>
-          <div className="space-y-2">
-            {lashBrowItems.map((item) => (
-              <div key={item.name} className="flex justify-between gap-4 text-sm">
-                <span className="text-[var(--text-dim)]">{item.name}</span>
-                <span className="text-white font-medium whitespace-nowrap">{item.price}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-[var(--text-dim)] mt-4">
-            Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 € · Empfohlen alle 6–9 Wochen
-          </p>
-        </motion.div>
-
-        {/* Extras */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="rounded-xl border border-white/5 p-5 mb-6"
-          style={{ background: "var(--bg-card)" }}
-        >
-          <h3 className="text-white font-semibold mb-4">Extras & Services</h3>
-          <div className="space-y-2">
-            {extrasItems.map((item) => (
-              <div key={item.name} className="flex justify-between gap-4 text-sm">
-                <span className="text-[var(--text-dim)]">{item.name}</span>
-                <span className="text-white font-medium whitespace-nowrap">{item.price}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Hinweise */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.7, duration: 0.5 }}
-          className="text-center space-y-2"
-        >
-          <p className="text-xs text-[var(--text-dim)]">
-            Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026
-          </p>
-          <p className="text-xs text-[var(--text-dim)]">
-            Piercen ab 14 Jahre in Anwesenheit eines Erziehungsberechtigten, ab 16 Jahre alleine.
-          </p>
-          <p className="text-xs text-[var(--text-dim)]">
+        {/* Piercing Panel */}
+        <div className={`pricing-panel${tab === 0 ? " active" : ""}`}>
+          {piercingData.map((cat) => (
+            <div key={cat.cat} className="pricing-category">
+              <div className="pricing-cat-title">{cat.cat}</div>
+              {cat.items.map((item) => (
+                <div key={item.name} className="pricing-row">
+                  <span className="pricing-name">{item.name}</span>
+                  <span className="pricing-price">{item.price}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+          <div className="pricing-note">
+            Alle Piercings inkl. Schmuck & Kontrolltermin · Preise gültig ab 1.1.2026<br />
+            Piercen ab 14 Jahre in Anwesenheit eines Erziehungsberechtigten, ab 16 Jahre alleine.<br />
             Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!
-          </p>
-        </motion.div>
+          </div>
+        </div>
+
+        {/* Lash & Brow Panel */}
+        <div className={`pricing-panel${tab === 1 ? " active" : ""}`}>
+          <div className="pricing-category">
+            <div className="pricing-cat-title">Lash & Brow Lifting</div>
+            {lashBrow.map((item) => (
+              <div key={item.name} className="pricing-row">
+                <span className="pricing-name">{item.name}</span>
+                <span className="pricing-price">{item.price}</span>
+              </div>
+            ))}
+          </div>
+          <div className="pricing-note">
+            Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 €<br />
+            Empfohlen alle 6–9 Wochen
+          </div>
+        </div>
+
+        {/* Extras Panel */}
+        <div className={`pricing-panel${tab === 2 ? " active" : ""}`}>
+          <div className="pricing-category">
+            <div className="pricing-cat-title">Extras & Services</div>
+            {extras.map((item) => (
+              <div key={item.name} className="pricing-row">
+                <span className="pricing-name">{item.name}</span>
+                <span className="pricing-price">{item.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

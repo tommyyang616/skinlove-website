@@ -1,7 +1,5 @@
 "use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const reviews = [
   { initial: "A", name: "Anika Neuschitzer", date: "vor 2 Monaten", text: "Bin sehr happy mit meinem Piercing! Dankeschön! Eve ist eine sehr freundliche und authentische Frau, weiß was sie tut und man fühlt sich mega gut aufgehoben bei ihr!" },
@@ -21,7 +19,7 @@ const reviews = [
 ];
 
 const GoogleIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24">
+  <svg width="14" height="14" viewBox="0 0 24 24" style={{ display: "inline" }}>
     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -29,115 +27,64 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const Stars = () => (
-  <span className="text-yellow-400 text-sm tracking-wider">★★★★★</span>
-);
-
 export default function Reviews() {
-  const ref = useRef(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
 
   const scroll = useCallback((dir: number) => {
     if (!trackRef.current) return;
     const card = trackRef.current.querySelector<HTMLDivElement>(".review-card");
-    if (card) {
-      trackRef.current.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: "smooth" });
-    }
+    if (card) trackRef.current.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: "smooth" });
   }, []);
 
   return (
-    <section id="reviews" className="py-24 md:py-32" style={{ background: "#1a1a1e" }}>
-      <div ref={ref} className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <p className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-4">
-            Bewertungen
-          </p>
-          <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-            Das sagen meine Kunden
-          </h2>
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <GoogleIcon />
-            <span className="text-sm text-[var(--text-dim)]">4,6 Sterne · Google Bewertungen</span>
-          </div>
-          <div className="text-2xl text-yellow-400 tracking-wider">★★★★★</div>
-        </motion.div>
-
-        {/* Scrollable Track */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="relative"
-        >
-          <div
-            ref={trackRef}
-            className="flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {reviews.map((r, i) => (
-              <div
-                key={i}
-                className="review-card flex-shrink-0 w-[340px] max-md:w-[85vw] rounded-2xl border border-white/5 p-6 snap-start"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[var(--pink)]/20 flex items-center justify-center text-[var(--pink)] font-semibold text-sm">
-                    {r.initial}
-                  </div>
-                  <div>
-                    <div className="text-white text-sm font-medium">{r.name}</div>
-                    <div className="text-xs text-[var(--text-dim)]">{r.date}</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1 mb-3">
-                  <GoogleIcon />
-                  <Stars />
-                </div>
-                <p className="text-sm text-[var(--text-dim)] leading-relaxed">{r.text}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Nav Buttons */}
-          <div className="flex justify-center gap-3 mt-6">
-            <button
-              onClick={() => scroll(-1)}
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/5 transition-colors"
-            >
-              ←
-            </button>
-            <button
-              onClick={() => scroll(1)}
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/5 transition-colors"
-            >
-              →
-            </button>
-          </div>
-        </motion.div>
-
-        {/* All Reviews Link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-center mt-8"
-        >
-          <a
-            href="https://www.google.com/search?q=rezensionen+f%C3%BCr+skinlove+tattoo-piercing-permanent+make-up"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--pink)]/30 text-[var(--pink)] text-sm hover:bg-[var(--pink)]/10 transition-colors"
-          >
-            Alle Bewertungen ansehen
-          </a>
-        </motion.div>
+    <section id="reviews">
+      <div className="section-inner">
+        <div className="section-header reveal">
+          <div className="section-eyebrow">Kundenstimmen</div>
+          <h2 className="section-title">Bewertungen</h2>
+          <div className="section-line" />
+        </div>
+        <div className="reviews-top">
+          <GoogleIcon />
+          <span className="g-rating">4,6</span>
+          <span className="g-stars">★★★★★</span>
+          <span className="g-count">· Google Bewertungen</span>
+        </div>
       </div>
+
+      <div className="reviews-track-wrap">
+        <div className="reviews-track" ref={trackRef}>
+          {reviews.map((r, i) => (
+            <div key={i} className="review-card">
+              <div className="review-header">
+                <div className="reviewer-avatar">{r.initial}</div>
+                <div>
+                  <div className="reviewer-name">{r.name}</div>
+                  <div className="review-date">{r.date}</div>
+                </div>
+              </div>
+              <div className="review-source">
+                <GoogleIcon />
+                <span className="review-stars">★★★★★</span>
+              </div>
+              <p className="review-text">{r.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="reviews-nav">
+        <button onClick={() => scroll(-1)} aria-label="Zurück">←</button>
+        <button onClick={() => scroll(1)} aria-label="Vor">→</button>
+      </div>
+      <a
+        className="reviews-all-link"
+        href="https://www.google.com/search?q=skinlove+tattoo+piercing+marchtrenk+bewertungen"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Alle Bewertungen auf Google ansehen →
+      </a>
     </section>
   );
 }
