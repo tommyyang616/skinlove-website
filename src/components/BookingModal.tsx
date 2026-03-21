@@ -1,64 +1,23 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-type Props = {
+interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
-};
+}
 
-const services = [
-  "Tattoo — Neues Tattoo",
-  "Tattoo — Cover-Up",
-  "Tattoo — Auffrischung",
-  "Piercing",
-  "Permanent Make-up",
-  "Lash & Brow",
-  "Beratungsgespräch",
-  "Sonstiges",
-];
+export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
+  const [form, setForm] = useState({ name: "", email: "", service: "tattoo", message: "" });
 
-export default function BookingModal({ isOpen, onClose }: Props) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isOpen]);
-
-  const handleSubmit = async () => {
-    if (!form.name.trim() || !form.email.trim()) {
-      setErrorMsg("Bitte Name und E-Mail ausfüllen");
-      return;
-    }
-    setStatus("loading");
-    setErrorMsg("");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-
-      if (!res.ok || data.error) {
-        throw new Error(data.error || "Fehler beim Senden");
-      }
-
-      setStatus("success");
-      setForm({ name: "", email: "", phone: "", service: "", message: "" });
-    } catch (err) {
-      setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Fehler beim Senden");
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = `Hallo Eve! 💕\n\nName: ${form.name}\nE-Mail: ${form.email}\nService: ${form.service}\n\nNachricht: ${form.message}`;
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/436607835346?text=${encoded}`, "_blank");
+    onClose();
+    setForm({ name: "", email: "", service: "tattoo", message: "" });
   };
 
   return (
@@ -68,89 +27,76 @@ export default function BookingModal({ isOpen, onClose }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={onClose}
+          className="fixed inset-0 z-[10001] flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.85)" }}
         >
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 25 }}
-            className="relative w-full max-w-md bg-[#141414] border border-white/10 p-6 md:p-8 max-h-[90vh] overflow-y-auto"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
             onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-[440px] rounded-2xl border border-white/10 p-8 relative"
+            style={{ background: "#1a1a1a" }}
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-4 right-4 text-white/40 hover:text-white text-xl transition-colors"
             >
               ✕
             </button>
 
-            <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            <h3 className="font-[family-name:var(--font-cormorant)] text-2xl font-semibold text-white mb-2">
               Termin anfragen
             </h3>
-            <p className="text-xs text-[#888] mb-6">
-              Wir melden uns innerhalb von 24 Stunden bei dir.
+            <p className="text-sm text-[var(--text-dim)] mb-6">
+              Schick mir deine Anfrage direkt per WhatsApp
             </p>
 
-            {status === "success" ? (
-              <div className="text-center py-8">
-                <div className="text-4xl mb-3">✓</div>
-                <p className="text-white font-medium">Anfrage gesendet!</p>
-                <p className="text-[#888] text-sm mt-1">Wir melden uns bald bei dir.</p>
-                <button onClick={onClose} className="mt-4 px-6 py-2 bg-[#bb3599] text-white text-sm hover:bg-[#a02d85] transition-colors cursor-pointer">
-                  Schließen
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <input
-                  placeholder="Name *"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full p-3 bg-[#1a1a1a] border border-white/10 text-white text-sm outline-none focus:border-[#bb3599] transition-colors"
-                />
-                <input
-                  type="email"
-                  placeholder="E-Mail *"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full p-3 bg-[#1a1a1a] border border-white/10 text-white text-sm outline-none focus:border-[#bb3599] transition-colors"
-                />
-                <input
-                  type="tel"
-                  placeholder="Telefon (optional)"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="w-full p-3 bg-[#1a1a1a] border border-white/10 text-white text-sm outline-none focus:border-[#bb3599] transition-colors"
-                />
-                <select
-                  value={form.service}
-                  onChange={(e) => setForm({ ...form, service: e.target.value })}
-                  className="w-full p-3 bg-[#1a1a1a] border border-white/10 text-white text-sm outline-none focus:border-[#bb3599] transition-colors"
-                >
-                  <option value="">Service wählen...</option>
-                  {services.map((s) => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
-                <textarea
-                  placeholder="Deine Nachricht (optional)"
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full p-3 bg-[#1a1a1a] border border-white/10 text-white text-sm outline-none focus:border-[#bb3599] transition-colors min-h-[80px] resize-y"
-                />
-                {errorMsg && <p className="text-red-400 text-xs">{errorMsg}</p>}
-                <button
-                  onClick={handleSubmit}
-                  disabled={status === "loading"}
-                  className="w-full p-3 bg-[#bb3599] text-white font-semibold text-sm hover:bg-[#a02d85] transition-colors disabled:opacity-50 cursor-pointer"
-                >
-                  {status === "loading" ? "Wird gesendet..." : "Anfrage senden"}
-                </button>
-              </div>
-            )}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Dein Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50"
+              />
+              <input
+                type="email"
+                placeholder="Deine E-Mail"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50"
+              />
+              <select
+                value={form.service}
+                onChange={(e) => setForm({ ...form, service: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[var(--pink)]/50 appearance-none"
+              >
+                <option value="tattoo" className="bg-[#1a1a1a]">Tattoo</option>
+                <option value="piercing" className="bg-[#1a1a1a]">Piercing</option>
+                <option value="pmu" className="bg-[#1a1a1a]">Permanent Make-up</option>
+                <option value="lash" className="bg-[#1a1a1a]">Lash &amp; Brow Lifting</option>
+                <option value="kinder" className="bg-[#1a1a1a]">Kinderohrringe</option>
+                <option value="sonstiges" className="bg-[#1a1a1a]">Sonstiges</option>
+              </select>
+              <textarea
+                placeholder="Beschreibe dein Wunschprojekt..."
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                required
+                rows={3}
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50 resize-none"
+              />
+              <button
+                type="submit"
+                className="w-full bg-[var(--pink)] text-white py-3 rounded-lg font-medium hover:brightness-110 transition-all flex items-center justify-center gap-2"
+              >
+                <span>💬</span> Via WhatsApp senden
+              </button>
+            </form>
           </motion.div>
         </motion.div>
       )}

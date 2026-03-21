@@ -1,69 +1,57 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 
-const categories = [
+const services = [
   {
-    id: "tattoo",
+    emoji: "🎨",
     title: "Tattoo",
-    icon: "🖊️",
-    description:
-      "Von filigranen Finelinetattoos bis zu großflächigen Motiven — jedes Tattoo wird individuell für dich gestaltet. Ich arbeite in verschiedenen Stilen und berate dich gerne zu Motiv, Platzierung und Größe.",
-    items: [
-      "Fineline & Minimalistisch",
-      "Realistic & Portrait",
-      "Blackwork & Dotwork",
-      "Watercolor",
-      "Lettering & Schriftzüge",
-      "Cover-ups & Rework",
-      "Custom Designs",
+    desc: "Von filigranen Fine-Lines bis hin zu großflächigen Pieces – jedes Tattoo wird individuell für dich designt.",
+    points: [
+      "Individuelle Beratung & Design",
+      "Fine Line & Micro Realism",
+      "Cover-Ups & Rework",
+      "Farbige & Blackwork Tattoos",
     ],
   },
   {
-    id: "piercing",
+    emoji: "💎",
     title: "Piercing",
-    icon: "💎",
-    description:
-      "Professionelles Piercen mit Fokus auf Hygiene und Ästhetik. Ich verwende ausschließlich hochwertigen Erstschmuck aus Titan und berate dich ausführlich zur Pflege.",
-    items: [
-      "Ohren (Helix, Tragus, Conch, etc.)",
-      "Nasenpiercing (Nostril, Septum)",
-      "Lippenpiercing (Labret, Medusa)",
-      "Augenbraue",
-      "Bauchnabel",
-      "Surface & Dermal Anchor",
-      "Intimpiercings",
+    desc: "Professionelles Piercing mit sterilen Einwegnadeln und hochwertigem Titan G23 Erstschmuck.",
+    points: [
+      "Titan G23 Erstschmuck",
+      "Sterile Einwegnadeln",
+      "Umfassende Nachsorge",
+      "Große Schmuckauswahl",
     ],
   },
   {
-    id: "pmu",
+    emoji: "✨",
     title: "Permanent Make-up",
-    icon: "✨",
-    description:
-      "Perfekte Augenbrauen, definierte Lippen oder einen sanften Lidstrich — dauerhaft und natürlich. Mit modernsten Techniken für ein Ergebnis, das zu dir passt.",
-    items: [
-      "Augenbrauen (Powder Brows)",
-      "Augenbrauen (Microblading)",
-      "Lippen (Aquarell Lips)",
-      "Lidstrich (Eyeliner)",
-      "Wimpernkranzverdichtung",
-      "Narbenkorrektur",
+    desc: "Permanent Make-up für einen natürlich perfekten Look – sanft, präzise und langanhaltend.",
+    points: ["Powder Brows", "Lip Blush", "Eyeliner", "Auffrischung"],
+  },
+  {
+    emoji: "🎓",
+    title: "Workshops",
+    desc: "Lerne die Kunst des Tätowierens und Piercens in professionellen Workshops mit Zertifikat.",
+    points: [
+      "2-Tages-Intensivkurs",
+      "Hygiene & Sicherheit",
+      "Praxis an Kunsthaut",
+      "Zertifikat",
     ],
   },
   {
-    id: "workshops",
-    title: "Workshops",
-    icon: "🎓",
-    description:
-      "Du willst Tätowieren oder Piercing lernen? In meinen Workshops zeige ich dir alles von Grund auf — Theorie, Hygiene und natürlich viel Praxis.",
-    items: [
-      "Tattoo-Workshop (Beginner)",
-      "Tattoo-Workshop (Advanced)",
-      "Piercing-Workshop",
-      "PMU-Workshop (Powder Brows)",
-      "PMU-Workshop (Microblading)",
-      "Einzelcoaching möglich",
+    emoji: "🌟",
+    title: "Guest Artists",
+    desc: "Regelmäßig begrüßen wir talentierte Gastkünstler mit besonderen Styles und Techniken.",
+    points: [
+      "Wechselnde Styles",
+      "Spezielle Techniken",
+      "Limitierte Termine",
+      "Folge uns für Ankündigungen",
     ],
   },
 ];
@@ -71,12 +59,10 @@ const categories = [
 export default function Services() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [activeTab, setActiveTab] = useState("tattoo");
-
-  const active = categories.find((c) => c.id === activeTab)!;
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <section id="services" className="section-2 py-24 md:py-32">
+    <section id="services" className="py-24 md:py-32" style={{ background: "#121215" }}>
       <div ref={ref} className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -85,80 +71,67 @@ export default function Services() {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-4">
-            Was wir anbieten
+            Leistungen
           </p>
           <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-            Leistungen
+            Mein Angebot
           </h2>
-          <div className="pink-line" />
+          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
         </motion.div>
 
-        {/* Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveTab(cat.id)}
-              className={`px-6 py-3 rounded-full text-sm tracking-wider uppercase transition-all duration-300 ${
-                activeTab === cat.id
-                  ? "bg-[var(--pink)] text-white"
-                  : "glass-card text-[var(--text-dim)] hover:text-white"
-              }`}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((s, i) => (
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              onClick={() => setOpenIdx(openIdx === i ? null : i)}
+              className="rounded-2xl border border-white/5 p-6 cursor-pointer transition-all duration-300 hover:border-[var(--pink)]/30 group"
+              style={{ background: "var(--bg-card)" }}
             >
-              <span className="mr-2">{cat.icon}</span>
-              {cat.title}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="glass-card p-8 md:p-12 rounded-2xl"
-        >
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="font-[family-name:var(--font-cormorant)] text-3xl font-semibold text-white mb-4">
-                {active.icon} {active.title}
+              <div className="text-3xl mb-4">{s.emoji}</div>
+              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-[var(--pink)] transition-colors">
+                {s.title}
               </h3>
-              <p className="text-[var(--text-dim)] leading-relaxed mb-6">
-                {active.description}
+              <p className="text-sm text-[var(--text-dim)] leading-relaxed mb-4">
+                {s.desc}
               </p>
-              <a
-                href="https://wa.me/436607835346"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--pink)] text-white text-xs tracking-[2px] uppercase rounded-full hover:bg-[var(--pink-dim)] transition-all duration-300"
-              >
-                Termin vereinbaren
-              </a>
-            </div>
-            <div>
-              <ul className="space-y-3">
-                {active.items.map((item, i) => (
-                  <motion.li
-                    key={item}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="flex items-center gap-3 text-[var(--text-dim)]"
+
+              <AnimatePresence>
+                {openIdx === i && (
+                  <motion.ul
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-2 overflow-hidden"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--pink)] shrink-0" />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.div>
+                    {s.points.map((p) => (
+                      <li
+                        key={p}
+                        className="flex items-center gap-2 text-sm text-[var(--text-dim)]"
+                      >
+                        <span className="text-[var(--pink)] text-xs">●</span>
+                        {p}
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
+
+              <div className="mt-4 flex items-center gap-1 text-xs text-[var(--pink)]">
+                <span>{openIdx === i ? "Weniger" : "Mehr erfahren"}</span>
+                <span
+                  className="transition-transform duration-300"
+                  style={{ transform: openIdx === i ? "rotate(180deg)" : "none" }}
+                >
+                  ▼
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

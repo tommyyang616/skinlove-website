@@ -2,89 +2,43 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--bg)] border-t border-white/5 py-12">
+    <footer className="py-10 border-t border-white/5" style={{ background: "#0a0a0a" }}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <h3 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white mb-3">
-              SkinLove
-            </h3>
-            <p className="text-[var(--text-dim)] text-sm leading-relaxed">
-              Tattoo, Piercing &amp; Permanent Make-up in Marchtrenk.
-              Professionell, hygienisch, mit Herz.
-            </p>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <span className="text-[var(--pink)]">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </span>
+            <span className="text-white font-semibold tracking-wider">SkinLove</span>
           </div>
 
           {/* Links */}
-          <div>
-            <h4 className="text-xs tracking-[2px] uppercase text-white mb-4">
-              Navigation
-            </h4>
-            <div className="space-y-2">
-              {[
-                { href: "#about", label: "Über mich" },
-                { href: "#services", label: "Leistungen" },
-                { href: "#gallery", label: "Galerie" },
-                { href: "#pricing", label: "Preise" },
-                { href: "#contact", label: "Kontakt" },
-              ].map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="block text-sm text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-xs tracking-[2px] uppercase text-white mb-4">
-              Rechtliches
-            </h4>
-            <div className="space-y-2">
-              <Link
-                href="/impressum"
-                className="block text-sm text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors"
-              >
-                Impressum
-              </Link>
-              <Link
-                href="/datenschutz"
-                className="block text-sm text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors"
-              >
-                Datenschutz
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[var(--text-dimmer)] text-xs">
-            © {new Date().getFullYear()} SkinLove Tattoo &amp; Piercing. Alle
-            Rechte vorbehalten.
-          </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6 text-sm text-[var(--text-dim)]">
+            <Link href="/impressum" className="hover:text-white transition-colors">
+              Impressum
+            </Link>
+            <Link href="/datenschutz" className="hover:text-white transition-colors">
+              Datenschutz
+            </Link>
+            <a href="#workshop" className="hover:text-white transition-colors">
+              Workshop
+            </a>
             <a
               href="https://www.instagram.com/skinlove_tattoopiercing/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--text-dimmer)] hover:text-[var(--pink)] transition-colors text-sm"
+              className="hover:text-[var(--pink)] transition-colors"
             >
               Instagram
             </a>
-            <a
-              href="https://wa.me/436607835346"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--text-dimmer)] hover:text-[var(--pink)] transition-colors text-sm"
-            >
-              WhatsApp
-            </a>
           </div>
+        </div>
+
+        <div className="text-center mt-8 text-xs text-[var(--text-dim)]">
+          © 2026 SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule · Mitgründer Miro Urbanek
         </div>
       </div>
     </footer>

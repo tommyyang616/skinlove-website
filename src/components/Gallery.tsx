@@ -1,22 +1,29 @@
 "use client";
 
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
-const galleryImages = [
+const studioImages = [
   { src: "/gallery/arbeit1.png", alt: "Tattoo Arbeit 1" },
   { src: "/gallery/arbeit2.jpeg", alt: "Tattoo Arbeit 2" },
   { src: "/gallery/arbeit3.jpeg", alt: "Tattoo Arbeit 3" },
   { src: "/gallery/arbeit4.png", alt: "Tattoo Arbeit 4" },
   { src: "/gallery/arbeit6.png", alt: "Tattoo Arbeit 5" },
+  { src: "/gallery/tattoo1.jpg", alt: "Tattoo 1" },
+  { src: "/gallery/tattoo2.jpg", alt: "Tattoo 2" },
+  { src: "/gallery/tattoo3.jpeg", alt: "Tattoo 3" },
+  { src: "/gallery/tattoo4.jpg", alt: "Tattoo 4" },
+  { src: "/gallery/tattoo5.jpg", alt: "Tattoo 5" },
+  { src: "/gallery/piercing1.jpg", alt: "Piercing 1" },
+  { src: "/gallery/piercing2.jpg", alt: "Piercing 2" },
+  { src: "/gallery/piercing3.jpg", alt: "Piercing 3" },
 ];
 
 const guestImages = [
-  { src: "/gallery/guests/guest1-profile.jpeg", alt: "Guest Artist Profil" },
-  { src: "/gallery/guests/guest1-work1.png", alt: "Guest Artist Arbeit 1" },
-  { src: "/gallery/guests/guest1-work2.png", alt: "Guest Artist Arbeit 2" },
-  { src: "/gallery/guests/guest1-work3.png", alt: "Guest Artist Arbeit 3" },
-  { src: "/gallery/guests/guest1-work4.png", alt: "Guest Artist Arbeit 4" },
+  { src: "/gallery/guests/guest1-work1.png", alt: "Nikola – Arbeit 1" },
+  { src: "/gallery/guests/guest1-work2.png", alt: "Nikola – Arbeit 2" },
+  { src: "/gallery/guests/guest1-work3.png", alt: "Nikola – Arbeit 3" },
+  { src: "/gallery/guests/guest1-work4.png", alt: "Nikola – Arbeit 4" },
 ];
 
 export default function Gallery() {
@@ -25,21 +32,30 @@ export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [tab, setTab] = useState<"studio" | "guests">("studio");
 
-  const images = tab === "studio" ? galleryImages : guestImages;
+  const images = tab === "studio" ? studioImages : guestImages;
 
-  const openLightbox = useCallback((index: number) => setLightbox(index), []);
+  const openLightbox = useCallback((i: number) => setLightbox(i), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const nextImage = useCallback(() => {
-    setLightbox((prev) => (prev !== null ? (prev + 1) % images.length : null));
+    setLightbox((p) => (p !== null ? (p + 1) % images.length : null));
   }, [images.length]);
   const prevImage = useCallback(() => {
-    setLightbox((prev) =>
-      prev !== null ? (prev - 1 + images.length) % images.length : null
-    );
+    setLightbox((p) => (p !== null ? (p - 1 + images.length) % images.length : null));
   }, [images.length]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (lightbox === null) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightbox, closeLightbox, nextImage, prevImage]);
+
   return (
-    <section id="gallery" className="section-3 py-24 md:py-32">
+    <section id="gallery" className="py-24 md:py-32" style={{ background: "#1a1a1e" }}>
       <div ref={ref} className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -53,32 +69,51 @@ export default function Gallery() {
           <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
             Galerie
           </h2>
-          <div className="pink-line" />
+          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
         </motion.div>
 
         {/* Tabs */}
         <div className="flex justify-center gap-4 mb-10">
           <button
-            onClick={() => setTab("studio")}
+            onClick={() => { setTab("studio"); setLightbox(null); }}
             className={`px-6 py-2.5 rounded-full text-sm tracking-wider transition-all duration-300 ${
               tab === "studio"
                 ? "bg-[var(--pink)] text-white"
-                : "glass-card text-[var(--text-dim)] hover:text-white"
+                : "bg-white/5 border border-white/5 text-[var(--text-dim)] hover:text-white"
             }`}
           >
             Meine Arbeiten
           </button>
           <button
-            onClick={() => setTab("guests")}
+            onClick={() => { setTab("guests"); setLightbox(null); }}
             className={`px-6 py-2.5 rounded-full text-sm tracking-wider transition-all duration-300 ${
               tab === "guests"
                 ? "bg-[var(--pink)] text-white"
-                : "glass-card text-[var(--text-dim)] hover:text-white"
+                : "bg-white/5 border border-white/5 text-[var(--text-dim)] hover:text-white"
             }`}
           >
             Guest Artists
           </button>
         </div>
+
+        {/* Guest Artist Info */}
+        {tab === "guests" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-4 justify-center mb-8"
+          >
+            <img
+              src="/gallery/guests/guest1-profile.jpeg"
+              alt="Nikola"
+              className="w-14 h-14 rounded-full object-cover border-2 border-[var(--pink)]"
+            />
+            <div>
+              <p className="text-white font-medium">Nikola</p>
+              <p className="text-sm text-[var(--text-dim)]">Gasttätowierer</p>
+            </div>
+          </motion.div>
+        )}
 
         {/* Grid */}
         <motion.div
@@ -117,14 +152,11 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
           >
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full glass text-white text-2xl hover:bg-white/10 transition-colors"
+              onClick={(e) => { e.stopPropagation(); prevImage(); }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors"
             >
               ‹
             </button>
@@ -139,20 +171,20 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
             />
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full glass text-white text-2xl hover:bg-white/10 transition-colors"
+              onClick={(e) => { e.stopPropagation(); nextImage(); }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors"
             >
               ›
             </button>
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-full glass text-white text-xl hover:bg-white/10 transition-colors"
+              className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white text-xl hover:bg-white/20 transition-colors"
             >
               ✕
             </button>
+            <div className="absolute bottom-4 text-white/60 text-sm">
+              {lightbox + 1} / {images.length}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

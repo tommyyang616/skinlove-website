@@ -1,105 +1,113 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
-  const [videoIndex, setVideoIndex] = useState(0);
-  const videos = ["/images/hero-video1.mp4", "/images/hero-video2.mp4"];
+  const [activeVideo, setActiveVideo] = useState(0);
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setVideoIndex((prev) => (prev + 1) % videos.length);
+      setActiveVideo((prev) => (prev === 0 ? 1 : 0));
     }, 8000);
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const v1 = video1Ref.current;
+    const v2 = video2Ref.current;
+    if (activeVideo === 0) {
+      v1?.play().catch(() => {});
+      if (v2) v2.currentTime = 0;
+    } else {
+      v2?.play().catch(() => {});
+      if (v1) v1.currentTime = 0;
+    }
+  }, [activeVideo]);
+
   return (
-    <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-      {/* Video Background */}
-      <div className="absolute inset-0">
-        {videos.map((src, i) => (
-          <video
-            key={src}
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
-              i === videoIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.6)] via-[rgba(10,10,10,0.3)] to-[var(--bg)]" />
-      </div>
+    <section id="hero" className="relative h-screen overflow-hidden">
+      {/* Video 1 */}
+      <video
+        ref={video1Ref}
+        src="/images/hero-video1.mp4"
+        muted
+        loop
+        playsInline
+        autoPlay
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          activeVideo === 0 ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      {/* Video 2 */}
+      <video
+        ref={video2Ref}
+        src="/images/hero-video2.mp4"
+        muted
+        loop
+        playsInline
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          activeVideo === 1 ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[var(--bg)]" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-6"
-        >
-          Tattoo · Piercing · Permanent Make-up
-        </motion.p>
-
-        <motion.h1
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="font-[family-name:var(--font-cormorant)] text-5xl md:text-7xl lg:text-8xl font-semibold text-white leading-tight mb-8"
+          transition={{ duration: 1, delay: 0.3 }}
         >
-          SkinLove
-        </motion.h1>
+          <p className="text-xs tracking-[8px] uppercase text-white/60 mb-4">
+            SkinLove Tattoo & Piercing
+          </p>
+          <h1
+            className="font-[family-name:var(--font-cormorant)] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-white mb-4"
+            style={{ lineHeight: 1.1 }}
+          >
+            Dein Style.
+          </h1>
+          <p className="text-lg md:text-xl text-white/70 mb-10 tracking-wide">
+            Tattoo · Piercing · PMU
+          </p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="text-lg md:text-xl text-[var(--text-dim)] max-w-2xl mx-auto mb-10 leading-relaxed"
-        >
-          Dein Studio für Tattoo, Piercing &amp; Permanent Make-up in Marchtrenk.
-          Professionell, hygienisch, mit Herz.
-        </motion.p>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <a
+              href="#contact"
+              className="px-8 py-3.5 bg-[var(--pink)] text-white rounded-full font-medium tracking-wider text-sm hover:brightness-110 transition-all shadow-lg shadow-[var(--pink)]/20"
+            >
+              Termin buchen
+            </a>
+            <a
+              href="#services"
+              className="px-8 py-3.5 border border-white/20 text-white rounded-full font-medium tracking-wider text-sm hover:bg-white/5 transition-all"
+            >
+              Entdecken
+            </a>
+          </div>
+        </motion.div>
 
+        {/* Scroll Indicator */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+          className="absolute bottom-8"
         >
-          <button
-            onClick={() => window.dispatchEvent(new Event("open-booking"))}
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[var(--pink)] text-white text-sm tracking-[2px] uppercase rounded-full hover:bg-[var(--pink-dim)] transition-all duration-300 hover:scale-105"
-          >
-            📩 Termin anfragen
-          </button>
-          <a
-            href="#services"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-white/20 text-white text-sm tracking-[2px] uppercase rounded-full hover:border-[var(--pink)] hover:text-[var(--pink)] transition-all duration-300"
-          >
-            Leistungen ansehen
-          </a>
+          <div className="w-5 h-8 rounded-full border border-white/30 flex items-start justify-center p-1">
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1 h-2 rounded-full bg-white/60"
+            />
+          </div>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="w-6 h-10 border-2 border-white/20 rounded-full flex items-start justify-center p-1.5"
-        >
-          <div className="w-1 h-2 bg-[var(--pink)] rounded-full" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

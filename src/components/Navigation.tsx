@@ -7,10 +7,9 @@ const navLinks = [
   { href: "#about", label: "Über mich" },
   { href: "#services", label: "Leistungen" },
   { href: "#gallery", label: "Galerie" },
-  { href: "#info", label: "Infos" },
-  { href: "#reviews", label: "Bewertungen" },
   { href: "#pricing", label: "Preise" },
-  { href: "#terminanfrage", label: "Termin" },
+  { href: "#reviews", label: "Bewertungen" },
+  { href: "#info", label: "Infos" },
   { href: "#contact", label: "Kontakt" },
 ];
 

@@ -5,34 +5,34 @@ import { useRef } from "react";
 
 const infoCards = [
   {
-    icon: "💰",
-    title: "Anzahlung",
-    text: "Für jeden Termin ist eine Anzahlung erforderlich. Diese wird vom Gesamtpreis abgezogen und sichert deinen Termin verbindlich. Die Höhe der Anzahlung besprechen wir individuell.",
-  },
-  {
-    icon: "❌",
-    title: "Stornierung",
-    text: "Termine können bis 48 Stunden vorher kostenlos storniert werden. Bei kurzfristiger Absage oder Nichterscheinen verfällt die Anzahlung. Bitte hab Verständnis — so kann ich dir und anderen Kunden die beste Betreuung bieten.",
-  },
-  {
-    icon: "🔄",
-    title: "Nachstechen",
-    text: "Ein kostenloses Nachstechen ist innerhalb von 8 Wochen nach dem Termin möglich, sofern die Pflegeanleitung eingehalten wurde. Danach gelten die regulären Preise.",
-  },
-  {
-    icon: "🩹",
-    title: "Pflege",
-    text: "Nach jedem Termin bekommst du eine ausführliche Pflegeanleitung. Die richtige Nachsorge ist entscheidend für ein perfektes Ergebnis. Bei Fragen bin ich jederzeit erreichbar!",
-  },
-  {
-    icon: "🔞",
+    emoji: "🔞",
     title: "Mindestalter",
-    text: "Für Tattoos und Piercings musst du mindestens 18 Jahre alt sein. Unter 18 ist ein Piercing nur mit schriftlicher Einverständniserklärung eines Erziehungsberechtigten möglich.",
+    text: "Tattoo & Piercing ab 18 Jahren oder ab 14 mit schriftlicher Einverständniserklärung eines Erziehungsberechtigten.",
   },
   {
-    icon: "🤰",
-    title: "Kontraindikationen",
-    text: "Tattoos und Piercings sind nicht möglich bei Schwangerschaft, Stillzeit, Blutgerinnungsstörungen, akuten Hauterkrankungen oder unter Einfluss von Alkohol/Drogen.",
+    emoji: "🧼",
+    title: "Hygiene",
+    text: "Alle Werkzeuge werden sterilisiert, Einwegmaterial wird bei jedem Kunden neu verwendet. Deine Sicherheit steht an erster Stelle.",
+  },
+  {
+    emoji: "💊",
+    title: "Vor dem Termin",
+    text: "Bitte 24h vorher keinen Alkohol trinken, kein Aspirin nehmen und ausreichend essen und trinken.",
+  },
+  {
+    emoji: "🩹",
+    title: "Nachsorge",
+    text: "Du bekommst von mir eine detaillierte Nachsorge-Anleitung und ein Pflegeset. Bei Fragen bin ich jederzeit erreichbar.",
+  },
+  {
+    emoji: "💳",
+    title: "Bezahlung",
+    text: "Bar oder Kartenzahlung. Für Tattoos ab 200€ ist eine Anzahlung von 50€ bei der Terminvereinbarung erforderlich.",
+  },
+  {
+    emoji: "📅",
+    title: "Termine",
+    text: "Bitte buche deinen Termin vorab per WhatsApp, Telefon oder über das Kontaktformular. Walk-ins nur nach Verfügbarkeit.",
   },
 ];
 
@@ -41,7 +41,7 @@ export default function Info() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="info" className="section-3 py-24 md:py-32">
+    <section id="info" className="py-24 md:py-32" style={{ background: "#1e1e23" }}>
       <div ref={ref} className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -55,7 +55,7 @@ export default function Info() {
           <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
             Wichtige Infos
           </h2>
-          <div className="pink-line" />
+          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -65,15 +65,12 @@ export default function Info() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="glass-card p-6 rounded-2xl"
+              className="rounded-2xl border border-white/5 p-6 hover:border-[var(--pink)]/20 transition-colors"
+              style={{ background: "var(--bg-card)" }}
             >
-              <span className="text-3xl mb-4 block">{card.icon}</span>
-              <h3 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white mb-3">
-                {card.title}
-              </h3>
-              <p className="text-[var(--text-dim)] text-sm leading-relaxed">
-                {card.text}
-              </p>
+              <div className="text-3xl mb-4">{card.emoji}</div>
+              <h3 className="text-white font-semibold mb-2">{card.title}</h3>
+              <p className="text-sm text-[var(--text-dim)] leading-relaxed">{card.text}</p>
             </motion.div>
           ))}
         </div>
