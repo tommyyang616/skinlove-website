@@ -29,6 +29,10 @@ const GoogleIcon = () => (
   </svg>
 );
 
+const Stars = () => (
+  <span className="text-yellow-400 text-sm tracking-wider">★★★★★</span>
+);
+
 export default function Reviews() {
   const ref = useRef(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -93,7 +97,7 @@ export default function Reviews() {
                 </div>
                 <div className="flex items-center gap-1 mb-3">
                   <GoogleIcon />
-                  <span className="text-yellow-400 text-sm tracking-wider">★★★★★</span>
+                  <Stars />
                 </div>
                 <p className="text-sm text-[var(--text-dim)] leading-relaxed">{r.text}</p>
               </div>
@@ -106,13 +110,13 @@ export default function Reviews() {
               onClick={() => scroll(-1)}
               className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/5 transition-colors"
             >
-              ‹
+              ←
             </button>
             <button
               onClick={() => scroll(1)}
               className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/5 transition-colors"
             >
-              ›
+              →
             </button>
           </div>
         </motion.div>

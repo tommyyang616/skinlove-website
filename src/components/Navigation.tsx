@@ -158,7 +158,8 @@ export default function Navigation() {
           {/* Mobile toggle */}
           <button
             className="lg:hidden"
-            style={{ display: "flex", flexDirection: "column", gap: "5px", cursor: "pointer", padding: "8px", background: "none", border: "none" }}
+            style={{ display: "flex", flexDirection: "column", gap: "5px", cursor: "pointer", padding: "8px",
+background: "none", border: "none" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Menü"
           >
