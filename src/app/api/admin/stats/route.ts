@@ -20,7 +20,7 @@ export async function GET() {
 
     let freeSpots = 0;
     let revenue = 0;
-    courses.forEach((c) => {
+    courses.forEach((c: { maxSpots: number; price: unknown; _count: { enrollments: number } }) => {
       const booked = c._count.enrollments;
       freeSpots += c.maxSpots - booked;
       revenue += booked * Number(c.price);
