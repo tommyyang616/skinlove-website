@@ -15,7 +15,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     e.preventDefault();
     const text = `Hallo Eve! 💕\n\nName: ${form.name}\nE-Mail: ${form.email}\nService: ${form.service}\n\nNachricht: ${form.message}`;
     const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/436607835346?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/436607923606?text=${encoded}`, "_blank");
     onClose();
     setForm({ name: "", email: "", service: "tattoo", message: "" });
   };

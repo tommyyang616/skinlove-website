@@ -3,103 +3,58 @@
 :root {
   --pink: #bb3599;
   --pink-dim: #a02d85;
-  --pink-glow: rgba(187, 53, 153, 0.15);
+  --pink-glow: rgba(187,53,153,.15);
   --bg: #0a0a0a;
   --bg-card: #141414;
   --bg-card-hover: #1a1a1a;
-  --text: #e8e4df;
-  --text-dim: #8a8580;
-  --text-dimmer: #5a5550;
+  --text: #f0ece8;
+  --text-dim: #b0aaa4;
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Inter', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  background: var(--bg);
+  font-family: var(--sans);
+  background: #0a0a0a;
   color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-::selection {
-  background: var(--pink);
-  color: #fff;
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .5;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--pink-dim);
-}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
 
-/* Glassmorphism utility */
-.glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.glass-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: rgba(187, 53, 153, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Section backgrounds - gradually lighter */
-.section-1 { background: #0e0e0e; }
-.section-2 { background: #121215; }
-.section-3 { background: #161619; }
-.section-4 { background: #1a1a1e; }
-.section-5 { background: #1e1e23; }
-.section-6 { background: #222228; }
-
-/* Pink gradient text */
-.text-gradient {
-  background: linear-gradient(135deg, var(--pink), #e44dbb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Divider line */
-.pink-line {
-  width: 60px;
-  height: 2px;
-  background: var(--pink);
-  margin: 0 auto;
-}
-
-/* Modal animation */
-.animate-in {
-  animation: modalIn 0.3s ease-out;
-}
-
-@keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
+/* Section backgrounds — gets lighter as you scroll */
+#about { background: #0e0e0e; }
+#services { background: #121215; }
+#pricing { background: #161619; }
+#gallery { background: #1a1a1e; }
+#workshop { background: #1e1e23; }
+#info { background: #1e1e23; }
+#reviews { background: #1e1e23; }
+#contact { background: #222228; }

@@ -3,10 +3,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const highlights = [
-  { value: "500+", label: "Happy Clients" },
-  { value: "100%", label: "Steril" },
-  { value: "5★", label: "Google" },
+const stats = [
+  { value: "6+", label: "Jahre Erfahrung" },
+  { value: "OÖ", label: "Linz · Wels · Region" },
 ];
 
 export default function About() {
@@ -22,16 +21,19 @@ export default function About() {
             initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative"
+            className="relative max-w-sm mx-auto lg:mx-0"
           >
-            <div className="rounded-2xl overflow-hidden border border-white/5">
+            <div className="overflow-hidden border border-white/5">
               <img
-                src="/images/eve-about.jpg"
+                src="/images/eve-about.png"
                 alt="Eve Paule – SkinLove"
                 className="w-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    "https://myhellocash.com/img/salon/website/522/ede7b670-4110-44fc-a579-bb75b52bd73c.jpg";
+                }}
               />
             </div>
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[var(--pink)]/20 rounded-2xl" />
           </motion.div>
 
           {/* Text */}
@@ -44,50 +46,43 @@ export default function About() {
               Über mich
             </p>
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-              Inhaberin & Künstlerin
+              Eve Paule
             </h2>
             <div className="w-12 h-0.5 bg-[var(--pink)] mb-6" />
 
             <div className="space-y-4 text-[var(--text-dim)] text-sm leading-relaxed">
               <p>
-                Meine Leidenschaft für Kunst und Ästhetik begleitet mich seit meiner Kindheit.
-                Vom ersten Strich auf Papier über das Experimentieren mit verschiedensten
-                Kunstformen hat sich mein Weg stetig weiterentwickelt.
+                Ich bin Eve, Gründerin von SkinLove. Vom Einzelhandel und der Krankenpflege
+                zur Körperkunst — heute lebe ich meinen Traum als selbstständige Tätowiererin,
+                Piercerin und Permanent Make-up-Artistin.
               </p>
               <p>
-                Vom ersten Strich auf Papier über das Experimentieren mit verschiedensten
-                Kunstformen hat sich mein Weg stetig weiterentwickelt – bis hin zur Arbeit
-                auf der schönsten Leinwand der Welt: der Haut.
-              </p>
-              <p>
-                Bei SkinLove steht deine Vision im Mittelpunkt. Ich nehme mir Zeit für eine
-                ausführliche Beratung, damit wir gemeinsam dein perfektes Tattoo, Piercing
-                oder Permanent Make-up umsetzen.
+                Ob Fine-Line, Mandala, Black &amp; Grey oder Watercolor — jedes Tattoo ist für mich
+                eine Herzensangelegenheit. Ich nehme mir Zeit für deine Geschichte und gestalte
+                ein Motiv, das zu dir passt.
               </p>
             </div>
 
-            {/* Highlights */}
-            <div className="grid grid-cols-3 gap-4 mt-8">
-              {highlights.map((h, i) => (
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              {stats.map((s, i) => (
                 <motion.div
-                  key={h.label}
+                  key={s.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-                  className="rounded-xl border border-white/5 p-4 text-center"
+                  className="border border-white/5 p-5 text-center"
                   style={{ background: "var(--bg-card)" }}
                 >
-                  <p className="text-2xl font-bold text-[var(--pink)]">{h.value}</p>
-                  <p className="text-xs text-[var(--text-dim)] mt-1">{h.label}</p>
+                  <p
+                    className="font-[family-name:var(--font-cormorant)] text-3xl font-semibold"
+                    style={{ color: "var(--pink)" }}
+                  >
+                    {s.value}
+                  </p>
+                  <p className="text-xs text-[var(--text-dim)] mt-1 tracking-wide">{s.label}</p>
                 </motion.div>
               ))}
-            </div>
-
-            <div className="mt-8">
-              <p className="text-white font-medium">Eve Paule</p>
-              <p className="text-sm text-[var(--text-dim)]">
-                Inhaberin · SkinLove Tattoo & Piercing
-              </p>
             </div>
           </motion.div>
         </div>

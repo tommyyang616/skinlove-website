@@ -1,141 +1,212 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "#about", label: "Über mich" },
   { href: "#services", label: "Leistungen" },
-  { href: "#gallery", label: "Galerie" },
   { href: "#pricing", label: "Preise" },
-  { href: "#reviews", label: "Bewertungen" },
-  { href: "#info", label: "Infos" },
+  { href: "#gallery", label: "Galerie" },
+  { href: "#workshop", label: "Workshop" },
+  { href: "#info", label: "Wichtige Infos" },
   { href: "#contact", label: "Kontakt" },
 ];
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [mobileOpen]);
-
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled
-            ? "py-3 bg-[rgba(10,10,10,0.95)] backdrop-blur-xl border-b border-[rgba(187,53,153,0.08)]"
-            : "py-5 bg-transparent"
-        }`}
+      <style>{`
+        .logo-skin {
+          opacity: 0;
+          animation: logoIn .6s ease forwards, logoLoop 3s ease 1.2s infinite;
+        }
+        .logo-heart {
+          color: #bb3599 !important;
+          font-size: 20px;
+          margin: 0 3px;
+          display: inline-block;
+          opacity: 0;
+          animation: logoIn .5s ease .4s forwards, heartBeat 1s ease 1.2s infinite;
+        }
+        .logo-love {
+          opacity: 0;
+          animation: logoIn .6s ease .7s forwards, logoLoop 3s ease 1.5s infinite;
+        }
+        .logo-sub {
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--text-dim);
+          opacity: 0;
+          animation: logoIn .5s ease 1.1s forwards;
+          margin-left: 12px;
+        }
+        @keyframes logoIn { to { opacity: 1; } }
+        @keyframes logoLoop {
+          0%,100% { opacity:1; transform:translateY(0); }
+          50% { opacity:.6; transform:translateY(-2px); }
+        }
+        @keyframes heartBeat {
+          0%,100% { transform:scale(1); }
+          50% { transform:scale(1.3); }
+        }
+        nav a {
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--text-dim);
+          transition: color .3s;
+          position: relative;
+        }
+        nav a:hover { color: var(--pink); }
+        nav a::after {
+          content: '';
+          position: absolute;
+          bottom: -4px; left: 0;
+          width: 0; height: 1px;
+          background: var(--pink);
+          transition: width .3s;
+        }
+        nav a:hover::after { width: 100%; }
+        .header-cta {
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          padding: 4px 20px;
+          border: 1px solid var(--pink);
+          color: #fff;
+          background: var(--pink);
+          transition: all .3s;
+        }
+        .header-cta:hover { background: var(--pink-dim); }
+        .menu-toggle span {
+          width: 24px;
+          height: 1.5px;
+          background: var(--text);
+          transition: all .3s;
+          display: block;
+        }
+      `}</style>
+
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 100,
+          padding: scrolled ? "12px 0" : "20px 0",
+          transition: "all .4s",
+          background: scrolled ? "rgba(10,10,10,.95)" : "rgba(10,10,10,.85)",
+          backdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(187,53,153,.08)",
+        }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 24px",
+          }}
+        >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3">
-            <img
-              src="/images/logo.jpg"
-              alt="SkinLove Logo"
-              className="h-10 object-contain brightness-110"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://myhellocash.com/img/salon/website/522/497a0aaf-8a50-4256-819a-e2ab9130dcc9.jpg";
+          <a href="#hero" style={{ display: "flex", alignItems: "center", gap: 0, textDecoration: "none" }}>
+            <span
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: "22px",
+                fontWeight: 600,
+                color: "#fff",
+                letterSpacing: "-0.5px",
+                display: "flex",
+                alignItems: "center",
               }}
-            />
+            >
+              <span className="logo-skin">Skin</span>
+              <span className="logo-heart">♥</span>
+              <span className="logo-love">Love</span>
+            </span>
+            <span className="logo-sub">Tattoo &amp; Piercing</span>
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav style={{ display: "flex", gap: "32px", alignItems: "center" }} className="hidden lg:flex">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+            <a href="#contact" className="header-cta">
+              Termin
+            </a>
+          </nav>
+
+          {/* Mobile toggle */}
+          <button
+            className="lg:hidden"
+            style={{ display: "flex", flexDirection: "column", gap: "5px", cursor: "pointer", padding: "8px", background: "none", border: "none" }}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Menü"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div
+            style={{
+              background: "rgba(10,10,10,.98)",
+              borderTop: "1px solid rgba(187,53,153,.1)",
+              padding: "24px",
+            }}
+            className="lg:hidden"
+          >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-xs tracking-[2px] uppercase text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors duration-300"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "12px 0",
+                  fontSize: "13px",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  color: "var(--text-dim)",
+                  borderBottom: "1px solid rgba(255,255,255,.04)",
+                }}
               >
                 {link.label}
               </a>
             ))}
-          </nav>
-
-          {/* CTA */}
-          <a
-            href="https://wa.me/436607835346"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--pink)] text-white text-xs tracking-[2px] uppercase rounded-full hover:bg-[var(--pink-dim)] transition-all duration-300"
-          >
-            Termin buchen
-          </a>
-
-          {/* Mobile Burger */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center"
-            aria-label="Menü öffnen"
-          >
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
-          </button>
-        </div>
-      </motion.header>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-[rgba(10,10,10,0.98)] backdrop-blur-xl flex flex-col items-center justify-center gap-8"
-          >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className="text-2xl font-[family-name:var(--font-cormorant)] text-white hover:text-[var(--pink)] transition-colors"
-              >
-                {link.label}
-              </motion.a>
-            ))}
             <a
-              href="https://wa.me/436607835346"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileOpen(false)}
-              className="mt-4 px-8 py-3 bg-[var(--pink)] text-white text-sm tracking-[2px] uppercase rounded-full"
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="header-cta"
+              style={{ display: "inline-block", marginTop: "16px" }}
             >
-              Termin buchen
+              Termin vereinbaren
             </a>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </header>
     </>
   );
 }

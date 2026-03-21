@@ -4,8 +4,9 @@ import About from "@/components/About";
 import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
 import Gallery from "@/components/Gallery";
-import Reviews from "@/components/Reviews";
+import Workshop from "@/components/Workshop";
 import Info from "@/components/Info";
+import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -19,8 +20,9 @@ export default function Home() {
         <Services />
         <Pricing />
         <Gallery />
-        <Reviews />
+        <Workshop />
         <Info />
+        <Reviews />
         <Contact />
       </main>
       <Footer />

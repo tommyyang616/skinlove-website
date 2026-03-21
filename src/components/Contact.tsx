@@ -3,219 +3,228 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
+const contactInfo = [
+  {
+    icon: "📍",
+    label: "Adresse",
+    lines: ["Linzer Straße 52", "4614 Marchtrenk", "Oberösterreich"],
+    link: "https://maps.google.com/?q=Linzer+Straße+52,+4614+Marchtrenk",
+    linkLabel: "Auf Google Maps",
+  },
+  {
+    icon: "📞",
+    label: "Telefon / WhatsApp",
+    lines: ["+43 660 792 3606"],
+    link: "tel:+436607923606",
+    linkLabel: "Jetzt anrufen",
+  },
+  {
+    icon: "📸",
+    label: "Instagram",
+    lines: ["@skinlove.tattoo"],
+    link: "https://instagram.com/skinlove.tattoo",
+    linkLabel: "Instagram öffnen",
+  },
+  {
+    icon: "🕐",
+    label: "Öffnungszeiten",
+    lines: ["Mo–Fr: 9:00–18:00", "Sa: 9:00–14:00", "So: Geschlossen"],
+    link: null,
+    linkLabel: null,
+  },
+];
+
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", service: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSending(true);
+    setStatus("loading");
     try {
-      const res = await fetch("/api/contact", {
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) {
-        setSent(true);
-        setForm({ name: "", email: "", service: "", message: "" });
-      }
+      setStatus("sent");
+      setForm({ name: "", phone: "", service: "", message: "" });
     } catch {
-      // fail silently
+      setStatus("error");
     }
-    setSending(false);
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32" style={{ background: "#222228" }}>
-      <div ref={ref} className="max-w-6xl mx-auto px-6">
+    <section id="contact" style={{ padding: "100px 0", background: "#222228" }}>
+      <div ref={ref} style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          style={{ marginBottom: "60px" }}
         >
-          <p className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-4">
+          <p style={{ fontSize: "11px", letterSpacing: "5px", textTransform: "uppercase", color: "var(--pink)", marginBottom: "16px", fontFamily: "'Outfit', sans-serif" }}>
             Kontakt
           </p>
-          <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-            Jetzt Termin vereinbaren
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 600, color: "#fff", marginBottom: "16px" }}>
+            Lass uns reden
           </h2>
-          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
+          <p style={{ fontSize: "15px", color: "var(--text-dim)", maxWidth: "540px", lineHeight: 1.7 }}>
+            Kein Termin ohne Rückruf — ich melde mich bei dir!
+          </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Left: Info + Map */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px,1fr))", gap: "40px", alignItems: "start" }}>
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="space-y-8"
+            transition={{ delay: 0.2, duration: 0.7 }}
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            {/* Contact Cards */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <a
-                href="tel:+436607835346"
-                className="rounded-xl border border-white/5 p-5 hover:border-[var(--pink)]/30 transition-colors block"
-                style={{ background: "var(--bg-card)" }}
+            {contactInfo.map((info, i) => (
+              <motion.div
+                key={info.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                style={{
+                  background: "var(--bg-card)",
+                  border: "1px solid rgba(255,255,255,.04)",
+                  padding: "24px",
+                  display: "flex",
+                  gap: "16px",
+                  alignItems: "flex-start",
+                }}
               >
-                <div className="text-2xl mb-2">📞</div>
-                <p className="text-sm text-[var(--text-dim)]">Telefon</p>
-                <p className="text-white font-medium">+43 660 783 5346</p>
-              </a>
-              <a
-                href="mailto:eve@skinlove-tattoo-piercing.at"
-                className="rounded-xl border border-white/5 p-5 hover:border-[var(--pink)]/30 transition-colors block"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <div className="text-2xl mb-2">✉️</div>
-                <p className="text-sm text-[var(--text-dim)]">E-Mail</p>
-                <p className="text-white font-medium text-sm">eve@skinlove-tattoo-piercing.at</p>
-              </a>
-              <div
-                className="rounded-xl border border-white/5 p-5"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <div className="text-2xl mb-2">📍</div>
-                <p className="text-sm text-[var(--text-dim)]">Adresse</p>
-                <p className="text-white font-medium text-sm">
-                  Linzer Straße 35, 1. OG
-                  <br />
-                  4614 Marchtrenk, Österreich
-                </p>
-              </div>
-              <div
-                className="rounded-xl border border-white/5 p-5"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <div className="text-2xl mb-2">🕐</div>
-                <p className="text-sm text-[var(--text-dim)]">Öffnungszeiten</p>
-                <div className="text-white text-sm space-y-0.5">
-                  <p>Mo–Fr: 09:00–18:00</p>
-                  <p>Sa: 10:00–17:00</p>
-                  <p className="text-[var(--text-dim)]">So: Geschlossen</p>
+                <span style={{ fontSize: "20px", flexShrink: 0, marginTop: "2px" }}>{info.icon}</span>
+                <div>
+                  <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--pink)", marginBottom: "8px", fontFamily: "'Outfit', sans-serif" }}>
+                    {info.label}
+                  </p>
+                  {info.lines.map((line, j) => (
+                    <p key={j} style={{ fontSize: "14px", color: "var(--text)", marginBottom: "2px" }}>{line}</p>
+                  ))}
+                  {info.link && (
+                    <a
+                      href={info.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: "12px", color: "var(--pink)", marginTop: "8px", display: "inline-block", letterSpacing: "1px", textTransform: "uppercase" }}
+                    >
+                      {info.linkLabel} →
+                    </a>
+                  )}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            ))}
 
-            <div className="rounded-xl border border-white/5 p-4 text-center text-sm text-yellow-400/90" style={{ background: "var(--bg-card)" }}>
-              ⚠️ Termine nur nach vorheriger Vereinbarung!
-            </div>
-
-            {/* Map */}
-            <div className="rounded-xl overflow-hidden border border-white/5">
+            {/* Google Maps Embed */}
+            <div style={{ overflow: "hidden", border: "1px solid rgba(255,255,255,.04)" }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2670.5!2d14.1168099!3d48.1916365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477399a62e58e06f%3A0x76a72be82a7a02ff!2sLinzer%20Stra%C3%9Fe%2035%2C%204614%20Marchtrenk%2C%20%C3%96sterreich!5e0!3m2!1sde!2sat!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2658.8!2d14.1145!3d48.1962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47740c5b4c3f8c91%3A0x4e5e8b8b4c3f8c91!2sLinzer+Str.+52%2C+4614+Marchtrenk!5e0!3m2!1sde!2sat!4v1"
                 width="100%"
-                height="250"
-                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+                height="220"
+                style={{ border: 0, display: "block", filter: "grayscale(0.4) invert(0.05)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                title="SkinLove Standort"
               />
             </div>
-            <a
-              href="https://www.google.com/maps/dir//Linzer+Stra%C3%9Fe+35,+4614+Marchtrenk,+%C3%96sterreich"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-[var(--pink)] hover:underline"
-            >
-              🗺️ Route planen
-            </a>
           </motion.div>
 
-          {/* Right: Contact Form */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            style={{ background: "var(--bg-card)", border: "1px solid rgba(255,255,255,.04)", padding: "40px" }}
           >
-            {sent ? (
-              <div
-                className="rounded-2xl border border-white/5 p-10 text-center"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <div className="text-5xl mb-4">💌</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Nachricht gesendet!</h3>
-                <p className="text-sm text-[var(--text-dim)]">
-                  Ich melde mich so schnell wie möglich bei dir.
-                </p>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.8rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
+              Rückruf-Anfrage
+            </h3>
+            <p style={{ fontSize: "13px", color: "var(--text-dim)", marginBottom: "32px", lineHeight: 1.6 }}>
+              Füll das Formular aus — ich ruf dich zurück. Kein Online-Buchen, dafür persönliche Beratung!
+            </p>
+
+            {status === "sent" ? (
+              <div style={{ textAlign: "center", padding: "40px 0" }}>
+                <div style={{ fontSize: "48px", color: "var(--pink)", marginBottom: "16px" }}>✓</div>
+                <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>
+                  Anfrage erhalten!
+                </h4>
+                <p style={{ fontSize: "14px", color: "var(--text-dim)" }}>Eve meldet sich bald bei dir. 💕</p>
               </div>
             ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="rounded-2xl border border-white/5 p-8 space-y-5"
-                style={{ background: "var(--bg-card)" }}
-              >
-                <h3 className="text-lg font-semibold text-white mb-2">Schreib mir</h3>
-                <div>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {[
+                  { name: "name", placeholder: "Dein Name *", type: "text", required: true },
+                  { name: "phone", placeholder: "Telefon / WhatsApp *", type: "tel", required: true },
+                  { name: "service", placeholder: "Gewünschte Leistung (Tattoo, Piercing…)", type: "text", required: false },
+                ].map((field) => (
                   <input
-                    type="text"
-                    placeholder="Dein Name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50 transition-colors"
+                    key={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                    value={form[field.name as keyof typeof form]}
+                    onChange={(e) => setForm({ ...form, [field.name]: e.target.value })}
+                    style={{
+                      background: "rgba(255,255,255,.04)",
+                      border: "1px solid rgba(255,255,255,.08)",
+                      padding: "14px 18px",
+                      fontSize: "14px",
+                      color: "#fff",
+                      outline: "none",
+                      width: "100%",
+                    }}
                   />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Deine E-Mail"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    required
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50 transition-colors"
-                  />
-                </div>
-                <div>
-                  <select
-                    value={form.service}
-                    onChange={(e) => setForm({ ...form, service: e.target.value })}
-                    required
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[var(--pink)]/50 transition-colors appearance-none"
-                  >
-                    <option value="" className="bg-[#1a1a1a]">
-                      Service wählen...
-                    </option>
-                    <option value="tattoo" className="bg-[#1a1a1a]">Tattoo</option>
-                    <option value="piercing" className="bg-[#1a1a1a]">Piercing</option>
-                    <option value="pmu" className="bg-[#1a1a1a]">Permanent Make-up</option>
-                    <option value="lash" className="bg-[#1a1a1a]">Lash & Brow Lifting</option>
-                    <option value="kinder" className="bg-[#1a1a1a]">Kinderohrringe</option>
-                    <option value="sonstiges" className="bg-[#1a1a1a]">Sonstiges</option>
-                  </select>
-                </div>
-                <div>
-                  <textarea
-                    placeholder="Deine Nachricht..."
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    required
-                    rows={4}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[var(--pink)]/50 transition-colors resize-none"
-                  />
-                </div>
+                ))}
+                <textarea
+                  placeholder="Deine Nachricht oder Wunschmotiv"
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  style={{
+                    background: "rgba(255,255,255,.04)",
+                    border: "1px solid rgba(255,255,255,.08)",
+                    padding: "14px 18px",
+                    fontSize: "14px",
+                    color: "#fff",
+                    outline: "none",
+                    resize: "vertical",
+                    fontFamily: "'Inter', sans-serif",
+                    lineHeight: 1.6,
+                  }}
+                />
                 <button
                   type="submit"
-                  disabled={sending}
-                  className="w-full bg-[var(--pink)] text-white py-3 rounded-lg font-medium hover:brightness-110 transition-all disabled:opacity-50"
+                  disabled={status === "loading"}
+                  style={{
+                    background: "var(--pink)",
+                    color: "#fff",
+                    border: "none",
+                    padding: "18px",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    transition: "all .3s",
+                    fontFamily: "'Outfit', sans-serif",
+                  }}
                 >
-                  {sending ? "Wird gesendet..." : "Nachricht senden"}
+                  {status === "loading" ? "Wird gesendet..." : "Rückruf anfordern"}
                 </button>
-                <div className="text-center">
-                  <a
-                    href="https://wa.me/436607835346"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-green-400 hover:text-green-300 transition-colors"
-                  >
-                    💬 Oder direkt per WhatsApp
-                  </a>
-                </div>
+                {status === "error" && (
+                  <p style={{ fontSize: "13px", color: "#ff6b6b", textAlign: "center" }}>
+                    Fehler beim Senden. Bitte direkt anrufen: +43 660 792 3606
+                  </p>
+                )}
               </form>
             )}
           </motion.div>

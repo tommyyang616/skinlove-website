@@ -1,135 +1,216 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const services = [
   {
-    emoji: "🎨",
-    title: "Tattoo",
-    desc: "Von filigranen Fine-Lines bis hin zu großflächigen Pieces – jedes Tattoo wird individuell für dich designt.",
-    points: [
-      "Individuelle Beratung & Design",
-      "Fine Line & Micro Realism",
-      "Cover-Ups & Rework",
-      "Farbige & Blackwork Tattoos",
+    title: "Tattoos",
+    short: "Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Finger-Tattoos, Cover-Ups, Auffrischung & Narbenüberdeckung.",
+    details: [
+      "Farbtattoos & Schwarz-Weiß-Tattoos — detailreiche Farbarbeiten oder klassische Black & Grey",
+      "Mini-Tattoos — kleine Kunstwerke mit großer Bedeutung, perfekt für dezente Designs",
+      "Finger-Tattoos — wenige Studios bieten es an, ich schon!",
+      "Cover-Ups für kleinere Motive — kostenloses Beratungsgespräch",
+      "Tattoo-Auffrischung — Farben auffrischen oder Linien nachziehen, egal von welchem Studio",
+      "Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren",
+      "Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen",
+      "Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust",
     ],
   },
   {
-    emoji: "💎",
-    title: "Piercing",
-    desc: "Professionelles Piercing mit sterilen Einwegnadeln und hochwertigem Titan G23 Erstschmuck.",
-    points: [
-      "Titan G23 Erstschmuck",
-      "Sterile Einwegnadeln",
-      "Umfassende Nachsorge",
-      "Große Schmuckauswahl",
+    title: "Piercings",
+    short: "Professionell, hygienisch, mit Feingefühl. Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze & Intimbereich.",
+    details: [
+      "Nase: Nostril, Septum, Bridge, Nassallang",
+      "Ohr: Lobe, Helix, Tragus, Conch/Rook, Industrial, Daith/Migräne",
+      "Surface: Augenbraue, Anti Eyebrow, Oberflächen",
+      "Bauchnabel: Standard, Doppelt, 4-fach",
+      "Oral: Zunge, Doppelt/Snake, Lippenbändchen",
+      "Lippe: Madonna/Labret/Medusa, Bites, Ashley",
+      "Brustwarze: Einzel oder Beide",
+      "Intimbereich Damen & Herren — komplettes Angebot",
+      "Alles inkl. Schmuck & Kontrolltermin",
     ],
   },
   {
-    emoji: "✨",
     title: "Permanent Make-up",
-    desc: "Permanent Make-up für einen natürlich perfekten Look – sanft, präzise und langanhaltend.",
-    points: ["Powder Brows", "Lip Blush", "Eyeliner", "Auffrischung"],
-  },
-  {
-    emoji: "🎓",
-    title: "Workshops",
-    desc: "Lerne die Kunst des Tätowierens und Piercens in professionellen Workshops mit Zertifikat.",
-    points: [
-      "2-Tages-Intensivkurs",
-      "Hygiene & Sicherheit",
-      "Praxis an Kunsthaut",
-      "Zertifikat",
+    short: "Natürliche Schönheit unterstreichen: Fein gezeichnete Augenbrauen und dezente Lippen, die lange halten.",
+    details: [
+      "Augenbrauen — natürlich gezeichnet, typgerecht angepasst",
+      "Lippen — dezente Schattierung für mehr Ausdruck",
+      "Langanhaltend — erleichtert den Alltag, kein tägliches Nachziehen",
+      "Präzise Arbeit mit modernstem Equipment",
+      "Individuelle Beratung vor jeder Behandlung",
     ],
   },
   {
-    emoji: "🌟",
-    title: "Guest Artists",
-    desc: "Regelmäßig begrüßen wir talentierte Gastkünstler mit besonderen Styles und Techniken.",
-    points: [
-      "Wechselnde Styles",
-      "Spezielle Techniken",
-      "Limitierte Termine",
-      "Folge uns für Ankündigungen",
+    title: "Lash & Brow Lifting",
+    short: "Naturwimpern sanft nach oben geformt — länger & voller. Brow Lifting für ausdrucksstarke Augenbrauen.",
+    details: [
+      "Lash Lifting inkl. Färben & Keratin",
+      "Brow Lifting inkl. Färben & Keratin",
+      "Kombi Lash & Brow inkl. Zupfen",
+      "Empfohlen alle 6–9 Wochen für dauerhaften WOW-Effekt",
+    ],
+  },
+  {
+    title: "Kinderohrringe",
+    short: "Studex-System — sanft, schmerzarm & sicher. Ab 6 Monaten.",
+    details: [
+      "Studex-System — kein Schießen, speziell für empfindliche Kinderhaut",
+      "Ab 6 Monaten möglich",
+      "Ab 8 Jahren auch andere Ohrringe mit Nadel möglich",
+      "Verschiedene Motiv-Designs verfügbar",
+      "Entspannte Atmosphäre für Kinder und Eltern",
+    ],
+  },
+  {
+    title: "Spezialleistungen",
+    short: "Wildfleischbehandlung, Dermal Anker Entfernung, kostenlose Erstberatung & mehr.",
+    details: [
+      "Wildfleischbehandlung",
+      "Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko",
+      "Nachstechen gratis innerhalb von 14 Tagen",
+      "Kostenlose Beratung & Erstgespräche jederzeit",
+      "Piercing-Korrekturen bei Fehlstichen aus anderen Studios",
+      "Prontolind Spray & Gel für optimale Pflege",
+      "Stecker kürzen, Fremdschmuck wechseln, Dehnen",
     ],
   },
 ];
 
+function ServiceCard({ svc, index, inView }: { svc: typeof services[0]; index: number; inView: boolean }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.1, duration: 0.6 }}
+      onClick={() => setOpen(!open)}
+      style={{
+        background: "var(--bg-card)",
+        border: `1px solid ${open ? "rgba(187,53,153,.3)" : "rgba(255,255,255,.04)"}`,
+        padding: "32px",
+        cursor: "pointer",
+        transition: "all .3s",
+      }}
+      className="hover:border-[rgba(187,53,153,.2)] hover:-translate-y-0.5"
+    >
+      <h3
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "1.5rem",
+          fontWeight: 600,
+          color: "#fff",
+          marginBottom: "12px",
+        }}
+      >
+        {svc.title}
+      </h3>
+      <p style={{ fontSize: "14px", color: "var(--text-dim)", lineHeight: 1.7, marginBottom: "16px" }}>
+        {svc.short}
+      </p>
+      <span
+        style={{
+          fontSize: "12px",
+          letterSpacing: "1.5px",
+          textTransform: "uppercase",
+          color: "var(--pink)",
+          fontWeight: 500,
+        }}
+      >
+        {open ? "Weniger anzeigen ↑" : "Mehr erfahren ↓"}
+      </span>
+
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          style={{ marginTop: "20px", overflow: "hidden" }}
+        >
+          <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {svc.details.map((item, i) => (
+              <li
+                key={i}
+                style={{
+                  fontSize: "13px",
+                  color: "var(--text-dim)",
+                  paddingLeft: "16px",
+                  position: "relative",
+                  lineHeight: 1.6,
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: "8px",
+                    width: "4px",
+                    height: "4px",
+                    background: "var(--pink)",
+                    borderRadius: "50%",
+                  }}
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
 export default function Services() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <section id="services" className="py-24 md:py-32" style={{ background: "#121215" }}>
-      <div ref={ref} className="max-w-6xl mx-auto px-6">
+    <section id="services" style={{ padding: "100px 0", background: "#121215" }}>
+      <div ref={ref} style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          style={{ marginBottom: "60px" }}
         >
-          <p className="text-xs tracking-[6px] uppercase text-[var(--pink)] mb-4">
+          <p
+            style={{
+              fontSize: "11px",
+              letterSpacing: "5px",
+              textTransform: "uppercase",
+              color: "var(--pink)",
+              marginBottom: "16px",
+              fontFamily: "'Outfit', sans-serif",
+            }}
+          >
             Leistungen
           </p>
-          <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-6">
-            Mein Angebot
+          <h2
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(2rem,5vw,3.5rem)",
+              fontWeight: 600,
+              color: "#fff",
+            }}
+          >
+            Was ich für dich mache
           </h2>
-          <div className="w-12 h-0.5 bg-[var(--pink)] mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              onClick={() => setOpenIdx(openIdx === i ? null : i)}
-              className="rounded-2xl border border-white/5 p-6 cursor-pointer transition-all duration-300 hover:border-[var(--pink)]/30 group"
-              style={{ background: "var(--bg-card)" }}
-            >
-              <div className="text-3xl mb-4">{s.emoji}</div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-[var(--pink)] transition-colors">
-                {s.title}
-              </h3>
-              <p className="text-sm text-[var(--text-dim)] leading-relaxed mb-4">
-                {s.desc}
-              </p>
-
-              <AnimatePresence>
-                {openIdx === i && (
-                  <motion.ul
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-2 overflow-hidden"
-                  >
-                    {s.points.map((p) => (
-                      <li
-                        key={p}
-                        className="flex items-center gap-2 text-sm text-[var(--text-dim)]"
-                      >
-                        <span className="text-[var(--pink)] text-xs">●</span>
-                        {p}
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-
-              <div className="mt-4 flex items-center gap-1 text-xs text-[var(--pink)]">
-                <span>{openIdx === i ? "Weniger" : "Mehr erfahren"}</span>
-                <span
-                  className="transition-transform duration-300"
-                  style={{ transform: openIdx === i ? "rotate(180deg)" : "none" }}
-                >
-                  ▼
-                </span>
-              </div>
-            </motion.div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+            gap: "20px",
+          }}
+        >
+          {services.map((svc, i) => (
+            <ServiceCard key={svc.title} svc={svc} index={i} inView={inView} />
           ))}
         </div>
       </div>
