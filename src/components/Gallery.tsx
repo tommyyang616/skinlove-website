@@ -27,18 +27,18 @@ const studioImages = [
   { src: "/images/gallery/gallery-21.jpg", alt: "Arbeit 21" },
   { src: "/images/gallery/gallery-22.jpg", alt: "Arbeit 22" },
   { src: "/images/gallery/gallery-23.jpg", alt: "Arbeit 23" },
-  { src: "/gallery/arbeit1.png", alt: "Tattoo Arbeit 1" },
-  { src: "/gallery/arbeit2.jpeg", alt: "Tattoo Arbeit 2" },
-  { src: "/gallery/arbeit3.jpeg", alt: "Tattoo Arbeit 3" },
-  { src: "/gallery/arbeit4.png", alt: "Tattoo Arbeit 4" },
-  { src: "/gallery/arbeit6.png", alt: "Tattoo Arbeit 5" },
+  { src: "/gallery/arbeit1.jpg", alt: "Tattoo Arbeit 1" },
+  { src: "/gallery/arbeit2.jpg", alt: "Tattoo Arbeit 2" },
+  { src: "/gallery/arbeit3.jpg", alt: "Tattoo Arbeit 3" },
+  { src: "/gallery/arbeit4.jpg", alt: "Tattoo Arbeit 4" },
+  { src: "/gallery/arbeit6.jpg", alt: "Tattoo Arbeit 5" },
 ];
 
 const guestImages = [
-  { src: "/gallery/guests/guest1-work1.png", alt: "Nikola – Arbeit 1" },
-  { src: "/gallery/guests/guest1-work2.png", alt: "Nikola – Arbeit 2" },
-  { src: "/gallery/guests/guest1-work3.png", alt: "Nikola – Arbeit 3" },
-  { src: "/gallery/guests/guest1-work4.png", alt: "Nikola – Arbeit 4" },
+  { src: "/gallery/guests/guest1-work1.jpg", alt: "Nikola – Arbeit 1" },
+  { src: "/gallery/guests/guest1-work2.jpg", alt: "Nikola – Arbeit 2" },
+  { src: "/gallery/guests/guest1-work3.jpg", alt: "Nikola – Arbeit 3" },
+  { src: "/gallery/guests/guest1-work4.jpg", alt: "Nikola – Arbeit 4" },
 ];
 
 export default function Gallery() {
@@ -119,7 +119,7 @@ export default function Gallery() {
             className="flex items-center gap-4 justify-center mb-8"
           >
             <img
-              src="/gallery/guests/guest1-profile.jpeg"
+              src="/gallery/guests/guest1-profile.jpg"
               alt="Nikola"
               className="w-14 h-14 rounded-full object-cover border-2 border-[var(--pink)]"
             />

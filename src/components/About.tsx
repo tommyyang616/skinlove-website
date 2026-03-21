@@ -26,7 +26,7 @@ export default function About() {
           >
             <div className="rounded-2xl overflow-hidden border border-white/5">
               <img
-                src="/images/eve-about.png"
+                src="/images/eve-about.jpg"
                 alt="Eve Paule – SkinLove"
                 className="w-full object-cover"
               />
