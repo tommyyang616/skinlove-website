@@ -27,8 +27,9 @@ export default function AdminPage() {
 
   useEffect(() => { if (sessionStorage.getItem("sl_admin") === "1") setLoggedIn(true); }, []);
 
-  const login = () => {
-    if (pw === "skinlove2026!") { setLoggedIn(true); sessionStorage.setItem("sl_admin", "1"); }
+  const login = async () => {
+    const res = await fetch("/api/admin-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: pw }) });
+    if (res.ok) { setLoggedIn(true); sessionStorage.setItem("sl_admin", "1"); }
     else setErr("Falsches Passwort");
   };
   const logout = () => { sessionStorage.removeItem("sl_admin"); setLoggedIn(false); };

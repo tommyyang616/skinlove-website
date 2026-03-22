@@ -1,9 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
 
-const SB_URL = "https://ebcjdkjrzwjxxwgtzunh.supabase.co";
-const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViY2pka2pyendqeHh3Z3R6dW5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4NDY4OTksImV4cCI6MjA4ODQyMjg5OX0.eOeWfKVQ8ZSVvsc0zcZtFQAFtx05Oe6AAukgqRS0zeY";
-
 export default function Contact({ bookingOpen, onOpen, onClose }: { bookingOpen: boolean; onOpen: () => void; onClose: () => void }) {
   const [success, setSuccess] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -21,23 +18,16 @@ export default function Contact({ bookingOpen, onOpen, onClose }: { bookingOpen:
     if (!email || !email.includes("@")) { if (emailRef.current) emailRef.current.style.borderColor = "#e44"; return; }
     if (!name) { if (nameRef.current) nameRef.current.style.borderColor = "#e44"; return; }
 
-    // Save to Supabase
-    fetch(SB_URL + "/rest/v1/bookings", {
+    // Save via API (rate limited + telegram notification)
+    fetch("/api/booking", {
       method: "POST",
-      headers: { "Content-Type": "application/json", apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
-      body: JSON.stringify({ name, email, phone: null, service: service || null, message: msg || null, status: "pending" }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, service: service || null, message: msg || null }),
     }).catch(() => {});
 
     // WhatsApp
     const waMsg = `📅 *Neue Terminanfrage*%0A%0A*Name:* ${name}%0A*E-Mail:* ${email}%0A*Service:* ${service || "Nicht angegeben"}%0A*Nachricht:* ${msg || "—"}%0A%0A_Gesendet über skinlove-website_`;
     window.open("https://wa.me/436607835346?text=" + waMsg, "_blank");
-
-    // Email via Edge Function
-    fetch(SB_URL + "/functions/v1/send-booking-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + SB_KEY },
-      body: JSON.stringify({ name, email, service, message: msg }),
-    }).catch(() => {});
 
     setSuccess(true);
   };

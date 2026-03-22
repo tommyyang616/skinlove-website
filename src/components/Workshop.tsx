@@ -72,6 +72,13 @@ export default function Workshop() {
       body: JSON.stringify({ course_id: selected.id, name, email: contact, phone: contact, status: "pending", paid: false }),
     }).catch(() => {});
 
+    // Also via API for rate limiting + telegram
+    fetch("/api/booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email: contact, courseId: selected.id }),
+    }).catch(() => {});
+
     setSuccess(true);
   };
 
