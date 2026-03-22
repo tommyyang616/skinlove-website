@@ -2,76 +2,115 @@
 import { useState } from "react";
 
 const services = [
-  {
-    title: "Tattoo",
-    icon: "✦",
-    desc: "Von filigranen Fine-Line-Designs bis zu detailreichen Motiven – ich setze deine Ideen mit ruhiger Hand und Liebe zum Detail um. Jedes Tattoo ist ein Einzelstück.",
-    tags: ["Fine Line", "Blackwork", "Ornamental", "Lettering", "Custom"],
-  },
-  {
-    title: "Piercing",
-    icon: "◈",
-    desc: "Professionelles Piercing mit Titan-Schmuck der höchsten Güte. Von klassischen Ohren bis zu exklusiven Körper-Piercings – alles unter sterilen Bedingungen.",
-    tags: ["Ohr", "Nase", "Bauchnabel", "Lippe", "Intim", "Zunge"],
-  },
-  {
-    title: "Lash Lifting",
-    icon: "✧",
-    desc: "Natürliche Wimpernpflege mit Keratin und Lifting-Effekt. Deine Wimpern werden gebogen, gefärbt und mit Keratin behandelt – für bis zu 8 Wochen strahlende Augen.",
-    tags: ["Lash Lifting", "Brow Lifting", "Keratin", "Färben"],
-  },
-  {
-    title: "Permanent Make-up",
-    icon: "◇",
-    desc: "Dezentes, natürlich aussehendes Permanent Make-up für Augenbrauen, Lippen und Eyeliner. Für einen frischen Look rund um die Uhr – ohne tägliches Schminken.",
-    tags: ["Augenbrauen", "Lippen", "Eyeliner", "Microblading"],
-  },
-  {
-    title: "Kinderpiercing",
-    icon: "♡",
-    desc: "Einfühlsames Kinderpiercing in entspannter Atmosphäre. Mit Erfahrung im Umgang mit kleinen Kunden und einfühlsamer Begleitung. Ab 0 Monaten, immer mit Elternteil.",
-    tags: ["Ab 0 Monate", "Ohr", "Titan-Schmuck", "Einfühlsam"],
-  },
-  {
-    title: "Schmuck & Änderungen",
-    icon: "◉",
-    desc: "Schmuck tauschen, kürzen oder Wildfleisch behandeln – ich helfe bei allen Anliegen rund um bestehende Piercings, auch wenn sie nicht von mir gestochen wurden.",
-    tags: ["Schmuck wechseln", "Kürzen", "Dehnen", "Wildfleisch"],
-  },
+  { title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Finger-Tattoos, Cover-Ups, Auffrischung & Narbenüberdeckung.", details: ["Farbtattoos & Schwarz-Weiß-Tattoos — detailreiche Farbarbeiten oder klassische Black & Grey","Mini-Tattoos — kleine Kunstwerke mit großer Bedeutung, perfekt für dezente Designs","Finger-Tattoos — wenige Studios bieten es an, ich schon!","Cover-Ups für kleinere Motive — kostenloses Beratungsgespräch","Tattoo-Auffrischung — Farben auffrischen oder Linien nachziehen, egal von welchem Studio","Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren","Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen","Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust"] },
+  { title: "Piercings", desc: "Professionell, hygienisch, mit Feingefühl. Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze & Intimbereich.", details: ["Nase: Nostril, Septum, Bridge, Nassallang","Ohr: Lobe, Helix, Tragus, Conch/Rook, Industrial, Daith/Migräne","Surface: Augenbraue, Anti Eyebrow, Oberflächen","Bauchnabel: Standard, Doppelt, 4-fach","Oral: Zunge, Doppelt/Snake, Lippenbändchen","Lippe: Madonna/Labret/Medusa, Bites, Ashley","Brustwarze: Einzel oder Beide","Intimbereich Damen & Herren — komplettes Angebot","Alles inkl. Schmuck & Kontrolltermin"] },
+  { title: "Permanent Make-up", desc: "Natürliche Schönheit unterstreichen: Fein gezeichnete Augenbrauen und dezente Lippen, die lange halten.", details: ["Augenbrauen — natürlich gezeichnet, typgerecht angepasst","Lippen — dezente Schattierung für mehr Ausdruck","Langanhaltend — erleichtert den Alltag, kein tägliches Nachziehen","Präzise Arbeit mit modernstem Equipment","Individuelle Beratung vor jeder Behandlung"] },
+  { title: "Lash & Brow Lifting", desc: "Naturwimpern sanft nach oben geformt — länger & voller. Brow Lifting für ausdrucksstarke Augenbrauen.", details: ["Lash Lifting inkl. Färben & Keratin","Brow Lifting inkl. Färben & Keratin","Kombi Lash & Brow inkl. Zupfen","Empfohlen alle 6–9 Wochen für dauerhaften WOW-Effekt"] },
+  { title: "Kinderohrringe", desc: "Studex-System — sanft, schmerzarm & sicher. Ab 6 Monaten.", details: ["Studex-System — kein Schießen, speziell für empfindliche Kinderhaut","Ab 6 Monaten möglich","Ab 8 Jahren auch andere Ohrringe mit Nadel möglich","Verschiedene Motiv-Designs verfügbar","Entspannte Atmosphäre für Kinder und Eltern"] },
+  { title: "Spezialleistungen", desc: "Wildfleischbehandlung, Dermal Anker Entfernung, kostenlose Erstberatung & mehr.", details: ["Wildfleischbehandlung","Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko","Nachstechen gratis innerhalb von 14 Tagen","Kostenlose Beratung & Erstgespräche jederzeit","Piercing-Korrekturen bei Fehlstichen aus anderen Studios","Prontolind Spray & Gel für optimale Pflege","Stecker kürzen, Fremdschmuck wechseln, Dehnen"] },
 ];
 
-export default function Services() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+const guestArtists = [
+  {
+    name: "Nikola",
+    style: "Gasttätowierer",
+    avatar: "/gallery/guests/guest1-profile.jpg",
+    works: ["/gallery/arbeit1.jpg","/gallery/arbeit2.jpg","/gallery/arbeit3.jpg","/gallery/arbeit4.jpg","/gallery/arbeit6.jpg","/gallery/guests/guest1-work1.jpg","/gallery/guests/guest1-work2.jpg","/gallery/guests/guest1-work3.jpg","/gallery/guests/guest1-work4.jpg"],
+  }
+];
 
-  const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i);
+export default function Services({ onBook }: { onBook: () => void }) {
+  const [openCards, setOpenCards] = useState<Set<number>>(new Set());
+  const [guestLbOpen, setGuestLbOpen] = useState(false);
+  const [guestLbIdx, setGuestLbIdx] = useState(0);
+  const [workLbOpen, setWorkLbOpen] = useState(false);
+  const [workLbIdx, setWorkLbIdx] = useState(0);
+  const [workImgs, setWorkImgs] = useState<string[]>([]);
+
+  const toggle = (i: number) => {
+    setOpenCards(prev => {
+      const s = new Set(prev);
+      s.has(i) ? s.delete(i) : s.add(i);
+      return s;
+    });
+  };
+
+  const openGuestLb = (idx: number) => { setGuestLbIdx(idx); setGuestLbOpen(true); };
+  const closeGuestLb = () => setGuestLbOpen(false);
+  const openWorkLb = (imgs: string[], idx: number) => { setWorkImgs(imgs); setWorkLbIdx(idx); setWorkLbOpen(true); };
+  const closeWorkLb = () => setWorkLbOpen(false);
+  const navWork = (dir: number) => setWorkLbIdx(p => (p + dir + workImgs.length) % workImgs.length);
 
   return (
-    <section id="services">
-      <div className="section-inner">
-        <div className="section-header reveal">
-          <div className="section-eyebrow">Was ich anbiete</div>
-          <h2 className="section-title">Leistungen</h2>
-          <div className="section-line" />
-        </div>
-        <div className="services-grid reveal">
+    <section className="section" id="services">
+      <div className="container">
+        <span className="section-label reveal">Leistungen</span>
+        <h2 className="section-title reveal">Was ich für dich mache</h2>
+        <div className="services-grid">
           {services.map((s, i) => (
-            <div key={s.title} className={`service-card${openIdx === i ? " open" : ""}`}>
-              <div className="service-header" onClick={() => toggle(i)}>
-                <h3>{s.title}</h3>
-                <div className="service-icon">{s.icon}</div>
-              </div>
-              <div className="service-body">
-                <div className="service-body-inner">
-                  <p>{s.desc}</p>
-                  <div className="service-tags">
-                    {s.tags.map((t) => (
-                      <span key={t} className="service-tag">{t}</span>
-                    ))}
-                  </div>
-                </div>
+            <div key={i} className={`service-card reveal${openCards.has(i) ? " open" : ""}`} onClick={() => toggle(i)}>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+              <span className="service-expand">Mehr erfahren</span>
+              <div className="service-detail">
+                <ul>{s.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* GASTTÄTOWIERER */}
+        <div className="guest-section reveal" id="guest-artists" style={{ marginTop: 80 }}>
+          <span className="section-label" style={{ marginBottom: 12, display: "block" }}>Guest Artists</span>
+          <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "#fff", fontWeight: 600, marginBottom: 12 }}>Gasttätowierer bei SkinLove</h3>
+          <p style={{ fontSize: 14, color: "var(--text-dim)", marginBottom: 32 }}>Unsere Gasttätowierer sind jeweils in der <strong style={{ color: "var(--pink)" }}>letzten Woche des Monats</strong> im Studio in Marchtrenk.</p>
+          <div className="guest-grid">
+            {guestArtists.map((a, i) => (
+              <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
+                <div className="guest-card-mosaic">
+                  {a.works.slice(0, 3).map((w, j) => <img key={j} src={w} alt="" />)}
+                </div>
+                <div className="guest-card-bottom">
+                  <img className="guest-avatar" src={a.avatar} alt={a.name} />
+                  <div className="guest-info">
+                    <h4>{a.name}</h4>
+                    <p>{a.style}</p>
+                  </div>
+                  <span className="guest-cta">Arbeiten ansehen →</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Guest Artist Lightbox */}
+        <div className={`guest-lb${guestLbOpen ? " open" : ""}`} id="guestLb">
+          <div className="guest-lb-inner">
+            <button className="guest-lb-close" onClick={closeGuestLb}>×</button>
+            {guestArtists[guestLbIdx] && (
+              <>
+                <div className="guest-lb-header">
+                  <img src={guestArtists[guestLbIdx].avatar} alt={guestArtists[guestLbIdx].name} />
+                  <h3>{guestArtists[guestLbIdx].name}</h3>
+                  <p>{guestArtists[guestLbIdx].style}</p>
+                </div>
+                <div className="guest-lb-gallery">
+                  {guestArtists[guestLbIdx].works.map((w, j) => (
+                    <img key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
+                  ))}
+                </div>
+                <a href="#" onClick={(e) => { e.preventDefault(); closeGuestLb(); setTimeout(onBook, 300); }} style={{ display: "block", textAlign: "center", marginTop: 20, padding: "12px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "opacity .3s" }}>Termin vereinbaren</a>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Guest Work Lightbox */}
+        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`}>
+          <button className="close-btn" onClick={closeWorkLb}>×</button>
+          <button className="nav-btn prev" onClick={() => navWork(-1)}>‹</button>
+          {workImgs[workLbIdx] && <img src={workImgs[workLbIdx]} alt="" />}
+          <button className="nav-btn next" onClick={() => navWork(1)}>›</button>
         </div>
       </div>
     </section>
