@@ -29,11 +29,18 @@ export default function Workshop() {
         });
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setWorkshops(data.map((c: any) => ({
-            id: c.id, title: c.title, desc: c.description, date: c.start_date, time: c.time_text,
-            price: c.price, deposit: c.deposit, maxSpots: c.max_spots, takenSpots: c.bookings?.[0]?.count || 0,
-            category: c.category, includes: c.includes || "", img: c.image_url || "",
-          })));
+          setWorkshops(data.map((c: any) => {
+            let img = c.image_url || "";
+            // Map old .png refs or missing images to optimized .jpg
+            if (!img || img.includes("workshop1")) img = "/images/workshop1.jpg";
+            else if (img.includes("workshop2")) img = "/images/workshop2.jpg";
+            else if (img.includes("workshop3")) img = "/images/workshop3.jpg";
+            return {
+              id: c.id, title: c.title, desc: c.description, date: c.start_date, time: c.time_text,
+              price: c.price, deposit: c.deposit, maxSpots: c.max_spots, takenSpots: c.bookings?.[0]?.count || 0,
+              category: c.category, includes: c.includes || "", img,
+            };
+          }));
         }
       } catch { /* fallback */ }
     })();
