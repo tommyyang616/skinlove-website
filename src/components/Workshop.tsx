@@ -7,9 +7,9 @@ const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 interface WS { id: string; title: string; desc: string; date: string; time: string; price: number; deposit: number; maxSpots: number; takenSpots: number; category: string; includes: string; img: string; }
 
 const FALLBACK: WS[] = [
-  { id:"tattoo-kurs", title:"Tattoo Kurs", desc:"Lerne Tätowieren von Grund auf — Theorie, Hygiene, Technik & Praxis. Jeden Mittwoch & Donnerstag, fortlaufend.", date:"2026-04-01", time:"Mi 17:00 – 19:00 · Do 17:00 – 20:00", price:499, deposit:150, maxSpots:6, takenSpots:0, category:"Tattoo", includes:"Material, Übungshaut, Zertifikat", img:"" },
-  { id:"piercing-kurs", title:"Piercing Kurs", desc:"Hygiene, Anatomie, Materialien & erste Stiche unter Anleitung. Für alle die ins Piercing-Business einsteigen wollen.", date:"2026-04-13", time:"Mo & Di 17:00 – 19:00", price:499, deposit:150, maxSpots:4, takenSpots:0, category:"Piercing", includes:"Starter-Kit, Zertifikat, Modell-Praxis", img:"" },
-  { id:"lash-lifting-basics", title:"Lash & Brow Lifting — Basics", desc:"Lerne die Grundlagen des Lash & Brow Liftings. Theorie, Praxis an Modellen, Materialien inklusive. Perfekt für Einsteigerinnen!", date:"2026-04-12", time:"10:00 – 16:00", price:349, deposit:100, maxSpots:6, takenSpots:0, category:"Lash & Brow", includes:"Material, Zertifikat, Verpflegung", img:"" },
+  { id:"tattoo-kurs", title:"Tattoo Kurs", desc:"Lerne Tätowieren von Grund auf — Theorie, Hygiene, Technik & Praxis. Jeden Mittwoch & Donnerstag, fortlaufend.", date:"2026-04-01", time:"Mi 17:00 – 19:00 · Do 17:00 – 20:00", price:499, deposit:150, maxSpots:6, takenSpots:0, category:"Tattoo", includes:"Material, Übungshaut, Zertifikat", img:"/images/workshop1.png" },
+  { id:"piercing-kurs", title:"Piercing Kurs", desc:"Hygiene, Anatomie, Materialien & erste Stiche unter Anleitung. Für alle die ins Piercing-Business einsteigen wollen.", date:"2026-04-13", time:"Mo & Di 17:00 – 19:00", price:499, deposit:150, maxSpots:4, takenSpots:0, category:"Piercing", includes:"Starter-Kit, Zertifikat, Modell-Praxis", img:"/images/workshop2.png" },
+  { id:"lash-lifting-basics", title:"Lash & Brow Lifting — Basics", desc:"Lerne die Grundlagen des Lash & Brow Liftings. Theorie, Praxis an Modellen, Materialien inklusive. Perfekt für Einsteigerinnen!", date:"2026-04-12", time:"10:00 – 16:00", price:349, deposit:100, maxSpots:6, takenSpots:0, category:"Lash & Brow", includes:"Material, Zertifikat, Verpflegung", img:"/images/workshop3.png" },
 ];
 
 export default function Workshop() {
