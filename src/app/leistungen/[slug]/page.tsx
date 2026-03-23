@@ -28,5 +28,27 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const service = serviceData[slug];
   if (!service) notFound();
-  return <ServicePageClient service={service} slug={slug} />;
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: service.faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <ServicePageClient service={service} slug={slug} />
+    </>
+  );
 }

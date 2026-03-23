@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Datenschutz – SkinLove Tattoo & Piercing",
+  description: "Datenschutzerklärung von SkinLove Tattoo & Piercing in Marchtrenk. Informationen zur Verarbeitung personenbezogener Daten.",
+  alternates: { canonical: "/datenschutz" },
+  robots: { index: true, follow: true },
 };
 
 export default function Datenschutz() {

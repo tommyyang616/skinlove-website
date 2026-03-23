@@ -55,6 +55,10 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
   icons: { icon: "/favicon.ico" },
+  manifest: "/manifest.json",
+  other: {
+    "theme-color": "#BB3599",
+  },
 };
 
 export default function RootLayout({
@@ -63,7 +67,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${inter.variable} ${cormorant.variable} ${outfit.variable}`}>
+    <html lang="de-AT" className={`${inter.variable} ${cormorant.variable} ${outfit.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -96,8 +100,9 @@ export default function RootLayout({
               sameAs: [
                 "https://www.instagram.com/skinlove_tattoopiercing/",
                 "https://www.facebook.com/skinlovetattoopiercing",
+                "https://www.tiktok.com/@skinlove_tattoopiercing",
               ],
-              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.6", bestRating: "5", ratingCount: "14" },
+              aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", bestRating: "5", ratingCount: "86" },
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
                 name: "Leistungen",

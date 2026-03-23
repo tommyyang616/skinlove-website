@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Impressum – SkinLove Tattoo & Piercing",
+  description: "Impressum von SkinLove Tattoo & Piercing in Marchtrenk. Inhaberin Eve Paule, Kontaktdaten und rechtliche Informationen.",
+  alternates: { canonical: "/impressum" },
+  robots: { index: true, follow: true },
 };
 
 export default function Impressum() {
