@@ -30,10 +30,10 @@ export default function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        <video ref={vid1} className="hero-bg-vid active" autoPlay muted playsInline>
+        <video ref={vid1} className="hero-bg-vid active" autoPlay muted playsInline preload="auto" poster="/images/hero.jpg">
           <source src="/images/hero-video1.mp4" type="video/mp4" />
         </video>
-        <video ref={vid2} className="hero-bg-vid" muted playsInline>
+        <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
           <source src="/images/hero-video2.mp4" type="video/mp4" />
         </video>
       </div>
