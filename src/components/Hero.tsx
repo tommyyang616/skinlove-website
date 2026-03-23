@@ -1,14 +1,26 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
   const vid2 = useRef<HTMLVideoElement>(null);
+  const [videosReady, setVideosReady] = useState(false);
 
   useEffect(() => {
+    // Delay video loading until after first paint
+    const timer = setTimeout(() => setVideosReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!videosReady) return;
     const v1 = vid1.current;
     const v2 = vid2.current;
     if (!v1 || !v2) return;
+
+    // Start playing video 1
+    v1.play().catch(() => {});
+
     const swap = () => {
       if (v1.classList.contains("active")) {
         v1.classList.remove("active");
@@ -25,17 +37,37 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     v1.addEventListener("ended", swap);
     v2.addEventListener("ended", swap);
     return () => { v1.removeEventListener("ended", swap); v2.removeEventListener("ended", swap); };
-  }, []);
+  }, [videosReady]);
 
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        <video ref={vid1} className="hero-bg-vid active" autoPlay muted playsInline preload="auto" poster="/images/hero.jpg">
-          <source src="/images/hero-video1.mp4" type="video/mp4" />
-        </video>
-        <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
-          <source src="/images/hero-video2.mp4" type="video/mp4" />
-        </video>
+        {/* Poster image as immediate LCP */}
+        <img
+          src="/images/hero.jpg"
+          alt="SkinLove Tattoo & Piercing Studio"
+          fetchPriority="high"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+            opacity: videosReady ? 0 : 1,
+            transition: "opacity 0.5s ease",
+          }}
+        />
+        {videosReady && (
+          <>
+            <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="auto">
+              <source src="/images/hero-video1.mp4" type="video/mp4" />
+            </video>
+            <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
+              <source src="/images/hero-video2.mp4" type="video/mp4" />
+            </video>
+          </>
+        )}
       </div>
       <div className="hero-overlay" />
       <div className="hero-content" style={{ margin: 0, paddingLeft: 48, paddingRight: 24, width: "100%" }}>
