@@ -155,7 +155,7 @@ nav a:hover::after{width:100%}
 
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-img-wrap{position:relative;aspect-ratio:3/4;overflow:hidden}
+.about-img-wrap{position:relative;aspect-ratio:3/4;overflow:hidden;background:#000}
 .about-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
 .stat{padding:20px 0;border-top:1px solid rgba(255,255,255,.08)}
@@ -347,7 +347,7 @@ footer a{color:#fff}
 /* RESPONSIVE */
 @media(max-width:968px){
   .about-grid{grid-template-columns:1fr;gap:48px}
-  .about-img-wrap{max-width:400px}
+  .about-img-wrap{max-width:400px;margin:0 auto}
   .services-grid{grid-template-columns:1fr 1fr}
   .info-grid{grid-template-columns:1fr}
 }
