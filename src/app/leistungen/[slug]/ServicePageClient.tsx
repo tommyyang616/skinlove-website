@@ -12,7 +12,7 @@ type Service = {
   faq: { q: string; a: string }[];
 };
 
-export default function ServicePageClient({ service, slug }: { service: Service; slug: string }) {
+export default function ServicePageClient({ service }: { service: Service; slug: string }) {
   const [formOpen, setFormOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -30,7 +30,7 @@ export default function ServicePageClient({ service, slug }: { service: Service;
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, service: service.title, message: msg || null }),
-    }).catch(() => {});
+    }).catch(() => { });
 
     const waMsg = `📅 *Neue Terminanfrage*%0A%0A*Name:* ${name}%0A*E-Mail:* ${email}%0A*Service:* ${service.title}%0A*Nachricht:* ${msg || "—"}%0A%0A_Gesendet über skinlove-website_`;
     window.open("https://wa.me/436607835346?text=" + waMsg, "_blank");
@@ -92,15 +92,17 @@ export default function ServicePageClient({ service, slug }: { service: Service;
             ))}
           </div>
 
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: service.faq.map(f => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
-          })}} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: service.faq.map(f => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            })
+          }} />
         </div>
       )}
 

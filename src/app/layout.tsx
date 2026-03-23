@@ -1,6 +1,28 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Inter, Outfit } from "next/font/google";
 import "./globals.css";
-import { ChatWidget } from "@/components/chat/ChatWidget";
+import { ChatWrapper } from "@/components/chat/ChatWrapper";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"),
   title: {
@@ -41,14 +63,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
+    <html lang="de" className={`${inter.variable} ${cormorant.variable} ${outfit.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -58,7 +74,7 @@ export default function RootLayout({
               name: "SkinLove Tattoo & Piercing",
               alternateName: "SkinLove",
               description: "Professionelles Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Inhaberin Eve Paule.",
-              url: "https://skinlove-website.vercel.app",
+              url: process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app",
               telephone: "+436607835346",
               email: "eve@skinlove-tattoo-piercing.at",
               address: {
@@ -71,10 +87,10 @@ export default function RootLayout({
               },
               geo: { "@type": "GeoCoordinates", latitude: 48.1916, longitude: 14.1168 },
               openingHoursSpecification: [
-                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "09:00", closes: "18:00" },
+                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
                 { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
               ],
-              image: "https://skinlove-website.vercel.app/images/og-image.jpg",
+              image: `${process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"}/images/og-image.jpg`,
               priceRange: "€€",
               founder: { "@type": "Person", name: "Eve Paule" },
               sameAs: [
@@ -98,7 +114,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        <ChatWidget />
+        <ChatWrapper />
       </body>
     </html>
   );

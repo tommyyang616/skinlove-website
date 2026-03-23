@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 
 interface WS { id: string; title: string; desc: string; date: string; time: string; price: number; deposit: number; maxSpots: number; takenSpots: number; category: string; includes: string; img: string; }
 
+type ApiCourse = Omit<WS, "img"> & { img?: string };
+
 const FALLBACK: WS[] = [
-  { id:"tattoo-kurs", title:"Tattoo Kurs", desc:"Lerne Tätowieren von Grund auf — Theorie, Hygiene, Technik & Praxis. Jeden Mittwoch & Donnerstag, fortlaufend.", date:"2026-04-01", time:"Mi 17:00 – 19:00 · Do 17:00 – 20:00", price:499, deposit:150, maxSpots:6, takenSpots:0, category:"Tattoo", includes:"Material, Übungshaut, Zertifikat", img:"/images/workshop1.jpg" },
-  { id:"piercing-kurs", title:"Piercing Kurs", desc:"Hygiene, Anatomie, Materialien & erste Stiche unter Anleitung. Für alle die ins Piercing-Business einsteigen wollen.", date:"2026-04-13", time:"Mo & Di 17:00 – 19:00", price:499, deposit:150, maxSpots:4, takenSpots:0, category:"Piercing", includes:"Starter-Kit, Zertifikat, Modell-Praxis", img:"/images/workshop2.jpg" },
-  { id:"lash-lifting-basics", title:"Lash & Brow Lifting — Basics", desc:"Lerne die Grundlagen des Lash & Brow Liftings. Theorie, Praxis an Modellen, Materialien inklusive. Perfekt für Einsteigerinnen!", date:"2026-04-12", time:"10:00 – 16:00", price:349, deposit:100, maxSpots:6, takenSpots:0, category:"Lash & Brow", includes:"Material, Zertifikat, Verpflegung", img:"/images/workshop3.jpg" },
+  { id: "tattoo-kurs", title: "Tattoo Kurs", desc: "Lerne Tätowieren von Grund auf — Theorie, Hygiene, Technik & Praxis. Jeden Mittwoch & Donnerstag, fortlaufend.", date: "2026-04-01", time: "Mi 17:00 – 19:00 · Do 17:00 – 20:00", price: 499, deposit: 150, maxSpots: 6, takenSpots: 0, category: "Tattoo", includes: "Material, Übungshaut, Zertifikat", img: "/images/workshop1.jpg" },
+  { id: "piercing-kurs", title: "Piercing Kurs", desc: "Hygiene, Anatomie, Materialien & erste Stiche unter Anleitung. Für alle die ins Piercing-Business einsteigen wollen.", date: "2026-04-13", time: "Mo & Di 17:00 – 19:00", price: 499, deposit: 150, maxSpots: 4, takenSpots: 0, category: "Piercing", includes: "Starter-Kit, Zertifikat, Modell-Praxis", img: "/images/workshop2.jpg" },
+  { id: "lash-lifting-basics", title: "Lash & Brow Lifting — Basics", desc: "Lerne die Grundlagen des Lash & Brow Liftings. Theorie, Praxis an Modellen, Materialien inklusive. Perfekt für Einsteigerinnen!", date: "2026-04-12", time: "10:00 – 16:00", price: 349, deposit: 100, maxSpots: 6, takenSpots: 0, category: "Lash & Brow", includes: "Material, Zertifikat, Verpflegung", img: "/images/workshop3.jpg" },
 ];
 
 export default function Workshop() {
@@ -22,10 +24,10 @@ export default function Workshop() {
     (async () => {
       try {
         const res = await fetch("/api/courses");
-        const data = await res.json();
+        const data: unknown = await res.json();
         if (Array.isArray(data) && data.length > 0) {
           const fallbackImgs = ["/images/workshop1.jpg", "/images/workshop2.jpg", "/images/workshop3.jpg"];
-          setWorkshops(data.map((c: any, i: number) => {
+          setWorkshops((data as ApiCourse[]).map((c, i: number) => {
             const img = c.img || fallbackImgs[i % fallbackImgs.length];
             return { ...c, img };
           }));
@@ -38,9 +40,16 @@ export default function Workshop() {
 
   const openModal = (id: string) => {
     setSelectedId(id); setSuccess(false); setModalOpen(true);
-    document.body.style.overflow = "hidden";
   };
-  const closeModal = () => { setModalOpen(false); document.body.style.overflow = ""; };
+  const closeModal = () => { setModalOpen(false); };
+
+  useEffect(() => {
+    document.body.style.overflow = modalOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalOpen]);
 
   const submit = () => {
     const name = nameRef.current?.value.trim() || "";
@@ -59,7 +68,7 @@ export default function Workshop() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email: contact, courseId: selected.id }),
-    }).catch(() => {});
+    }).catch(() => { });
 
     setSuccess(true);
   };

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const IMGS = [
@@ -32,8 +33,8 @@ export default function Gallery() {
   const [lbIdx, setLbIdx] = useState(0);
   const touchX = useRef(0);
 
-  const openLB = (i: number) => { setLbIdx(i); setLbOpen(true); document.body.style.overflow = "hidden"; };
-  const closeLB = () => { setLbOpen(false); document.body.style.overflow = ""; };
+  const openLB = (i: number) => { setLbIdx(i); setLbOpen(true); };
+  const closeLB = () => { setLbOpen(false); };
   const navLB = useCallback((dir: number) => {
     setLbIdx(p => {
       const next = p + dir;
@@ -42,6 +43,8 @@ export default function Gallery() {
   }, []);
 
   useEffect(() => {
+    document.body.style.overflow = lbOpen ? "hidden" : "";
+
     const onKey = (e: KeyboardEvent) => {
       if (!lbOpen) return;
       if (e.key === "Escape") closeLB();
@@ -49,7 +52,10 @@ export default function Gallery() {
       if (e.key === "ArrowRight") navLB(1);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
   }, [lbOpen, navLB]);
 
   const scroll = (dir: number) => {
@@ -67,7 +73,7 @@ export default function Gallery() {
           <div className="gallery-wrap reveal">
             <div className="gallery-track" ref={trackRef}>
               {IMGS.map((src, i) => (
-                <img key={i} src={src} alt="Tattoo" onClick={() => openLB(i)} loading="lazy" />
+                <Image key={i} src={src} alt="Tattoo" width={500} height={500} onClick={() => openLB(i)} loading="lazy" unoptimized />
               ))}
             </div>
             <div className="gallery-nav">
@@ -78,7 +84,7 @@ export default function Gallery() {
           <div className="gallery-note reveal">
             Mehr auf{" "}
             <a href="https://www.instagram.com/skinlove_tattoopiercing/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
               Instagram
             </a>
           </div>
@@ -91,7 +97,7 @@ export default function Gallery() {
         onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchX.current; if (Math.abs(dx) > 50) navLB(dx < 0 ? 1 : -1); }}>
         <button className="lb-close" onClick={closeLB}>×</button>
         <button className="lb-nav prev" onClick={() => navLB(-1)}>‹</button>
-        <img className="lb-main" src={IMGS[lbIdx]} alt="" />
+        <Image className="lb-main" src={IMGS[lbIdx]} alt="Tattoo vergrößert" width={1200} height={1200} unoptimized />
         <button className="lb-nav next" onClick={() => navLB(1)}>›</button>
         <div className="lb-counter">{lbIdx + 1} / {IMGS.length}</div>
       </div>

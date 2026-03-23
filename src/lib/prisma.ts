@@ -15,8 +15,8 @@ function createClient() {
         ssl: { rejectUnauthorized: false },
         max: 5,
     })
-    const adapter = new PrismaPg(pool as any)
-    return new PrismaClient({ adapter } as any)
+    const adapter = new PrismaPg(pool as unknown as ConstructorParameters<typeof PrismaPg>[0])
+    return new PrismaClient({ adapter })
 }
 
 export const prisma = globalForPrisma.prisma ?? createClient()

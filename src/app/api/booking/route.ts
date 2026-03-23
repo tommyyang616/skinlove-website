@@ -48,8 +48,9 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const detail = e instanceof Error ? e.message : String(e);
     console.error("Booking error:", e);
-    return NextResponse.json({ error: "Interner Fehler", detail: e?.message || String(e) }, { status: 500 });
+    return NextResponse.json({ error: "Interner Fehler", detail }, { status: 500 });
   }
 }

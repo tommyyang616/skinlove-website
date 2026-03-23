@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -12,12 +13,12 @@ const slugMap: Record<string, string> = {
 };
 
 const services = [
-  { title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Finger-Tattoos, Cover-Ups, Auffrischung & Narbenüberdeckung.", details: ["Farbtattoos & Schwarz-Weiß-Tattoos — detailreiche Farbarbeiten oder klassische Black & Grey","Mini-Tattoos — kleine Kunstwerke mit großer Bedeutung, perfekt für dezente Designs","Finger-Tattoos — wenige Studios bieten es an, ich schon!","Cover-Ups für kleinere Motive — kostenloses Beratungsgespräch","Tattoo-Auffrischung — Farben auffrischen oder Linien nachziehen, egal von welchem Studio","Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren","Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen","Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust"] },
-  { title: "Piercings", desc: "Professionell, hygienisch, mit Feingefühl. Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze & Intimbereich.", details: ["Nase: Nostril, Septum, Bridge, Nassallang","Ohr: Lobe, Helix, Tragus, Conch/Rook, Industrial, Daith/Migräne","Surface: Augenbraue, Anti Eyebrow, Oberflächen","Bauchnabel: Standard, Doppelt, 4-fach","Oral: Zunge, Doppelt/Snake, Lippenbändchen","Lippe: Madonna/Labret/Medusa, Bites, Ashley","Brustwarze: Einzel oder Beide","Intimbereich Damen & Herren — komplettes Angebot","Alles inkl. Schmuck & Kontrolltermin"] },
-  { title: "Permanent Make-up", desc: "Natürliche Schönheit unterstreichen: Fein gezeichnete Augenbrauen und dezente Lippen, die lange halten.", details: ["Augenbrauen — natürlich gezeichnet, typgerecht angepasst","Lippen — dezente Schattierung für mehr Ausdruck","Langanhaltend — erleichtert den Alltag, kein tägliches Nachziehen","Präzise Arbeit mit modernstem Equipment","Individuelle Beratung vor jeder Behandlung"] },
-  { title: "Lash & Brow Lifting", desc: "Naturwimpern sanft nach oben geformt — länger & voller. Brow Lifting für ausdrucksstarke Augenbrauen.", details: ["Lash Lifting inkl. Färben & Keratin","Brow Lifting inkl. Färben & Keratin","Kombi Lash & Brow inkl. Zupfen","Empfohlen alle 6–9 Wochen für dauerhaften WOW-Effekt"] },
-  { title: "Kinderohrringe", desc: "Studex-System — sanft, schmerzarm & sicher. Ab 6 Monaten.", details: ["Studex-System — kein Schießen, speziell für empfindliche Kinderhaut","Ab 6 Monaten möglich","Ab 8 Jahren auch andere Ohrringe mit Nadel möglich","Verschiedene Motiv-Designs verfügbar","Entspannte Atmosphäre für Kinder und Eltern"] },
-  { title: "Spezialleistungen", desc: "Wildfleischbehandlung, Dermal Anker Entfernung, kostenlose Erstberatung & mehr.", details: ["Wildfleischbehandlung","Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko","Nachstechen gratis innerhalb von 14 Tagen","Kostenlose Beratung & Erstgespräche jederzeit","Piercing-Korrekturen bei Fehlstichen aus anderen Studios","Prontolind Spray & Gel für optimale Pflege","Stecker kürzen, Fremdschmuck wechseln, Dehnen"] },
+  { title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Finger-Tattoos, Cover-Ups, Auffrischung & Narbenüberdeckung.", details: ["Farbtattoos & Schwarz-Weiß-Tattoos — detailreiche Farbarbeiten oder klassische Black & Grey", "Mini-Tattoos — kleine Kunstwerke mit großer Bedeutung, perfekt für dezente Designs", "Finger-Tattoos — wenige Studios bieten es an, ich schon!", "Cover-Ups für kleinere Motive — kostenloses Beratungsgespräch", "Tattoo-Auffrischung — Farben auffrischen oder Linien nachziehen, egal von welchem Studio", "Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren", "Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen", "Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust"] },
+  { title: "Piercings", desc: "Professionell, hygienisch, mit Feingefühl. Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze & Intimbereich.", details: ["Nase: Nostril, Septum, Bridge, Nassallang", "Ohr: Lobe, Helix, Tragus, Conch/Rook, Industrial, Daith/Migräne", "Surface: Augenbraue, Anti Eyebrow, Oberflächen", "Bauchnabel: Standard, Doppelt, 4-fach", "Oral: Zunge, Doppelt/Snake, Lippenbändchen", "Lippe: Madonna/Labret/Medusa, Bites, Ashley", "Brustwarze: Einzel oder Beide", "Intimbereich Damen & Herren — komplettes Angebot", "Alles inkl. Schmuck & Kontrolltermin"] },
+  { title: "Permanent Make-up", desc: "Natürliche Schönheit unterstreichen: Fein gezeichnete Augenbrauen und dezente Lippen, die lange halten.", details: ["Augenbrauen — natürlich gezeichnet, typgerecht angepasst", "Lippen — dezente Schattierung für mehr Ausdruck", "Langanhaltend — erleichtert den Alltag, kein tägliches Nachziehen", "Präzise Arbeit mit modernstem Equipment", "Individuelle Beratung vor jeder Behandlung"] },
+  { title: "Lash & Brow Lifting", desc: "Naturwimpern sanft nach oben geformt — länger & voller. Brow Lifting für ausdrucksstarke Augenbrauen.", details: ["Lash Lifting inkl. Färben & Keratin", "Brow Lifting inkl. Färben & Keratin", "Kombi Lash & Brow inkl. Zupfen", "Empfohlen alle 6–9 Wochen für dauerhaften WOW-Effekt"] },
+  { title: "Kinderohrringe", desc: "Studex-System — sanft, schmerzarm & sicher. Ab 6 Monaten.", details: ["Studex-System — kein Schießen, speziell für empfindliche Kinderhaut", "Ab 6 Monaten möglich", "Ab 8 Jahren auch andere Ohrringe mit Nadel möglich", "Verschiedene Motiv-Designs verfügbar", "Entspannte Atmosphäre für Kinder und Eltern"] },
+  { title: "Spezialleistungen", desc: "Wildfleischbehandlung, Dermal Anker Entfernung, kostenlose Erstberatung & mehr.", details: ["Wildfleischbehandlung", "Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko", "Nachstechen gratis innerhalb von 14 Tagen", "Kostenlose Beratung & Erstgespräche jederzeit", "Piercing-Korrekturen bei Fehlstichen aus anderen Studios", "Prontolind Spray & Gel für optimale Pflege", "Stecker kürzen, Fremdschmuck wechseln, Dehnen"] },
 ];
 
 const guestArtists = [
@@ -25,7 +26,7 @@ const guestArtists = [
     name: "Nikola",
     style: "Gasttätowierer",
     avatar: "/gallery/guests/guest1-profile.jpg",
-    works: ["/gallery/arbeit1.jpg","/gallery/arbeit2.jpg","/gallery/arbeit3.jpg","/gallery/arbeit4.jpg","/gallery/arbeit6.jpg","/gallery/guests/guest1-work1.jpg","/gallery/guests/guest1-work2.jpg","/gallery/guests/guest1-work3.jpg","/gallery/guests/guest1-work4.jpg"],
+    works: ["/gallery/arbeit1.jpg", "/gallery/arbeit2.jpg", "/gallery/arbeit3.jpg", "/gallery/arbeit4.jpg", "/gallery/arbeit6.jpg", "/gallery/guests/guest1-work1.jpg", "/gallery/guests/guest1-work2.jpg", "/gallery/guests/guest1-work3.jpg", "/gallery/guests/guest1-work4.jpg"],
   }
 ];
 
@@ -40,7 +41,8 @@ export default function Services({ onBook }: { onBook: () => void }) {
   const toggle = (i: number) => {
     setOpenCards(prev => {
       const s = new Set(prev);
-      s.has(i) ? s.delete(i) : s.add(i);
+      if (s.has(i)) s.delete(i);
+      else s.add(i);
       return s;
     });
   };
@@ -85,10 +87,10 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists.map((a, i) => (
               <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
                 <div className="guest-card-mosaic">
-                  {a.works.slice(0, 3).map((w, j) => <img key={j} src={w} alt="" />)}
+                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt="Arbeit von Gasttätowierer" width={320} height={320} />)}
                 </div>
                 <div className="guest-card-bottom">
-                  <img className="guest-avatar" src={a.avatar} alt={a.name} />
+                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={60} height={60} />
                   <div className="guest-info">
                     <h4>{a.name}</h4>
                     <p>{a.style}</p>
@@ -107,13 +109,13 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists[guestLbIdx] && (
               <>
                 <div className="guest-lb-header">
-                  <img src={guestArtists[guestLbIdx].avatar} alt={guestArtists[guestLbIdx].name} />
+                  <Image src={guestArtists[guestLbIdx].avatar} alt={guestArtists[guestLbIdx].name} width={120} height={120} />
                   <h3>{guestArtists[guestLbIdx].name}</h3>
                   <p>{guestArtists[guestLbIdx].style}</p>
                 </div>
                 <div className="guest-lb-gallery">
                   {guestArtists[guestLbIdx].works.map((w, j) => (
-                    <img key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
+                    <Image key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} width={420} height={420} onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
                   ))}
                 </div>
                 <a href="#" onClick={(e) => { e.preventDefault(); closeGuestLb(); setTimeout(onBook, 300); }} style={{ display: "block", textAlign: "center", marginTop: 20, padding: "12px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "opacity .3s" }}>Termin vereinbaren</a>
@@ -126,7 +128,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
         <div className={`guest-work-lb${workLbOpen ? " open" : ""}`}>
           <button className="close-btn" onClick={closeWorkLb}>×</button>
           <button className="nav-btn prev" onClick={() => navWork(-1)}>‹</button>
-          {workImgs[workLbIdx] && <img src={workImgs[workLbIdx]} alt="" />}
+          {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} />}
           <button className="nav-btn next" onClick={() => navWork(1)}>›</button>
         </div>
       </div>

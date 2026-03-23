@@ -48,7 +48,8 @@ export async function GET(request: NextRequest) {
       activeCourses,
       timestamp: new Date().toISOString(),
     });
-  } catch (e: any) {
-    return NextResponse.json({ status: "error", message: e?.message || String(e), timestamp: new Date().toISOString() }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ status: "error", message, timestamp: new Date().toISOString() }, { status: 500 });
   }
 }

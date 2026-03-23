@@ -1,16 +1,31 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 
+function getAdminToken() {
+  return sessionStorage.getItem("sl_admin_token") || "";
+}
 const api = (path: string, opts?: RequestInit) =>
-  fetch(path, { ...opts, headers: { "Content-Type": "application/json", ...opts?.headers } }).then(r => r.json());
+  fetch(path, { ...opts, headers: { "Content-Type": "application/json", "x-admin-token": getAdminToken(), ...opts?.headers } }).then(r => r.json());
 
-type Course = { id: string; title: string; category: string | null; description: string | null; startDate: string; timeText: string | null; price: any; deposit: any; maxSpots: number; includes: string | null; imageUrl: string | null; isActive: boolean; createdAt: string; enrollments?: any[]; };
-type Booking = { id: string; courseId: string | null; name: string; email: string; phone: string | null; status: string; paid: boolean; createdAt: string; course?: { title: string; price?: any; deposit?: any }; };
+type MoneyValue = number | string | null;
+type CourseEnrollment = { id: string };
+type Course = { id: string; title: string; category: string | null; description: string | null; startDate: string; timeText: string | null; price: MoneyValue; deposit: MoneyValue; maxSpots: number; includes: string | null; imageUrl: string | null; isActive: boolean; createdAt: string; enrollments?: CourseEnrollment[]; };
+type Booking = { id: string; courseId: string | null; name: string; email: string; phone: string | null; status: string; paid: boolean; createdAt: string; course?: { title: string; price?: MoneyValue; deposit?: MoneyValue }; };
 type ContactReq = { id: string; name: string; email: string; phone: string | null; service: string | null; message: string | null; status: string; createdAt: string; };
 type Tab = "dashboard" | "anfragen" | "workshops" | "buchungen" | "settings";
 
+type DashboardProps = {
+  contacts: ContactReq[];
+  bookings: Booking[];
+  activeCourses: number;
+  totalBookings: number;
+  paidBookings: number;
+  revenue: number;
+  pendingContacts: number;
+};
+
 export default function AdminPage() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(() => typeof window !== "undefined" && !!sessionStorage.getItem("sl_admin_token"));
   const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
@@ -19,14 +34,12 @@ export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [contacts, setContacts] = useState<ContactReq[]>([]);
 
-  useEffect(() => { if (sessionStorage.getItem("sl_admin") === "1") setLoggedIn(true); }, []);
-
   const login = async () => {
     const res = await fetch("/api/admin-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: user, password: pw }) });
-    if (res.ok) { setLoggedIn(true); sessionStorage.setItem("sl_admin", "1"); }
+    if (res.ok) { setLoggedIn(true); sessionStorage.setItem("sl_admin_token", pw); }
     else setErr("Falscher Benutzername oder Passwort");
   };
-  const logout = () => { sessionStorage.removeItem("sl_admin"); setLoggedIn(false); };
+  const logout = () => { sessionStorage.removeItem("sl_admin_token"); setLoggedIn(false); };
 
   const load = useCallback(async () => {
     const [c, b, r] = await Promise.all([
@@ -39,7 +52,15 @@ export default function AdminPage() {
     if (Array.isArray(r)) setContacts(r);
   }, []);
 
-  useEffect(() => { if (loggedIn) load(); }, [loggedIn, load]);
+  useEffect(() => {
+    if (!loggedIn) return;
+
+    const timer = window.setTimeout(() => {
+      void load();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [loggedIn, load]);
 
   if (!loggedIn) return (
     <div style={{ minHeight: "100vh", background: "#09090b", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Inter',system-ui,sans-serif" }}>
@@ -63,7 +84,7 @@ export default function AdminPage() {
   const paidBookings = bookings.filter(b => b.paid).length;
   const revenue = bookings.filter(b => b.paid).reduce((s, b) => {
     const c = courses.find(c2 => c2.id === b.courseId);
-    return s + toNum(c?.deposit);
+    return s + toNum(c?.deposit ?? null);
   }, 0);
 
   const tabs: { key: Tab; label: string; icon: string; badge?: number }[] = [
@@ -100,7 +121,7 @@ export default function AdminPage() {
       </header>
 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 64px" }}>
-        {tab === "dashboard" && <Dashboard courses={courses} contacts={contacts} bookings={bookings} activeCourses={activeCourses} totalBookings={totalBookings} paidBookings={paidBookings} revenue={revenue} pendingContacts={pendingContacts} />}
+        {tab === "dashboard" && <Dashboard contacts={contacts} bookings={bookings} activeCourses={activeCourses} totalBookings={totalBookings} paidBookings={paidBookings} revenue={revenue} pendingContacts={pendingContacts} />}
         {tab === "anfragen" && <Anfragen contacts={contacts} onUpdate={load} />}
         {tab === "workshops" && <Workshops courses={courses} onUpdate={load} />}
         {tab === "buchungen" && <Buchungen buchungen={bookings} courses={courses} onUpdate={load} />}
@@ -113,7 +134,7 @@ export default function AdminPage() {
 /* ─── SHARED ─── */
 const inp: React.CSSProperties = { width: "100%", padding: "11px 14px", background: "#1a1a1e", border: "1px solid rgba(255,255,255,.08)", borderRadius: 8, color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" };
 const card: React.CSSProperties = { background: "#111113", border: "1px solid rgba(255,255,255,.06)", borderRadius: 10, padding: 24 };
-const toNum = (v: any) => typeof v === "number" ? v : Number(v) || 0;
+const toNum = (v: MoneyValue) => typeof v === "number" ? v : Number(v) || 0;
 const fmtDate = (d: string) => new Date(d).toLocaleDateString("de-AT", { day: "numeric", month: "short", year: "numeric" });
 const fmtDateTime = (d: string) => new Date(d).toLocaleDateString("de-AT", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
 const tbl: React.CSSProperties = { width: "100%", fontSize: 13, borderCollapse: "collapse" };
@@ -135,7 +156,7 @@ function Empty({ text, icon }: { text: string; icon?: string }) {
 }
 
 /* ─── DASHBOARD ─── */
-function Dashboard({ courses, contacts, bookings, activeCourses, totalBookings, paidBookings, revenue, pendingContacts }: any) {
+function Dashboard({ contacts, bookings, activeCourses, totalBookings, paidBookings, revenue, pendingContacts }: DashboardProps) {
   const stats = [
     { num: pendingContacts, label: "Offene Anfragen", icon: "📩", color: pendingContacts > 0 ? "#ef4444" : "#4ade80" },
     { num: activeCourses, label: "Aktive Workshops", icon: "🎓", color: "#bb3599" },
@@ -155,7 +176,7 @@ function Dashboard({ courses, contacts, bookings, activeCourses, totalBookings, 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
         <div style={card}>
           <h3 style={{ fontSize: 13, color: "#fff", fontWeight: 600, marginBottom: 16 }}>📩 Letzte Anfragen</h3>
-          {contacts.length === 0 ? <Empty text="Keine Anfragen" /> : contacts.slice(0, 5).map((a: any) => (
+          {contacts.length === 0 ? <Empty text="Keine Anfragen" /> : contacts.slice(0, 5).map((a) => (
             <div key={a.id} style={{ padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                 <span style={{ color: "#fff", fontWeight: 500 }}>{a.name}</span>
@@ -168,7 +189,7 @@ function Dashboard({ courses, contacts, bookings, activeCourses, totalBookings, 
         </div>
         <div style={card}>
           <h3 style={{ fontSize: 13, color: "#fff", fontWeight: 600, marginBottom: 16 }}>📅 Letzte Buchungen</h3>
-          {bookings.length === 0 ? <Empty text="Keine Buchungen" /> : bookings.slice(0, 5).map((b: any) => (
+          {bookings.length === 0 ? <Empty text="Keine Buchungen" /> : bookings.slice(0, 5).map((b) => (
             <div key={b.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,.04)", fontSize: 12 }}>
               <span style={{ color: "#fff", fontWeight: 500 }}>{b.name}</span>
               <span style={{ color: "#888" }}>{b.course?.title || "—"}</span>
@@ -386,7 +407,7 @@ function Workshops({ courses, onUpdate }: { courses: Course[]; onUpdate: () => v
 }
 
 /* ─── BUCHUNGEN ─── */
-function Buchungen({ buchungen, courses, onUpdate }: { buchungen: Booking[]; courses: Course[]; onUpdate: () => void }) {
+function Buchungen({ buchungen, onUpdate }: { buchungen: Booking[]; courses: Course[]; onUpdate: () => void }) {
   const update = async (id: string, data: Record<string, unknown>) => {
     await api("/api/admin/bookings", { method: "PATCH", body: JSON.stringify({ id, ...data }) });
     onUpdate();
@@ -436,7 +457,7 @@ function Buchungen({ buchungen, courses, onUpdate }: { buchungen: Booking[]; cou
 
 /* ─── SETTINGS ─── */
 function Settings() {
-  const [hours, setHours] = useState([
+  const defaultHours = [
     { day: "Montag", from: "09:00", to: "18:00", closed: false },
     { day: "Dienstag", from: "09:00", to: "18:00", closed: false },
     { day: "Mittwoch", from: "09:00", to: "18:00", closed: false },
@@ -444,28 +465,43 @@ function Settings() {
     { day: "Freitag", from: "09:00", to: "18:00", closed: false },
     { day: "Samstag", from: "10:00", to: "17:00", closed: false },
     { day: "Sonntag", from: "", to: "", closed: true },
-  ]);
+  ];
+  const [hours, setHours] = useState(defaultHours);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
   const updateH = (i: number, f: string, v: string | boolean) => { setHours(p => p.map((h, j) => j === i ? { ...h, [f]: v } : h)); setSaved(false); };
+
+  useEffect(() => {
+    api("/api/admin/hours").then(data => {
+      if (Array.isArray(data) && data.length === 7) setHours(data);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const saveHours = async () => {
+    await api("/api/admin/hours", { method: "PUT", body: JSON.stringify(hours) });
+    setSaved(true); setTimeout(() => setSaved(false), 2000);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       <div style={card}>
         <h3 style={{ fontSize: 15, color: "#fff", fontWeight: 600, marginBottom: 20 }}>🕐 Öffnungszeiten</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {hours.map((h, i) => (
-            <div key={h.day} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
-              <span style={{ color: "#ccc", fontSize: 13, width: 110, flexShrink: 0 }}>{h.day}</span>
-              <label style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 12, color: "#888", width: 100 }}>
-                <input type="checkbox" checked={h.closed} onChange={e => updateH(i, "closed", e.target.checked)} style={{ accentColor: "#bb3599" }} /> Geschlossen
-              </label>
-              {!h.closed && (<><input type="time" value={h.from} onChange={e => updateH(i, "from", e.target.value)} style={{ ...inp, width: 120, padding: "6px 10px", fontSize: 12 }} /><span style={{ color: "#666" }}>–</span><input type="time" value={h.to} onChange={e => updateH(i, "to", e.target.value)} style={{ ...inp, width: 120, padding: "6px 10px", fontSize: 12 }} /></>)}
-              {h.closed && <span style={{ color: "#ef4444", fontSize: 12 }}>Geschlossen</span>}
-            </div>
-          ))}
-        </div>
+        {loading ? <p style={{ color: "#666", fontSize: 13 }}>Laden...</p> : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {hours.map((h, i) => (
+              <div key={h.day} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
+                <span style={{ color: "#ccc", fontSize: 13, width: 110, flexShrink: 0 }}>{h.day}</span>
+                <label style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 12, color: "#888", width: 100 }}>
+                  <input type="checkbox" checked={h.closed} onChange={e => updateH(i, "closed", e.target.checked)} style={{ accentColor: "#bb3599" }} /> Geschlossen
+                </label>
+                {!h.closed && (<><input type="time" value={h.from} onChange={e => updateH(i, "from", e.target.value)} style={{ ...inp, width: 120, padding: "6px 10px", fontSize: 12 }} /><span style={{ color: "#666" }}>–</span><input type="time" value={h.to} onChange={e => updateH(i, "to", e.target.value)} style={{ ...inp, width: 120, padding: "6px 10px", fontSize: 12 }} /></>)}
+                {h.closed && <span style={{ color: "#ef4444", fontSize: 12 }}>Geschlossen</span>}
+              </div>
+            ))}
+          </div>
+        )}
         <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12 }}>
-          <button style={btnP} onClick={() => { setSaved(true); setTimeout(() => setSaved(false), 2000); }}>💾 Speichern</button>
+          <button style={btnP} onClick={saveHours}>💾 Speichern</button>
           {saved && <span style={{ color: "#4ade80", fontSize: 12 }}>✓ Gespeichert</span>}
         </div>
         <p style={{ fontSize: 11, color: "#bb3599", marginTop: 12, fontWeight: 500 }}>⚠️ Termine nur nach vorheriger Vereinbarung!</p>
@@ -474,7 +510,7 @@ function Settings() {
       <div style={card}>
         <h3 style={{ fontSize: 15, color: "#fff", fontWeight: 600, marginBottom: 16 }}>📋 Studio-Info</h3>
         <div style={{ display: "grid", gap: 8, fontSize: 13 }}>
-          {[["Studio","SkinLove Tattoo & Piercing"],["Inhaberin","Eve Paule"],["Adresse","Linzer Straße 35, 1. OG, 4614 Marchtrenk"],["Telefon","+43 660 7835346"],["E-Mail","eve@skinlove-tattoo-piercing.at"]].map(([k,v]) => (
+          {[["Studio", "SkinLove Tattoo & Piercing"], ["Inhaberin", "Eve Paule"], ["Adresse", "Linzer Straße 35, 1. OG, 4614 Marchtrenk"], ["Telefon", "+43 660 7835346"], ["E-Mail", "eve@skinlove-tattoo-piercing.at"]].map(([k, v]) => (
             <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,.04)" }}>
               <span style={{ color: "#888" }}>{k}</span><span style={{ color: "#fff" }}>{v}</span>
             </div>

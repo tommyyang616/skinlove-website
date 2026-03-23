@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,9 +12,11 @@ export default function Datenschutz() {
       <header className="fixed top-0 left-0 w-full z-50 py-5 bg-[rgba(10,10,10,0.95)] backdrop-blur-xl border-b border-[rgba(187,53,153,0.08)]">
         <div className="max-w-[800px] mx-auto px-6 flex items-center justify-between">
           <Link href="/">
-            <img
-              src="/images/logo.png"
+            <Image
+              src="/images/logo.jpg"
               alt="SkinLove Logo"
+              width={160}
+              height={40}
               className="h-10 object-contain brightness-110"
             />
           </Link>
@@ -87,11 +90,12 @@ export default function Datenschutz() {
             4. Workshop-Buchung
           </h2>
           <p>
-            Bei der Buchung eines Workshops über unser Formular werden folgende
-            Daten erfasst: Name, E-Mail-Adresse, Telefonnummer, gewählter
-            Workshop. Diese Daten werden über Supabase (Hosting in der EU)
-            gespeichert und ausschließlich zur Bearbeitung Ihrer Buchung
-            verwendet.
+            Bei der Buchung eines Workshops oder einer Anfrage über unsere
+            Formulare werden insbesondere Name, E-Mail-Adresse, optionale
+            Nachrichteninhalte und je nach Anfrage die gewählte Leistung bzw.
+            der gewünschte Workshop verarbeitet. Diese Daten werden in unserer
+            Datenbank gespeichert und ausschließlich zur Bearbeitung Ihrer
+            Anfrage bzw. Buchung verwendet.
           </p>
 
           <h2 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white pt-4">
@@ -115,8 +119,10 @@ export default function Datenschutz() {
             6. Google Fonts
           </h2>
           <p>
-            Diese Website nutzt Google Fonts, die lokal eingebunden sind
-            (next/font). Es findet keine Verbindung zu Google-Servern statt.
+            Diese Website bindet Schriftarten von Google Fonts ein. Dabei kann
+            eine Verbindung zu Servern von Google hergestellt werden. Die
+            Nutzung erfolgt im Interesse einer einheitlichen und ansprechenden
+            Darstellung der Website.
           </p>
 
           <h2 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white pt-4">

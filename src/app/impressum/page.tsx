@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,9 +12,11 @@ export default function Impressum() {
       <header className="fixed top-0 left-0 w-full z-50 py-5 bg-[rgba(10,10,10,0.95)] backdrop-blur-xl border-b border-[rgba(187,53,153,0.08)]">
         <div className="max-w-[800px] mx-auto px-6 flex items-center justify-between">
           <Link href="/">
-            <img
-              src="/images/logo.png"
+            <Image
+              src="/images/logo.jpg"
               alt="SkinLove Logo"
+              width={160}
+              height={40}
               className="h-10 object-contain brightness-110"
             />
           </Link>

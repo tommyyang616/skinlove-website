@@ -1,11 +1,12 @@
 "use client";
+import Image from "next/image";
 export default function About() {
   return (
     <section className="section" id="about">
       <div className="container">
         <div className="about-grid">
           <div className="about-img-wrap reveal">
-            <img src="/images/eve-about.jpg" alt="Eve Paule – SkinLove" />
+            <Image src="/images/eve-about.jpg" alt="Eve Paule – SkinLove" width={800} height={1000} />
           </div>
           <div className="reveal">
             <span className="section-label">Über mich</span>

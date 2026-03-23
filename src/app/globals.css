@@ -3,7 +3,7 @@
    ========================================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e8e4df;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:#0a0a0a;color:#e8e4df;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 #about{background:#0e0e0e}
 #services{background:#121215}
@@ -23,8 +23,8 @@ ul{list-style:none}
   --bg-card-hover:#1a1a1a;
   --text:#f0ece8;
   --text-dim:#b0aaa4;
-  --serif:'Cormorant Garamond',serif;
-  --sans:'Inter',sans-serif;
+  --serif:var(--font-cormorant),serif;
+  --sans:var(--font-inter),sans-serif;
   --max:1200px;
 }
 body::after{
@@ -59,7 +59,7 @@ header.scrolled{padding:12px 0;background:rgba(10,10,10,.95)}
 }
 .logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
 .logo-text{
-  font-family:'Outfit',sans-serif;font-size:22px;font-weight:600;
+  font-family:var(--font-outfit),sans-serif;font-size:22px;font-weight:600;
   color:#fff;letter-spacing:-0.5px;display:flex;align-items:center;gap:0;
 }
 .logo-skin{opacity:0;animation:logoIn .6s ease forwards, logoLoop 3s ease 1.2s infinite}
@@ -104,7 +104,7 @@ nav a:hover::after{width:100%}
 }
 .hero-content{position:relative;z-index:2;padding-top:120px;padding-bottom:80px;text-align:left;max-width:700px}
 .hero h1{
-  font-family:'Outfit',sans-serif;font-size:clamp(3rem,8vw,6rem);
+  font-family:var(--font-outfit),sans-serif;font-size:clamp(3rem,8vw,6rem);
   font-weight:600;line-height:1.05;color:#fff;margin-bottom:24px;max-width:700px;letter-spacing:-1px;text-align:left;
 }
 .hero h1 em{font-style:normal;color:var(--pink)}

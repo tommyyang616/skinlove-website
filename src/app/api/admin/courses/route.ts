@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getTenantId } from "@/lib/tenant";
+import { checkAdminAuth } from "@/lib/admin-auth";
 
-export async function GET() {
+type CourseUpdateData = {
+  title?: string;
+  description?: string | null;
+  category?: string | null;
+  startDate?: Date | null;
+  timeText?: string | null;
+  price?: number;
+  deposit?: number;
+  maxSpots?: number;
+  includes?: string | null;
+  isActive?: boolean;
+};
+
+export async function GET(req: NextRequest) {
+  if (!checkAdminAuth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const tenantId = await getTenantId();
   if (!tenantId) return NextResponse.json([]);
   const courses = await prisma.course.findMany({
@@ -14,6 +29,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  if (!checkAdminAuth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const tenantId = await getTenantId();
   if (!tenantId) return NextResponse.json({ error: "No tenant" }, { status: 500 });
   const body = await req.json();
@@ -24,9 +40,10 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
+  if (!checkAdminAuth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = await req.json();
   const { id, ...data } = body;
-  const update: any = {};
+  const update: CourseUpdateData = {};
   if (data.title !== undefined) update.title = data.title;
   if (data.description !== undefined) update.description = data.description;
   if (data.category !== undefined) update.category = data.category;
@@ -42,6 +59,7 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  if (!checkAdminAuth(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await req.json();
   await prisma.course.delete({ where: { id } });
   return NextResponse.json({ ok: true });
