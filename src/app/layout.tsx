@@ -24,7 +24,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at"),
   title: {
     default: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
     template: "%s | SkinLove",

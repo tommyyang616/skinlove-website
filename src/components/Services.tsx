@@ -27,7 +27,19 @@ const guestArtists = [
     style: "Gasttätowierer",
     avatar: "/gallery/guests/guest1-profile.jpg",
     works: ["/gallery/arbeit1.jpg", "/gallery/arbeit2.jpg", "/gallery/arbeit3.jpg", "/gallery/arbeit4.jpg", "/gallery/arbeit6.jpg", "/gallery/guests/guest1-work1.jpg", "/gallery/guests/guest1-work2.jpg", "/gallery/guests/guest1-work3.jpg", "/gallery/guests/guest1-work4.jpg"],
-  }
+  },
+  {
+    name: "Nadija",
+    style: "Gasttätowiererin",
+    avatar: "/gallery/guests/nadija-profilbild.jpg",
+    works: Array.from({ length: 17 }, (_, i) => `/gallery/guests/nadija${i + 1}.jpg`),
+  },
+  {
+    name: "Srdjan",
+    style: "Gasttätowierer",
+    avatar: "/gallery/guests/srdjan-profilbild.jpg",
+    works: Array.from({ length: 15 }, (_, i) => `/gallery/guests/srdjan${i + 1}.jpg`),
+  },
 ];
 
 export default function Services({ onBook }: { onBook: () => void }) {
