@@ -1,51 +1,31 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
   const vid2 = useRef<HTMLVideoElement>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
   const [videosReady, setVideosReady] = useState(false);
   const [activeDesktopImage, setActiveDesktopImage] = useState<1 | 2>(1);
 
-  useLayoutEffect(() => {
-    if (typeof window === "undefined") return;
-    setIsDesktop(window.matchMedia("(min-width: 769px)").matches);
-  }, []);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia("(min-width: 769px)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const syncViewport = () => setIsDesktop(mediaQuery.matches);
-    mediaQuery.addEventListener("change", syncViewport);
-
-    if (mediaQuery.matches || reducedMotion) {
-      return () => {
-        mediaQuery.removeEventListener("change", syncViewport);
-      };
-    }
+    if (reducedMotion) return;
 
     // Delay video loading until after the initial content is stable
     const timer = setTimeout(() => setVideosReady(true), 2500);
-    return () => {
-      clearTimeout(timer);
-      mediaQuery.removeEventListener("change", syncViewport);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) return;
-
     const interval = window.setInterval(() => {
       setActiveDesktopImage((current) => (current === 1 ? 2 : 1));
     }, 3500);
 
     return () => window.clearInterval(interval);
-  }, [isDesktop]);
+  }, []);
 
   useEffect(() => {
     if (!videosReady) return;
@@ -77,38 +57,37 @@ export default function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        {isDesktop ? (
-          <>
-            <Image
-              src="/images/hero.jpg"
-              alt="SkinLove Tattoo Studio"
-              priority
-              fill
-              sizes="100vw"
-              style={{
-                objectFit: "cover",
-                objectPosition: "center center",
-                zIndex: 0,
-                opacity: activeDesktopImage === 1 ? 1 : 0,
-                transition: "opacity 0.8s ease",
-              }}
-            />
-            <Image
-              src="/images/hero2.jpg"
-              alt="SkinLove Tattoo Studio bei der Arbeit"
-              priority
-              fill
-              sizes="100vw"
-              style={{
-                objectFit: "cover",
-                objectPosition: "center center",
-                zIndex: 0,
-                opacity: activeDesktopImage === 2 ? 1 : 0,
-                transition: "opacity 0.8s ease",
-              }}
-            />
-          </>
-        ) : (
+        <div className="hero-desktop-media">
+          <Image
+            src="/images/hero.jpg"
+            alt="SkinLove Tattoo Studio"
+            priority
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center center",
+              zIndex: 0,
+              opacity: activeDesktopImage === 1 ? 1 : 0,
+              transition: "opacity 0.8s ease",
+            }}
+          />
+          <Image
+            src="/images/hero2.jpg"
+            alt="SkinLove Tattoo Studio bei der Arbeit"
+            priority
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center center",
+              zIndex: 0,
+              opacity: activeDesktopImage === 2 ? 1 : 0,
+              transition: "opacity 0.8s ease",
+            }}
+          />
+        </div>
+        <div className="hero-mobile-media">
           <Image
             src="/images/hero.jpg"
             alt="SkinLove Tattoo & Piercing Studio"
@@ -123,17 +102,17 @@ export default function Hero({ onBook }: { onBook: () => void }) {
               transition: "opacity 0.5s ease",
             }}
           />
-        )}
-        {!isDesktop && videosReady && (
-          <>
-            <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="auto">
-              <source src="/images/hero-video1.mp4" type="video/mp4" />
-            </video>
-            <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
-              <source src="/images/hero-video2.mp4" type="video/mp4" />
-            </video>
-          </>
-        )}
+          {videosReady && (
+            <>
+              <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="auto">
+                <source src="/images/hero-video1.mp4" type="video/mp4" />
+              </video>
+              <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
+                <source src="/images/hero-video2.mp4" type="video/mp4" />
+              </video>
+            </>
+          )}
+        </div>
       </div>
       <div className="hero-overlay" />
       <div className="hero-content" style={{ margin: 0, paddingLeft: 48, paddingRight: 24, width: "100%" }}>

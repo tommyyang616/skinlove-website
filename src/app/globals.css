@@ -326,6 +326,20 @@ nav a:hover::after {
   height: 100%
 }
 
+.hero-desktop-media,
+.hero-mobile-media {
+  position: absolute;
+  inset: 0
+}
+
+.hero-desktop-media {
+  display: block
+}
+
+.hero-mobile-media {
+  display: none
+}
+
 .hero-bg-vid {
   position: absolute;
   top: 0;
@@ -1411,6 +1425,14 @@ footer a {
 }
 
 @media(max-width:768px) {
+  .hero-desktop-media {
+    display: none
+  }
+
+  .hero-mobile-media {
+    display: block
+  }
+
   nav:not(.open) {
     display: none
   }
