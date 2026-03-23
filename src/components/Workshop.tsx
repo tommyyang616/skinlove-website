@@ -1,9 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-const SB_URL = "https://ebcjdkjrzwjxxwgtzunh.supabase.co";
-const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViY2pka2pyendqeHh3Z3R6dW5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4NDY4OTksImV4cCI6MjA4ODQyMjg5OX0.eOeWfKVQ8ZSVvsc0zcZtFQAFtx05Oe6AAukgqRS0zeY";
-
 interface WS { id: string; title: string; desc: string; date: string; time: string; price: number; deposit: number; maxSpots: number; takenSpots: number; category: string; includes: string; img: string; }
 
 const FALLBACK: WS[] = [
@@ -24,22 +21,15 @@ export default function Workshop() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(SB_URL + "/rest/v1/courses?active=eq.true&order=start_date&select=*,bookings(count)", {
-          headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
-        });
+        const res = await fetch("/api/courses");
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
           setWorkshops(data.map((c: any) => {
-            let img = c.image_url || "";
-            // Map old .png refs or missing images to optimized .jpg
+            let img = c.img || "";
             if (!img || img.includes("workshop1")) img = "/images/workshop1.jpg";
             else if (img.includes("workshop2")) img = "/images/workshop2.jpg";
             else if (img.includes("workshop3")) img = "/images/workshop3.jpg";
-            return {
-              id: c.id, title: c.title, desc: c.description, date: c.start_date, time: c.time_text,
-              price: c.price, deposit: c.deposit, maxSpots: c.max_spots, takenSpots: c.bookings?.[0]?.count || 0,
-              category: c.category, includes: c.includes || "", img,
-            };
+            return { ...c, img };
           }));
         }
       } catch { /* fallback */ }
@@ -66,13 +56,7 @@ export default function Workshop() {
     const msg = `💈 *Neue Workshop-Buchung!*%0A%0A*Workshop:* ${selected.title}%0A*Datum:* ${dateStr}, ${selected.time}%0A*Preis:* € ${selected.price} (Anzahlung: € ${selected.deposit})%0A*Zahlung:* 🏦 Überweisung (ausstehend)%0A%0A*Name:* ${name}%0A*Kontakt:* ${contact}%0A%0A_Gesendet über skinlove-website_`;
     window.open(`https://wa.me/436607835346?text=${msg}`, "_blank");
 
-    fetch(SB_URL + "/rest/v1/bookings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", apikey: SB_KEY, Authorization: "Bearer " + SB_KEY },
-      body: JSON.stringify({ course_id: selected.id, name, email: contact, phone: contact, status: "pending", paid: false }),
-    }).catch(() => {});
-
-    // Also via API for rate limiting + telegram
+    // Save via API (Prisma + rate limiting + telegram)
     fetch("/api/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

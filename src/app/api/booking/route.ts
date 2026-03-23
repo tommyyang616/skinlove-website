@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { sendTelegram } from "@/lib/telegram";
-
-const SB_URL = "https://ebcjdkjrzwjxxwgtzunh.supabase.co";
-const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViY2pka2pyendqeHh3Z3R6dW5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4NDY4OTksImV4cCI6MjA4ODQyMjg5OX0.eOeWfKVQ8ZSVvsc0zcZtFQAFtx05Oe6AAukgqRS0zeY";
+import { prisma } from "@/lib/prisma";
+import { getTenantId } from "@/lib/tenant";
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limit: 5 requests per 10 minutes per IP
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const { ok } = await checkRateLimit(`booking:${ip}`, 5, 600);
     if (!ok) return NextResponse.json({ error: "Zu viele Anfragen. Bitte warte ein paar Minuten." }, { status: 429 });
@@ -17,20 +15,15 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email) return NextResponse.json({ error: "Name und E-Mail sind Pflichtfelder." }, { status: 400 });
 
-    // Save to Supabase
-    const sbBody: Record<string, unknown> = { name, email, status: "pending" };
-    if (courseId) { sbBody.course_id = courseId; sbBody.phone = email; sbBody.paid = false; }
-    if (service) sbBody.service = service;
-    if (message) sbBody.message = message;
+    const tenantId = await getTenantId();
+    if (!tenantId) return NextResponse.json({ error: "Tenant nicht gefunden" }, { status: 500 });
 
-    await fetch(`${SB_URL}/rest/v1/bookings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
-      body: JSON.stringify(sbBody),
-    });
-
-    // Telegram Notification
     if (courseId) {
+      // Workshop booking → CourseEnrollment
+      await prisma.courseEnrollment.create({
+        data: { courseId, name, email, phone: email, status: "PENDING", paid: false },
+      });
+
       await sendTelegram(
         `📅 <b>Neue Workshop-Buchung!</b>\n\n` +
         `<b>Name:</b> ${name}\n` +
@@ -39,6 +32,11 @@ export async function POST(req: NextRequest) {
         `<i>Via skinlove-website</i>`
       );
     } else {
+      // Contact request
+      await prisma.contactRequest.create({
+        data: { tenantId, name, email, service: service || null, message: message || null, status: "PENDING" },
+      });
+
       await sendTelegram(
         `💈 <b>Neue Terminanfrage!</b>\n\n` +
         `<b>Name:</b> ${name}\n` +
@@ -50,7 +48,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    console.error("Booking error:", e);
     return NextResponse.json({ error: "Interner Fehler" }, { status: 500 });
   }
 }
