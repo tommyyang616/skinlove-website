@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"),
   title: {
@@ -97,6 +98,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <ChatWidget />
       </body>
     </html>
   );
