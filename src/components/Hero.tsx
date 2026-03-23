@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
@@ -9,6 +9,11 @@ export default function Hero({ onBook }: { onBook: () => void }) {
   const [videosReady, setVideosReady] = useState(false);
   const [activeDesktopImage, setActiveDesktopImage] = useState<1 | 2>(1);
 
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    setIsDesktop(window.matchMedia("(min-width: 769px)").matches);
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -16,10 +21,13 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const syncViewport = () => setIsDesktop(mediaQuery.matches);
-    syncViewport();
     mediaQuery.addEventListener("change", syncViewport);
 
-    if (isDesktop || reducedMotion) return;
+    if (mediaQuery.matches || reducedMotion) {
+      return () => {
+        mediaQuery.removeEventListener("change", syncViewport);
+      };
+    }
 
     // Delay video loading until after the initial content is stable
     const timer = setTimeout(() => setVideosReady(true), 2500);
