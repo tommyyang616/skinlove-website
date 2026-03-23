@@ -7,10 +7,13 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createClient() {
-    const connStr = process.env.DIRECT_URL || process.env.DATABASE_URL
+    const connStr = process.env.DATABASE_URL || ''
+    // Remove pgbouncer param as pg Pool doesn't understand it
+    const cleanUrl = connStr.replace('?pgbouncer=true', '').replace('&pgbouncer=true', '')
     const pool = new Pool({
-        connectionString: connStr,
+        connectionString: cleanUrl,
         ssl: { rejectUnauthorized: false },
+        max: 5,
     })
     const adapter = new PrismaPg(pool as any)
     return new PrismaClient({ adapter } as any)
