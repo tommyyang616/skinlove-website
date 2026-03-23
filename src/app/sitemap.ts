@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app";
-  const services = ["tattoos", "piercings", "permanent-make-up", "lash-brow-lifting", "kinderohrringe"];
+  const services = ["tattoos", "piercings", "permanent-make-up", "lash-brow-lifting", "kinderohrringe", "spezialleistungen"];
 
   return [
     { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },

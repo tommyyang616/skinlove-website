@@ -105,6 +105,26 @@ export const serviceData: Record<string, {
       { q: "Welchen Schmuck verwenden Sie?", a: "Hypoallergene Studex-Ohrstecker aus chirurgischem Stahl oder Titan." },
     ],
   },
+  spezialleistungen: {
+    title: "Spezialleistungen",
+    metaTitle: "Spezialleistungen Marchtrenk | Wildfleisch, Dermal Anker & mehr",
+    description: "Spezialleistungen bei SkinLove in Marchtrenk: Wildfleischbehandlung, Dermal Anker Entfernung, Piercing-Korrekturen, Nachstechen & kostenlose Erstberatung.",
+    hero: "Mehr als Tattoo & Piercing.",
+    details: [
+      "Wildfleischbehandlung — professionelle Behandlung von Granulationsgewebe",
+      "Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko",
+      "Nachstechen gratis innerhalb von 14 Tagen bei übermäßigem Farbverlust",
+      "Kostenlose Beratung & Erstgespräche jederzeit",
+      "Piercing-Korrekturen bei Fehlstichen aus anderen Studios",
+      "Prontolind Spray & Gel für optimale Pflege — direkt im Studio erhältlich",
+      "Stecker kürzen, Fremdschmuck wechseln, Dehnen",
+    ],
+    faq: [
+      { q: "Was ist Wildfleisch und wie wird es behandelt?", a: "Wildfleisch (Granulationsgewebe) entsteht manchmal bei Piercings. Wir behandeln es professionell — meld dich einfach bei uns." },
+      { q: "Kann ich auch Schmuck von anderen Studios wechseln lassen?", a: "Ja klar! Komm einfach vorbei — Fremdschmuck wechseln ist kein Problem." },
+      { q: "Kostet die Erstberatung etwas?", a: "Nein, Beratung und Erstgespräch sind bei uns immer kostenlos!" },
+    ],
+  },
 };
 
 export const slugs = Object.keys(serviceData);

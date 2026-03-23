@@ -1,5 +1,15 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+
+const slugMap: Record<string, string> = {
+  "Tattoos": "tattoos",
+  "Piercings": "piercings",
+  "Permanent Make-up": "permanent-make-up",
+  "Lash & Brow Lifting": "lash-brow-lifting",
+  "Kinderohrringe": "kinderohrringe",
+  "Spezialleistungen": "spezialleistungen",
+};
 
 const services = [
   { title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Finger-Tattoos, Cover-Ups, Auffrischung & Narbenüberdeckung.", details: ["Farbtattoos & Schwarz-Weiß-Tattoos — detailreiche Farbarbeiten oder klassische Black & Grey","Mini-Tattoos — kleine Kunstwerke mit großer Bedeutung, perfekt für dezente Designs","Finger-Tattoos — wenige Studios bieten es an, ich schon!","Cover-Ups für kleinere Motive — kostenloses Beratungsgespräch","Tattoo-Auffrischung — Farben auffrischen oder Linien nachziehen, egal von welchem Studio","Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren","Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen","Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust"] },
@@ -54,6 +64,13 @@ export default function Services({ onBook }: { onBook: () => void }) {
               <span className="service-expand">Mehr erfahren</span>
               <div className="service-detail">
                 <ul>{s.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
+                <Link
+                  href={`/leistungen/${slugMap[s.title] || "tattoos"}`}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 13, fontWeight: 600, transition: "opacity .3s" }}
+                >
+                  Details & FAQ →
+                </Link>
               </div>
             </div>
           ))}
