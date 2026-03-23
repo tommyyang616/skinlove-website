@@ -25,10 +25,6 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
       body: JSON.stringify({ name, email, service: service || null, message: msg || null }),
     }).catch(() => { });
 
-    // WhatsApp
-    const waMsg = `📅 *Neue Terminanfrage*%0A%0A*Name:* ${name}%0A*E-Mail:* ${email}%0A*Service:* ${service || "Nicht angegeben"}%0A*Nachricht:* ${msg || "—"}%0A%0A_Gesendet über skinlove-website_`;
-    window.open("https://wa.me/436607835346?text=" + waMsg, "_blank");
-
     setSuccess(true);
   };
 

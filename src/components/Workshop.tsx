@@ -58,11 +58,6 @@ export default function Workshop() {
     if (!contact) { if (contactRef.current) contactRef.current.style.borderColor = "#bb3599"; return; }
     if (!selected) return;
 
-    const d = new Date(selected.date + "T00:00");
-    const dateStr = d.toLocaleDateString("de-AT", { day: "numeric", month: "long", year: "numeric" });
-    const msg = `💈 *Neue Workshop-Buchung!*%0A%0A*Workshop:* ${selected.title}%0A*Datum:* ${dateStr}, ${selected.time}%0A*Preis:* € ${selected.price} (Anzahlung: € ${selected.deposit})%0A*Zahlung:* 🏦 Überweisung (ausstehend)%0A%0A*Name:* ${name}%0A*Kontakt:* ${contact}%0A%0A_Gesendet über skinlove-website_`;
-    window.open(`https://wa.me/436607835346?text=${msg}`, "_blank");
-
     // Save via API (Prisma + rate limiting + telegram)
     fetch("/api/booking", {
       method: "POST",
