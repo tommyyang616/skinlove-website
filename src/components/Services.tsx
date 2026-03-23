@@ -94,15 +94,14 @@ export default function Services({ onBook }: { onBook: () => void }) {
         <div className="guest-section reveal" id="guest-artists" style={{ marginTop: 80 }}>
           <span className="section-label" style={{ marginBottom: 12, display: "block" }}>Guest Artists</span>
           <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "#fff", fontWeight: 600, marginBottom: 12 }}>Gasttätowierer bei SkinLove</h3>
-          <p style={{ fontSize: 14, color: "var(--text-dim)", marginBottom: 32 }}>Unsere Gasttätowierer sind jeweils in der <strong style={{ color: "var(--pink)" }}>letzten Woche des Monats</strong> im Studio in Marchtrenk.</p>
           <div className="guest-grid">
             {guestArtists.map((a, i) => (
               <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
                 <div className="guest-card-mosaic">
-                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt="Arbeit von Gasttätowierer" width={320} height={320} />)}
+                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt="Arbeit von Gasttätowierer" width={320} height={320} sizes="(max-width: 768px) 45vw, 180px" loading="lazy" />)}
                 </div>
                 <div className="guest-card-bottom">
-                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={60} height={60} />
+                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={60} height={60} sizes="60px" loading="lazy" />
                   <div className="guest-info">
                     <h4>{a.name}</h4>
                     <p>{a.style}</p>
@@ -121,13 +120,13 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists[guestLbIdx] && (
               <>
                 <div className="guest-lb-header">
-                  <Image src={guestArtists[guestLbIdx].avatar} alt={guestArtists[guestLbIdx].name} width={120} height={120} />
+                  <Image src={guestArtists[guestLbIdx].avatar} alt={guestArtists[guestLbIdx].name} width={120} height={120} sizes="120px" loading="lazy" />
                   <h3>{guestArtists[guestLbIdx].name}</h3>
                   <p>{guestArtists[guestLbIdx].style}</p>
                 </div>
                 <div className="guest-lb-gallery">
                   {guestArtists[guestLbIdx].works.map((w, j) => (
-                    <Image key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} width={420} height={420} onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
+                    <Image key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} width={420} height={420} sizes="(max-width: 768px) 44vw, 240px" loading="lazy" onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
                   ))}
                 </div>
                 <a href="#" onClick={(e) => { e.preventDefault(); closeGuestLb(); setTimeout(onBook, 300); }} style={{ display: "block", textAlign: "center", marginTop: 20, padding: "12px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "opacity .3s" }}>Termin vereinbaren</a>
@@ -140,7 +139,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
         <div className={`guest-work-lb${workLbOpen ? " open" : ""}`}>
           <button className="close-btn" onClick={closeWorkLb}>×</button>
           <button className="nav-btn prev" onClick={() => navWork(-1)}>‹</button>
-          {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} />}
+          {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
           <button className="nav-btn next" onClick={() => navWork(1)}>›</button>
         </div>
       </div>

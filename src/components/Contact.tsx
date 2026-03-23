@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 
 export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean; onOpen: () => void; onClose: () => void }) {
   const [success, setSuccess] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const serviceRef = useRef<HTMLSelectElement>(null);
@@ -33,10 +34,19 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
       <section className="section contact-section" id="contact">
         <div className="container">
           <div className="map-placeholder reveal" style={{ aspectRatio: "16/7", marginBottom: 24, position: "relative", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2670.5!2d14.1168099!3d48.1916365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4773fb5a4c7b8e1d%3A0x0!2sLinzer+Stra%C3%9Fe+35%2C+4614+Marchtrenk!5e0!3m2!1sde!2sat!4v1"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-            />
+            {mapLoaded ? (
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2670.5!2d14.1168099!3d48.1916365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4773fb5a4c7b8e1d%3A0x0!2sLinzer+Stra%C3%9Fe+35%2C+4614+Marchtrenk!5e0!3m2!1sde!2sat!4v1"
+                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                title="Standort SkinLove Tattoo & Piercing"
+              />
+            ) : (
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, background: "linear-gradient(135deg, rgba(187,53,153,.12), rgba(10,10,10,.92))", border: "1px solid rgba(255,255,255,.08)" }}>
+                <strong style={{ color: "#fff", fontSize: 18 }}>Karte laden</strong>
+                <p style={{ color: "var(--text-dim)", fontSize: 13, margin: 0, textAlign: "center", maxWidth: 320 }}>Google Maps wird erst geladen, wenn du die Karte wirklich öffnen willst.</p>
+                <button className="btn-outline" type="button" onClick={() => setMapLoaded(true)} style={{ display: "inline-flex" }}>Karte anzeigen</button>
+              </div>
+            )}
             <a href="https://www.google.com/maps/dir//Linzer+Stra%C3%9Fe+35,+4614+Marchtrenk,+%C3%96sterreich" target="_blank" rel="noopener noreferrer"
               style={{ position: "absolute", top: 10, right: 10, zIndex: 2, fontSize: 10, padding: "5px 10px", background: "rgba(212,75,109,.7)", backdropFilter: "blur(8px)", color: "#fff", border: "1px solid rgba(212,75,109,.4)", letterSpacing: ".5px" }}>
               Route planen

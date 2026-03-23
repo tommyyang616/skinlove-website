@@ -125,7 +125,6 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        <ChatWrapper />
       </body>
     </html>
   );

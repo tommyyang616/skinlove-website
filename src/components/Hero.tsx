@@ -1,14 +1,25 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
   const vid2 = useRef<HTMLVideoElement>(null);
   const [videosReady, setVideosReady] = useState(false);
+  const [useDesktopImage, setUseDesktopImage] = useState(false);
 
   useEffect(() => {
-    // Delay video loading until after first paint
-    const timer = setTimeout(() => setVideosReady(true), 100);
+    if (typeof window === "undefined") return;
+
+    const isDesktop = window.matchMedia("(min-width: 769px)").matches;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    setUseDesktopImage(isDesktop);
+
+    if (isDesktop || reducedMotion) return;
+
+    // Delay video loading until after the initial content is stable
+    const timer = setTimeout(() => setVideosReady(true), 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -19,7 +30,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     if (!v1 || !v2) return;
 
     // Start playing video 1
-    v1.play().catch(() => {});
+    v1.play().catch(() => { });
 
     const swap = () => {
       if (v1.classList.contains("active")) {
@@ -42,17 +53,15 @@ export default function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        {/* Poster image as immediate LCP */}
-        <img
-          src="/images/hero.jpg"
+        <Image
+          src={useDesktopImage ? "/images/hero2.jpg" : "/images/hero.jpg"}
           alt="SkinLove Tattoo & Piercing Studio"
-          fetchPriority="high"
+          priority
+          fill
+          sizes="100vw"
           style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
+            objectPosition: useDesktopImage ? "center center" : "center top",
             zIndex: 0,
             opacity: videosReady ? 0 : 1,
             transition: "opacity 0.5s ease",
@@ -80,7 +89,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
             <span className="ha-word ha-d3 ha-skin">Skin</span>
             <span className="ha-heart ha-d4">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="#bb3599" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </span>
             <span className="ha-word ha-d5 ha-love">Love</span>

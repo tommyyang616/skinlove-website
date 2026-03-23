@@ -73,7 +73,16 @@ export default function Gallery() {
           <div className="gallery-wrap reveal">
             <div className="gallery-track" ref={trackRef}>
               {IMGS.map((src, i) => (
-                <Image key={i} src={src} alt="Tattoo" width={500} height={500} onClick={() => openLB(i)} loading="lazy" unoptimized />
+                <Image
+                  key={i}
+                  src={src}
+                  alt="Tattoo"
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 70vw, 320px"
+                  onClick={() => openLB(i)}
+                  loading="lazy"
+                />
               ))}
             </div>
             <div className="gallery-nav">
@@ -97,7 +106,7 @@ export default function Gallery() {
         onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchX.current; if (Math.abs(dx) > 50) navLB(dx < 0 ? 1 : -1); }}>
         <button className="lb-close" onClick={closeLB}>×</button>
         <button className="lb-nav prev" onClick={() => navLB(-1)}>‹</button>
-        <Image className="lb-main" src={IMGS[lbIdx]} alt="Tattoo vergrößert" width={1200} height={1200} unoptimized />
+        <Image className="lb-main" src={IMGS[lbIdx]} alt="Tattoo vergrößert" width={1200} height={1200} sizes="90vw" />
         <button className="lb-nav next" onClick={() => navLB(1)}>›</button>
         <div className="lb-counter">{lbIdx + 1} / {IMGS.length}</div>
       </div>

@@ -1,4 +1,3 @@
-"use client";
 export default function Info() {
   return (
     <section className="section" id="info" style={{ background: "#0e0e0e" }}>

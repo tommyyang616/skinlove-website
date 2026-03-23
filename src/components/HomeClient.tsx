@@ -1,19 +1,22 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
-import Gallery from "@/components/Gallery";
-import Workshop from "@/components/Workshop";
 import Info from "@/components/Info";
-import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
+const Gallery = dynamic(() => import("@/components/Gallery"));
+const Workshop = dynamic(() => import("@/components/Workshop"));
+const Reviews = dynamic(() => import("@/components/Reviews"));
+
 export default function HomeClient() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [deferredSectionsReady, setDeferredSectionsReady] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,6 +28,11 @@ export default function HomeClient() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDeferredSectionsReady(true), 1200);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <Navigation />
@@ -32,10 +40,10 @@ export default function HomeClient() {
       <About />
       <Services onBook={() => setBookingOpen(true)} />
       <Pricing />
-      <Gallery />
-      <Workshop />
+      {deferredSectionsReady ? <Gallery /> : null}
+      {deferredSectionsReady ? <Workshop /> : null}
       <Info />
-      <Reviews />
+      {deferredSectionsReady ? <Reviews /> : null}
       <Contact bookingOpen={bookingOpen} onOpen={() => setBookingOpen(true)} onClose={() => setBookingOpen(false)} />
       <Footer />
     </>
