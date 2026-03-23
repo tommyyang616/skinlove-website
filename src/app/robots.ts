@@ -5,6 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       { userAgent: "*", allow: "/", disallow: ["/admin"] },
     ],
-    sitemap: "https://skinlove-website.vercel.app/sitemap.xml",
+    sitemap: `${process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"}/sitemap.xml`,
   };
 }
