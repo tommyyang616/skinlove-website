@@ -74,7 +74,7 @@ export default function RootLayout({
               name: "SkinLove Tattoo & Piercing",
               alternateName: "SkinLove",
               description: "Professionelles Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Inhaberin Eve Paule.",
-              url: process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app",
+              url: process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at",
               telephone: "+436607835346",
               email: "eve@skinlove-tattoo-piercing.at",
               address: {
@@ -90,7 +90,7 @@ export default function RootLayout({
                 { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
                 { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
               ],
-              image: `${process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"}/images/og-image.jpg`,
+              image: `${process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at"}/images/og-image.jpg`,
               priceRange: "€€",
               founder: { "@type": "Person", name: "Eve Paule" },
               sameAs: [
