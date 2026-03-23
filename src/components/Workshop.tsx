@@ -24,11 +24,9 @@ export default function Workshop() {
         const res = await fetch("/api/courses");
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          setWorkshops(data.map((c: any) => {
-            let img = c.img || "";
-            if (!img || img.includes("workshop1")) img = "/images/workshop1.jpg";
-            else if (img.includes("workshop2")) img = "/images/workshop2.jpg";
-            else if (img.includes("workshop3")) img = "/images/workshop3.jpg";
+          const fallbackImgs = ["/images/workshop1.jpg", "/images/workshop2.jpg", "/images/workshop3.jpg"];
+          setWorkshops(data.map((c: any, i: number) => {
+            const img = c.img || fallbackImgs[i % fallbackImgs.length];
             return { ...c, img };
           }));
         }
