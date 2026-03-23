@@ -7,8 +7,8 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: "Zu viele Versuche" }, { status: 429 });
 
   const { password } = await req.json();
-  const correct = process.env.ADMIN_PASSWORD || "skinlove2026!";
+  const correct = (process.env.ADMIN_PASSWORD || "skinlove2026!").trim();
 
-  if (password === correct) return NextResponse.json({ ok: true });
+  if (password.trim() === correct) return NextResponse.json({ ok: true });
   return NextResponse.json({ error: "Falsches Passwort" }, { status: 401 });
 }
