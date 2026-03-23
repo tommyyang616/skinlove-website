@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ChatWrapper } from "@/components/chat/ChatWrapper";
@@ -59,6 +59,12 @@ export const metadata: Metadata = {
   other: {
     "theme-color": "#BB3599",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
