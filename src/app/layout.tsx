@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skinlove-website.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-website-one.vercel.app"),
   title: {
     default: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
     template: "%s | SkinLove",
@@ -96,7 +97,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ChatWidget />
+      </body>
     </html>
   );
 }

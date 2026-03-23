@@ -11,6 +11,7 @@ type Tab = "dashboard" | "anfragen" | "kurse" | "buchungen";
 
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
   const [tab, setTab] = useState<Tab>("dashboard");
@@ -21,9 +22,9 @@ export default function AdminPage() {
   useEffect(() => { if (sessionStorage.getItem("sl_admin") === "1") setLoggedIn(true); }, []);
 
   const login = async () => {
-    const res = await fetch("/api/admin-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: pw }) });
+    const res = await fetch("/api/admin-auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: user, password: pw }) });
     if (res.ok) { setLoggedIn(true); sessionStorage.setItem("sl_admin", "1"); }
-    else setErr("Falsches Passwort");
+    else setErr("Falscher Benutzername oder Passwort");
   };
   const logout = () => { sessionStorage.removeItem("sl_admin"); setLoggedIn(false); };
 
@@ -44,10 +45,16 @@ export default function AdminPage() {
     <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Inter',sans-serif" }}>
       <div style={{ width: 360, background: "#141414", border: "1px solid rgba(255,255,255,.1)", padding: 40 }}>
         <h2 style={{ color: "#fff", fontSize: 20, marginBottom: 24 }}>🔐 SkinLove Admin</h2>
-        <input type="password" placeholder="Admin-Passwort" value={pw}
+        <input type="text" placeholder="Benutzername" value={user}
+          onChange={e => { setUser(e.target.value); setErr(""); }}
+          style={{ width: "100%", padding: 12, background: "#1a1a1a", border: "1px solid rgba(255,255,255,.1)", color: "#fff", fontSize: 14, outline: "none", marginBottom: 12, boxSizing: "border-box" }}
+          autoComplete="username"
+        />
+        <input type="password" placeholder="Passwort" value={pw}
           onChange={e => { setPw(e.target.value); setErr(""); }}
           onKeyDown={e => e.key === "Enter" && login()}
           style={{ width: "100%", padding: 12, background: "#1a1a1a", border: "1px solid rgba(255,255,255,.1)", color: "#fff", fontSize: 14, outline: "none", marginBottom: 16, boxSizing: "border-box" }}
+          autoComplete="current-password"
         />
         <button onClick={login} style={{ width: "100%", padding: 12, background: "#bb3599", color: "#fff", border: "none", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Anmelden</button>
         {err && <p style={{ color: "#e44", fontSize: 12, marginTop: 12 }}>{err}</p>}
