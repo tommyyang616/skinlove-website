@@ -5,23 +5,39 @@ import { useEffect, useRef, useState } from "react";
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
   const vid2 = useRef<HTMLVideoElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [videosReady, setVideosReady] = useState(false);
-  const [useDesktopImage, setUseDesktopImage] = useState(false);
+  const [activeDesktopImage, setActiveDesktopImage] = useState<1 | 2>(1);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const isDesktop = window.matchMedia("(min-width: 769px)").matches;
+    const mediaQuery = window.matchMedia("(min-width: 769px)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    setUseDesktopImage(isDesktop);
+    const syncViewport = () => setIsDesktop(mediaQuery.matches);
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
 
     if (isDesktop || reducedMotion) return;
 
     // Delay video loading until after the initial content is stable
     const timer = setTimeout(() => setVideosReady(true), 2500);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      mediaQuery.removeEventListener("change", syncViewport);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
+    const interval = window.setInterval(() => {
+      setActiveDesktopImage((current) => (current === 1 ? 2 : 1));
+    }, 3500);
+
+    return () => window.clearInterval(interval);
+  }, [isDesktop]);
 
   useEffect(() => {
     if (!videosReady) return;
@@ -53,21 +69,54 @@ export default function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        <Image
-          src={useDesktopImage ? "/images/hero2.jpg" : "/images/hero.jpg"}
-          alt="SkinLove Tattoo & Piercing Studio"
-          priority
-          fill
-          sizes="100vw"
-          style={{
-            objectFit: "cover",
-            objectPosition: useDesktopImage ? "center center" : "center top",
-            zIndex: 0,
-            opacity: videosReady ? 0 : 1,
-            transition: "opacity 0.5s ease",
-          }}
-        />
-        {videosReady && (
+        {isDesktop ? (
+          <>
+            <Image
+              src="/images/hero.jpg"
+              alt="SkinLove Tattoo Studio"
+              priority
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center center",
+                zIndex: 0,
+                opacity: activeDesktopImage === 1 ? 1 : 0,
+                transition: "opacity 0.8s ease",
+              }}
+            />
+            <Image
+              src="/images/hero2.jpg"
+              alt="SkinLove Tattoo Studio bei der Arbeit"
+              priority
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center center",
+                zIndex: 0,
+                opacity: activeDesktopImage === 2 ? 1 : 0,
+                transition: "opacity 0.8s ease",
+              }}
+            />
+          </>
+        ) : (
+          <Image
+            src="/images/hero.jpg"
+            alt="SkinLove Tattoo & Piercing Studio"
+            priority
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center top",
+              zIndex: 0,
+              opacity: videosReady ? 0 : 1,
+              transition: "opacity 0.5s ease",
+            }}
+          />
+        )}
+        {!isDesktop && videosReady && (
           <>
             <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="auto">
               <source src="/images/hero-video1.mp4" type="video/mp4" />
