@@ -57,8 +57,10 @@ export default function Datenschutz() {
             <p>Eine Zusammenf{"\u00FC"}hrung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der technisch fehlerfreien Darstellung und Optimierung der Website).</p>
           </S>
 
-          <S t="4. Cookies">
-            <p>Diese Website verwendet ausschlie{"\u00DF"}lich technisch notwendige Cookies, die f{"\u00FC"}r den Betrieb der Seite erforderlich sind. Es werden keine Tracking- oder Marketing-Cookies eingesetzt. Technisch notwendige Cookies werden auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO gespeichert.</p>
+          <S t="4. Cookies und Speichertechnologien (TKG 2021 {'\u00A7'} 165)">
+            <p>Diese Website verwendet ausschlie{"\u00DF"}lich technisch notwendige Cookies, die f{"\u00FC"}r den Betrieb der Seite erforderlich sind. Es werden keine Tracking-, Analyse- oder Marketing-Cookies eingesetzt.</p>
+            <p>Gem{"\u00E4"}{"\u00DF"} {"\u00A7"} 165 Abs. 3 TKG 2021 ist f{"\u00FC"}r technisch notwendige Cookies keine Einwilligung erforderlich, da diese zur Bereitstellung des vom Nutzer ausdr{"\u00FC"}cklich angeforderten Dienstes unbedingt erforderlich sind.</p>
+            <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) i.V.m. {"\u00A7"} 165 Abs. 3 TKG 2021.</p>
           </S>
 
           <S t="5. Kontaktaufnahme &amp; Buchungsanfragen">
@@ -88,15 +90,20 @@ export default function Datenschutz() {
             <p>Auf dieser Website sind Links zu unseren Social-Media-Profilen eingebunden (Instagram, Facebook, TikTok). Es handelt sich um einfache Verlinkungen {"\u2014"} beim Besuch unserer Website werden keine Daten an diese Plattformen {"\u00FC"}bermittelt. Erst beim Klick auf einen Link und dem Besuch der jeweiligen Plattform gelten deren Datenschutzbestimmungen.</p>
           </S>
 
-          <S t="11. Auftragsverarbeitung">
+          <S t="11. Google Search Console">
+            <p>Wir verwenden die Google Search Console, um die Auffindbarkeit unserer Website in der Google-Suche zu {"\u00FC"}berwachen. Dazu wurde eine Verifizierung unserer Domain bei Google durchgef{"\u00FC"}hrt. Die Google Search Console erhebt keine personenbezogenen Daten von Website-Besuchern {"\u2014"} es werden lediglich aggregierte, anonymisierte Suchdaten an den Websitebetreiber {"\u00FC"}bermittelt.</p>
+            <p>Weitere Informationen: <A href="https://policies.google.com/privacy">policies.google.com/privacy</A></p>
+          </S>
+
+          <S t="12. Auftragsverarbeitung">
             <p>Wir haben mit unseren Dienstleistern (insbesondere Vercel als Hosting-Provider) Auftragsverarbeitungsvertr{"\u00E4"}ge gem{"\u00E4"}{"\u00DF"} Art. 28 DSGVO abgeschlossen. Diese stellen sicher, dass personenbezogene Daten nur nach unserer Weisung und unter Einhaltung der DSGVO verarbeitet werden.</p>
           </S>
 
-          <S t="12. Speicherdauer">
+          <S t="13. Speicherdauer">
             <p>Personenbezogene Daten werden nur so lange gespeichert, wie dies f{"\u00FC"}r den jeweiligen Verarbeitungszweck erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen (z.{"\u00A0"}B. 7 Jahre nach Bundesabgabenordnung f{"\u00FC"}r buchhalterisch relevante Unterlagen). Server-Logfiles werden in der Regel nach 30 Tagen gel{"\u00F6"}scht.</p>
           </S>
 
-          <S t="13. Ihre Rechte">
+          <S t="14. Ihre Rechte">
             <p>Sie haben nach der DSGVO folgende Rechte:</p>
             <ul className="list-disc list-inside space-y-1 pl-2">
               <li><strong className="text-white">Auskunft</strong> (Art. 15 DSGVO) {"\u2014"} Welche Daten wir {"\u00FC"}ber Sie gespeichert haben</li>
@@ -105,11 +112,12 @@ export default function Datenschutz() {
               <li><strong className="text-white">Einschr{"\u00E4"}nkung</strong> (Art. 18 DSGVO) {"\u2014"} Einschr{"\u00E4"}nkung der Verarbeitung</li>
               <li><strong className="text-white">Daten{"\u00FC"}bertragbarkeit</strong> (Art. 20 DSGVO) {"\u2014"} Herausgabe Ihrer Daten in maschinenlesbarem Format</li>
               <li><strong className="text-white">Widerspruch</strong> (Art. 21 DSGVO) {"\u2014"} Widerspruch gegen die Verarbeitung</li>
+              <li><strong className="text-white">Widerruf der Einwilligung</strong> (Art. 7 Abs. 3 DSGVO) {"\u2014"} Soweit die Verarbeitung auf Ihrer Einwilligung beruht, k{"\u00F6"}nnen Sie diese jederzeit widerrufen, ohne dass die Rechtm{"\u00E4"}{"\u00DF"}igkeit der bis dahin erfolgten Verarbeitung ber{"\u00FC"}hrt wird</li>
             </ul>
             <p>Zur Aus{"\u00FC"}bung Ihrer Rechte wenden Sie sich bitte an die oben genannte verantwortliche Stelle.</p>
           </S>
 
-          <S t="14. Beschwerderecht">
+          <S t="15. Beschwerderecht">
             <p>Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verst{"\u00F6"}{"\u00DF"}t, haben Sie das Recht, bei der zust{"\u00E4"}ndigen Aufsichtsbeh{"\u00F6"}rde Beschwerde einzulegen:</p>
             <p><strong className="text-white">{"\u00D6"}sterreichische Datenschutzbeh{"\u00F6"}rde</strong><br />Barichgasse 40{"\u2013"}42, 1030 Wien<br />Telefon: +43 1 52 152-0<br />E-Mail: <A href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</A><br />Website: <A href="https://www.dsb.gv.at">www.dsb.gv.at</A></p>
           </S>
