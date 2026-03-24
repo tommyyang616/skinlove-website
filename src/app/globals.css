@@ -64,6 +64,7 @@ ul {
 
 :root {
   --pink: #bb3599;
+  --pink-text: #d95dc0;
   --pink-dim: #a02d85;
   --pink-glow: rgba(187, 53, 153, .15);
   --bg: #0a0a0a;
@@ -105,7 +106,7 @@ body::after {
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--pink-text);
   margin-bottom: 16px;
   display: block;
 }
@@ -694,7 +695,7 @@ nav a:hover::after {
   font-size: 12px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--pink)
+  color: var(--pink-text)
 }
 
 .service-expand::after {
@@ -732,7 +733,7 @@ nav a:hover::after {
 .pricing-tab.active,
 .pricing-tab:hover {
   border-color: var(--pink);
-  color: var(--pink);
+  color: var(--pink-text);
   background: rgba(187, 53, 153, .06)
 }
 
@@ -770,7 +771,7 @@ nav a:hover::after {
   font-family: var(--serif);
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--pink);
+  color: var(--pink-text);
   white-space: nowrap
 }
 
@@ -779,7 +780,7 @@ nav a:hover::after {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--pink-text);
   padding: 24px 0 8px;
   margin-top: 16px
 }
@@ -960,7 +961,7 @@ nav a:hover::after {
   border: 1px solid rgba(255, 255, 255, .04)
 }
 
-.info-card h4 {
+.info-card h3, .info-card h4 {
   font-family: var(--serif);
   font-size: 1.1rem;
   font-weight: 600;
@@ -1014,12 +1015,12 @@ nav a:hover::after {
   margin-bottom: 32px
 }
 
-.contact-block h4 {
+.contact-block h3, .contact-block h4 {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--pink-text);
   margin-bottom: 12px
 }
 
@@ -1687,7 +1688,7 @@ footer a {
   margin-bottom: 8px
 }
 
-.ws-card h4 {
+.ws-card h3 {
   font-family: var(--serif);
   font-size: 1.2rem;
   font-weight: 600;
@@ -1804,7 +1805,10 @@ footer a {
   justify-content: center;
   cursor: pointer;
   z-index: 3;
-  transition: all .3s
+  transition: all .3s;
+  padding: 0;
+  font-family: inherit;
+  line-height: 1
 }
 
 .ws-info-icon:hover {
@@ -1832,11 +1836,11 @@ footer a {
   display: block
 }
 
-.ws-info-popup h5 {
+.ws-info-popup h4 {
   font-size: 12px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--pink-text);
   margin-bottom: 8px;
   font-weight: 600
 }
@@ -1990,7 +1994,7 @@ footer a {
 
 .guest-cta {
   font-size: 11px;
-  color: var(--pink);
+  color: var(--pink-text);
   letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: 500

@@ -84,7 +84,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
                   <div className="hours-row"><span>Samstag</span><span>10:00 – 17:00</span></div>
                   <div className="hours-row"><span>Sonntag</span><span>Geschlossen</span></div>
                 </div>
-                <p style={{ marginTop: 12, fontSize: 13, color: "var(--pink)", fontWeight: 500 }}>⚠️ Termine nur nach vorheriger Vereinbarung!</p>
+                <p style={{ marginTop: 12, fontSize: 13, color: "var(--pink-text)", fontWeight: 500 }}>⚠️ Termine nur nach vorheriger Vereinbarung!</p>
               </div>
             </div>
           </div>

@@ -100,20 +100,20 @@ export default function Workshop() {
                   <div key={ws.id} className="ws-card reveal visible">
                     <div className="ws-card-img" style={{ backgroundImage: ws.img ? `url('${ws.img}')` : "linear-gradient(135deg,rgba(187,53,153,.3),rgba(10,10,10,.9))" }}>
                       <span className="ws-card-badge">{ws.category}</span>
-                      <span className="ws-info-icon" onClick={toggleInfo}>i</span>
+                      <button type="button" className="ws-info-icon" onClick={toggleInfo} aria-label="Workshop-Info anzeigen">i</button>
                       <div className="ws-info-popup">
-                        <button className="close-info" onClick={(e) => { e.stopPropagation(); (e.currentTarget.parentElement as HTMLElement).classList.remove("show"); }}>×</button>
-                        <h3>Voraussetzungen</h3>
+                        <button className="close-info" onClick={(e) => { e.stopPropagation(); (e.currentTarget.parentElement as HTMLElement).classList.remove("show"); }} aria-label="Info schließen">×</button>
+                        <h4>Voraussetzungen</h4>
                         <ul><li>Mindestalter: 18 Jahre</li><li>Keine Vorkenntnisse nötig</li><li>Material wird gestellt</li></ul>
-                        <h3 style={{ marginTop: 12 }}>Stornierung</h3>
+                        <h4 style={{ marginTop: 12 }}>Stornierung</h4>
                         <ul><li>14+ Tage vorher: 100% Erstattung</li><li>7–14 Tage: 50% Erstattung</li><li>Unter 7 Tage: keine Erstattung</li></ul>
-                        <h3 style={{ marginTop: 12 }}>Inkludiert</h3>
+                        <h4 style={{ marginTop: 12 }}>Inkludiert</h4>
                         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>{ws.includes}</p>
                       </div>
                     </div>
                     <div className="ws-card-body">
                       <div className="ws-card-date">{dateStr}</div>
-                      <h4>{ws.title}</h4>
+                      <h3>{ws.title}</h3>
                       <p className="ws-card-desc">{ws.desc}</p>
                       <div className="ws-card-meta">
                         <span>🕐 {ws.time}</span>
