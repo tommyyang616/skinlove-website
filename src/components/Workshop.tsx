@@ -84,7 +84,7 @@ export default function Workshop() {
 
   return (
     <>
-      <section className="section" id="workshop" style={{ background: "#262630" }}>
+      <section className="section" id="workshop" style={{ background: "#202028" }}>
         <div className="container">
           <span className="section-label reveal">Workshop</span>
           <h2 className="section-title reveal">Workshops &amp; Kurse</h2>
