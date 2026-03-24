@@ -41,7 +41,7 @@ export default function Reviews() {
         <h2 className="section-title reveal">Das sagen meine Kunden</h2>
         <div className="reviews-header reveal">
           <GoogleSVG24 />
-          <span>4,6 Sterne · Google Bewertungen</span>
+          <span>4,9 Sterne · Google Bewertungen</span>
         </div>
         <div className="reviews-stars reveal">★★★★★</div>
         <div className="reviews-track-wrap reveal">
