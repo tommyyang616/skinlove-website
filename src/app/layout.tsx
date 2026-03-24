@@ -74,6 +74,7 @@ export default function RootLayout({
   return (
     <html lang="de-AT" className={`${inter.variable} ${cormorant.variable} ${outfit.variable}`}>
       <head>
+        <meta name="google-site-verification" content="6yq00dU1qxKw-0D8xhAY9LVLDljmd4V2yhkABzoNa8E" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
