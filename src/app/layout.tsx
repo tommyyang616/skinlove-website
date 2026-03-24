@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     default: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
     template: "%s | SkinLove",
   },
-  description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Individuelle K\u00F6rperkunst von Eve Paule. Jetzt Termin sichern!",
+  description: "Von der ersten Idee bis zum fertigen Kunstwerk \u2013 bei SkinLove bist du in erfahrenen H\u00E4nden. Jedes Tattoo wird individuell f\u00FCr dich gestaltet, mit Pr\u00E4zision, Leidenschaft und einem Auge f\u00FCrs Detail.",
   keywords: ["Tattoo", "Piercing", "Permanent Make-up", "Lash Lifting", "Marchtrenk", "Wels", "Linz", "Ober\u00F6sterreich", "Eve Paule", "SkinLove", "Tattoo Studio", "Fine Line Tattoo", "Kinderohrringe", "Gastt\u00E4towierer", "Tattoo Workshop"],
   authors: [{ name: "Eve Paule" }],
   creator: "SkinLove Tattoo & Piercing",
   alternates: { canonical: "/" },
   openGraph: {
     title: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
-    description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Individuelle K\u00F6rperkunst von Eve Paule.",
+    description: "Von der ersten Idee bis zum fertigen Kunstwerk \u2013 bei SkinLove bist du in erfahrenen H\u00E4nden. Jedes Tattoo wird individuell f\u00FCr dich gestaltet.",
     images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: "SkinLove Tattoo & Piercing" }],
     url: "/",
     type: "website",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
-    description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Jetzt Termin sichern!",
+    description: "Von der ersten Idee bis zum fertigen Kunstwerk \u2013 bei SkinLove bist du in erfahrenen H\u00E4nden. Jedes Tattoo wird individuell f\u00FCr dich gestaltet.",
     images: ["/images/og-image.jpg"],
   },
   robots: {
