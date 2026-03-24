@@ -12,7 +12,7 @@ export default function About() {
             <h2 className="section-title">Eve Paule</h2>
             <p className="section-text">Ich bin Eve, Gründerin von SkinLove. Vom Einzelhandel und der Krankenpflege zur Körperkunst — heute lebe ich meinen Traum als selbstständige Tätowiererin, Piercerin und Permanent Make-up-Artistin.</p>
             <br />
-            <p className="section-text">Ob Fine-Line, Mandala, Black &amp; Grey oder Watercolor — jedes Tattoo ist für mich eine Herzensangelegenheit. Ich nehme mir Zeit für deine Geschichte und gestalte ein Motiv, das zu dir passt.</p>
+            <p className="section-text">Von der ersten Idee bis zum fertigen Kunstwerk — bei SkinLove bist du in erfahrenen Händen. Jedes Tattoo wird individuell für dich gestaltet, mit Präzision, Leidenschaft und einem Auge fürs Detail.</p>
             <div className="about-stats">
               <div className="stat">
                 <div className="stat-num">6+</div>
