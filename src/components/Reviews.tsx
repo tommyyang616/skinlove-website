@@ -58,8 +58,8 @@ export default function Reviews() {
             ))}
           </div>
           <div className="reviews-nav">
-            <button onClick={() => scroll(-1)}>‹</button>
-            <button onClick={() => scroll(1)}>›</button>
+            <button onClick={() => scroll(-1)} aria-label="Vorherige Bewertungen">‹</button>
+            <button onClick={() => scroll(1)} aria-label="Nächste Bewertungen">›</button>
           </div>
         </div>
         <div style={{ textAlign: "center", marginTop: 32 }} className="reveal">

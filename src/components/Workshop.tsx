@@ -103,11 +103,11 @@ export default function Workshop() {
                       <span className="ws-info-icon" onClick={toggleInfo}>i</span>
                       <div className="ws-info-popup">
                         <button className="close-info" onClick={(e) => { e.stopPropagation(); (e.currentTarget.parentElement as HTMLElement).classList.remove("show"); }}>×</button>
-                        <h5>Voraussetzungen</h5>
+                        <h3>Voraussetzungen</h3>
                         <ul><li>Mindestalter: 18 Jahre</li><li>Keine Vorkenntnisse nötig</li><li>Material wird gestellt</li></ul>
-                        <h5 style={{ marginTop: 12 }}>Stornierung</h5>
+                        <h3 style={{ marginTop: 12 }}>Stornierung</h3>
                         <ul><li>14+ Tage vorher: 100% Erstattung</li><li>7–14 Tage: 50% Erstattung</li><li>Unter 7 Tage: keine Erstattung</li></ul>
-                        <h5 style={{ marginTop: 12 }}>Inkludiert</h5>
+                        <h3 style={{ marginTop: 12 }}>Inkludiert</h3>
                         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>{ws.includes}</p>
                       </div>
                     </div>
@@ -135,8 +135,8 @@ export default function Workshop() {
               })}
             </div>
             <div className="ws-scroll-nav">
-              <button onClick={() => scrollWs(-1)}>‹</button>
-              <button onClick={() => scrollWs(1)}>›</button>
+              <button onClick={() => scrollWs(-1)} aria-label="Vorheriger Workshop">‹</button>
+              <button onClick={() => scrollWs(1)} aria-label="Nächster Workshop">›</button>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function Workshop() {
       {/* Workshop Booking Modal */}
       <div className={`modal-overlay${modalOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
         <div className="modal" style={{ maxWidth: 440 }}>
-          <button className="modal-close" onClick={closeModal}>×</button>
+          <button className="modal-close" onClick={closeModal} aria-label="Schließen">×</button>
           {!success && selected ? (
             <div>
               <h3>{selected.title}</h3>

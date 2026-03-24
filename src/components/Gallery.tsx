@@ -86,8 +86,8 @@ export default function Gallery() {
               ))}
             </div>
             <div className="gallery-nav">
-              <button onClick={() => scroll(-1)}>‹</button>
-              <button onClick={() => scroll(1)}>›</button>
+              <button onClick={() => scroll(-1)} aria-label="Vorherige Bilder">‹</button>
+              <button onClick={() => scroll(1)} aria-label="Nächste Bilder">›</button>
             </div>
           </div>
           <div className="gallery-note reveal">
@@ -104,10 +104,10 @@ export default function Gallery() {
       <div className={`lightbox${lbOpen ? " open" : ""}`} id="lightbox" onClick={(e) => { if (e.target === e.currentTarget) closeLB(); }}
         onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
         onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchX.current; if (Math.abs(dx) > 50) navLB(dx < 0 ? 1 : -1); }}>
-        <button className="lb-close" onClick={closeLB}>×</button>
-        <button className="lb-nav prev" onClick={() => navLB(-1)}>‹</button>
+        <button className="lb-close" onClick={closeLB} aria-label="Galerie schließen">×</button>
+        <button className="lb-nav prev" onClick={() => navLB(-1)} aria-label="Vorheriges Bild">‹</button>
         <Image className="lb-main" src={IMGS[lbIdx]} alt="Tattoo vergrößert" width={1200} height={1200} sizes="90vw" />
-        <button className="lb-nav next" onClick={() => navLB(1)}>›</button>
+        <button className="lb-nav next" onClick={() => navLB(1)} aria-label="Nächstes Bild">›</button>
         <div className="lb-counter">{lbIdx + 1} / {IMGS.length}</div>
       </div>
     </>

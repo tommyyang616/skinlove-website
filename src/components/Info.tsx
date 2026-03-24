@@ -6,7 +6,7 @@ export default function Info() {
         <h2 className="section-title reveal">Wichtige Infos</h2>
         <div className="info-grid">
           <div className="info-card reveal">
-            <h4>Stornierung</h4>
+            <h3>Stornierung</h3>
             <ul>
               <li>Bis 48h vorher: kostenlose Verschiebung</li>
               <li>1 Tag vorher: 50 % + Anzahlung</li>
@@ -14,12 +14,12 @@ export default function Info() {
             </ul>
           </div>
           <div className="info-card reveal">
-            <h4>Anzahlung</h4>
+            <h3>Anzahlung</h3>
             <p>Bei Anfahrt über 1 Stunde + konkretem Motiv: Terminreservierung per Überweisung mit 150 € Anzahlung.</p>
             <p style={{ marginTop: 12, fontSize: 13, color: "var(--text-dim)" }}>IBAN: AT37 2032 6000 0123 9441<br />BIC: SPNAKT21XXX</p>
           </div>
           <div className="info-card reveal">
-            <h4>Nachstechen &amp; Pflege</h4>
+            <h3>Nachstechen &amp; Pflege</h3>
             <p>Gratis Nachstechen innerhalb von 14 Tagen, wenn übermäßig Farbe ausbricht. Kostenlose Erstberatung jederzeit möglich.</p>
           </div>
         </div>

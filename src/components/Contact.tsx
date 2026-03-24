@@ -66,19 +66,19 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
             </div>
             <div>
               <div className="contact-block" style={{ marginBottom: 12 }}>
-                <h4 style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <h3 style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                   Adresse
-                </h4>
+                </h3>
                 <p>Linzer Straße 35, 1. OG<br />4614 Marchtrenk, Österreich</p>
               </div>
             </div>
             <div>
               <div className="contact-block">
-                <h4 style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <h3 style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                   Öffnungszeiten
-                </h4>
+                </h3>
                 <div className="hours-grid">
                   <div className="hours-row"><span>Montag – Freitag</span><span>09:00 – 18:00</span></div>
                   <div className="hours-row"><span>Samstag</span><span>10:00 – 17:00</span></div>
@@ -94,7 +94,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
       {/* Booking Modal */}
       <div className={`modal-overlay${bookingOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
         <div className="modal">
-          <button className="modal-close" onClick={closeModal}>×</button>
+          <button className="modal-close" onClick={closeModal} aria-label="Schließen">×</button>
           <div className={`modal-form${success ? " hidden" : ""}`} id="bookingForm">
             <h3>Termin anfragen</h3>
             <p>Fülle das Formular aus und du bekommst eine Bestätigungsmail. Eve meldet sich in Kürze bei dir!</p>

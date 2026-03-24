@@ -69,7 +69,7 @@ export default function Navigation() {
         <a href="tel:+436607835346" className="header-cta" style={{ textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
           Anrufen<span style={{ display: "block", fontSize: 8, fontWeight: 400, opacity: .7, letterSpacing: 0, textTransform: "none", whiteSpace: "nowrap" }}>+43 660 783 5346</span>
         </a>
-        <button className="menu-toggle" onClick={() => setNavOpen(!navOpen)}>
+        <button className="menu-toggle" onClick={() => setNavOpen(!navOpen)} aria-label={navOpen ? "Menü schließen" : "Menü öffnen"}>
           <span /><span /><span />
         </button>
       </div>

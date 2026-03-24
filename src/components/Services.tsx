@@ -116,7 +116,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
         {/* Guest Artist Lightbox */}
         <div className={`guest-lb${guestLbOpen ? " open" : ""}`} id="guestLb">
           <div className="guest-lb-inner">
-            <button className="guest-lb-close" onClick={closeGuestLb}>×</button>
+            <button className="guest-lb-close" onClick={closeGuestLb} aria-label="Schließen">×</button>
             {guestArtists[guestLbIdx] && (
               <>
                 <div className="guest-lb-header">
@@ -137,10 +137,10 @@ export default function Services({ onBook }: { onBook: () => void }) {
 
         {/* Guest Work Lightbox */}
         <div className={`guest-work-lb${workLbOpen ? " open" : ""}`}>
-          <button className="close-btn" onClick={closeWorkLb}>×</button>
-          <button className="nav-btn prev" onClick={() => navWork(-1)}>‹</button>
+          <button className="close-btn" onClick={closeWorkLb} aria-label="Schließen">×</button>
+          <button className="nav-btn prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
           {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
-          <button className="nav-btn next" onClick={() => navWork(1)}>›</button>
+          <button className="nav-btn next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
         </div>
       </div>
     </section>
