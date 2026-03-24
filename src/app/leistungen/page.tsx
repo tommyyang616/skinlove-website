@@ -8,11 +8,12 @@ export const metadata: Metadata = {
 };
 
 const services = [
-    { slug: "tattoo", icon: "🎨", title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Cover-Ups" },
-    { slug: "piercing", icon: "💎", title: "Piercings", desc: "Nase, Ohr, Surface, Bauchnabel, Oral & mehr" },
-    { slug: "permanent-makeup", icon: "✨", title: "Permanent Make-up", desc: "Microblading, Powder Brows & Lippen" },
-    { slug: "lash-lifting", icon: "👁️", title: "Lash & Brow Lifting", desc: "Inkl. Färben & Keratin" },
-    { slug: "workshops", icon: "📚", title: "Workshops", desc: "Tattoo & Piercing lernen" },
+    { slug: "tattoos", icon: "🎨", title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Cover-Ups" },
+    { slug: "piercings", icon: "💎", title: "Piercings", desc: "Nase, Ohr, Surface, Bauchnabel, Oral & mehr" },
+    { slug: "permanent-make-up", icon: "✨", title: "Permanent Make-up", desc: "Augenbrauen & Lippen — natürlich betont" },
+    { slug: "lash-brow-lifting", icon: "👁️", title: "Lash & Brow Lifting", desc: "Inkl. Färben & Keratin" },
+    { slug: "kinderohrringe", icon: "🧸", title: "Kinderohrringe", desc: "Sanft & sicher mit dem Studex-System, ab 6 Monate" },
+    { slug: "spezialleistungen", icon: "⚡", title: "Spezialleistungen", desc: "Wildfleisch, Dermal Anker, Korrekturen & mehr" },
 ];
 
 export default function LeistungenPage() {

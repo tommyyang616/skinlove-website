@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter, Outfit } from "next/font/google";
 import "./globals.css";
-import { ChatWrapper } from "@/components/chat/ChatWrapper";
 
 const inter = Inter({
   subsets: ["latin"],

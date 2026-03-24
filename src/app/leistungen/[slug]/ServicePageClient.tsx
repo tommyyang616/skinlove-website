@@ -92,17 +92,7 @@ export default function ServicePageClient({ service }: { service: Service; slug:
             ))}
           </div>
 
-          <script type="application/ld+json" dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: service.faq.map(f => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a },
-              })),
-            })
-          }} />
+          {/* FAQ schema is rendered server-side in page.tsx */}
         </div>
       )}
 
