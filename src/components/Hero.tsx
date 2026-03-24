@@ -104,11 +104,11 @@ export default function Hero({ onBook }: { onBook: () => void }) {
           />
           {videosReady && (
             <>
-              <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="metadata">
+              <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="metadata" poster="/images/hero.jpg">
                 <source src="/images/hero-video1.mp4" type="video/mp4" />
                 <track kind="descriptions" label="Dekoratives Hintergrundvideo" />
               </video>
-              <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none">
+              <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none" poster="/images/hero2.jpg">
                 <source src="/images/hero-video2.mp4" type="video/mp4" />
                 <track kind="descriptions" label="Dekoratives Hintergrundvideo" />
               </video>
