@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     default: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
     template: "%s | SkinLove",
   },
-  description: "Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Inhaberin Eve Paule – individuelle Körperkunst mit Herz.",
-  keywords: ["Tattoo", "Piercing", "Permanent Make-up", "Lash Lifting", "Marchtrenk", "Wels", "Linz", "Oberösterreich", "Eve Paule", "SkinLove", "Tattoo Studio", "Fine Line Tattoo", "Kinderohrringe"],
+  description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Individuelle K\u00F6rperkunst von Eve Paule. Jetzt Termin sichern!",
+  keywords: ["Tattoo", "Piercing", "Permanent Make-up", "Lash Lifting", "Marchtrenk", "Wels", "Linz", "Ober\u00F6sterreich", "Eve Paule", "SkinLove", "Tattoo Studio", "Fine Line Tattoo", "Kinderohrringe", "Gastt\u00E4towierer", "Tattoo Workshop"],
   authors: [{ name: "Eve Paule" }],
   creator: "SkinLove Tattoo & Piercing",
   alternates: { canonical: "/" },
   openGraph: {
     title: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
-    description: "Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Inhaberin Eve Paule – individuelle Körperkunst mit Herz.",
+    description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Individuelle K\u00F6rperkunst von Eve Paule.",
     images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: "SkinLove Tattoo & Piercing" }],
     url: "/",
     type: "website",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "SkinLove Tattoo & Piercing | Marchtrenk bei Wels",
-    description: "Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels.",
+    description: "Tattoo Studio in Marchtrenk bei Wels \u2013 Piercing, Permanent Make-up & Lash Lifting. Jetzt Termin sichern!",
     images: ["/images/og-image.jpg"],
   },
   robots: {
@@ -54,7 +54,10 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
@@ -68,6 +71,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
 };
+
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at";
 
 export default function RootLayout({
   children,
@@ -87,15 +92,15 @@ export default function RootLayout({
               name: "SkinLove Tattoo & Piercing",
               alternateName: "SkinLove",
               description: "Professionelles Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Inhaberin Eve Paule.",
-              url: process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at",
+              url: baseUrl,
               telephone: "+436607835346",
               email: "eve@skinlove-tattoo-piercing.at",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Linzer Straße 35, 1. OG",
+                streetAddress: "Linzer Stra\u00DFe 35, 1. OG",
                 addressLocality: "Marchtrenk",
                 postalCode: "4614",
-                addressRegion: "Oberösterreich",
+                addressRegion: "Ober\u00F6sterreich",
                 addressCountry: "AT",
               },
               geo: { "@type": "GeoCoordinates", latitude: 48.1916, longitude: 14.1168 },
@@ -103,8 +108,8 @@ export default function RootLayout({
                 { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
                 { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
               ],
-              image: `${process.env.NEXT_PUBLIC_APP_URL || "https://skinlove-tattoo-piercing.at"}/images/og-image.jpg`,
-              priceRange: "€€",
+              image: `${baseUrl}/images/og-image.jpg`,
+              priceRange: "\u20AC\u20AC",
               founder: { "@type": "Person", name: "Eve Paule" },
               sameAs: [
                 "https://www.instagram.com/skinlove_tattoopiercing/",
@@ -119,9 +124,37 @@ export default function RootLayout({
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "Tattoos", description: "Fine-Line, Black & Grey, Mandala, Watercolor, Cover-Ups" } },
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "Piercings", description: "Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze, Intim" } },
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "Permanent Make-up", description: "Augenbrauen & Lippen" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lash & Brow Lifting", description: "Inkl. Färben & Keratin" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lash & Brow Lifting", description: "Inkl. F\u00E4rben & Keratin" } },
                 ],
               },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "\u00DCber mich",
+                  description: "Lerne Eve Paule kennen \u2013 Gr\u00FCnderin & Tattoo-K\u00FCnstlerin",
+                  url: `${baseUrl}/ueber-mich`,
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Gastt\u00E4towierer",
+                  description: "Internationale Guest Artists bei SkinLove",
+                  url: `${baseUrl}/gasttatowierer`,
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Workshops",
+                  description: "Tattoo Workshops & Kurse \u2013 Lerne t\u00E4towieren",
+                  url: `${baseUrl}/workshops`,
+                },
+              ],
             }),
           }}
         />

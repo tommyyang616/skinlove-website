@@ -1,82 +1,97 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Impressum – SkinLove Tattoo & Piercing",
-  description: "Impressum von SkinLove Tattoo & Piercing in Marchtrenk. Inhaberin Eve Paule, Kontaktdaten und rechtliche Informationen.",
+  title: "Impressum \u2013 SkinLove Tattoo & Piercing",
+  description: "Impressum von SkinLove Tattoo & Piercing in Marchtrenk. Inhaberin Eve Paule, Kontaktdaten und rechtliche Informationen gem\u00E4\u00DF ECG \u00A7 5.",
   alternates: { canonical: "/impressum" },
   robots: { index: true, follow: true },
 };
+
+const S = ({ t, children }: { t: string; children: React.ReactNode }) => (
+  <section className="mb-10">
+    <h2 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white mb-4">{t}</h2>
+    <div className="space-y-3">{children}</div>
+  </section>
+);
+
+const A = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a href={href} className="text-[var(--pink)] hover:underline">{children}</a>
+);
 
 export default function Impressum() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
       <header className="fixed top-0 left-0 w-full z-50 py-5 bg-[rgba(10,10,10,0.95)] backdrop-blur-xl border-b border-[rgba(187,53,153,0.08)]">
         <div className="max-w-[800px] mx-auto px-6 flex items-center justify-between">
-          <Link href="/">
-            <Image
-              src="/images/logo.jpg"
-              alt="SkinLove Logo"
-              width={160}
-              height={40}
-              className="h-10 object-contain brightness-110"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="text-xs tracking-[2px] uppercase text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors"
-          >
-            ← Zurück
-          </Link>
+          <Link href="/" className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white hover:text-[var(--pink)] transition-colors">SkinLove</Link>
+          <Link href="/" className="text-xs tracking-[2px] uppercase text-[var(--text-dim)] hover:text-[var(--pink)] transition-colors">{"\u2190"} Zur{"\u00FC"}ck</Link>
         </div>
       </header>
-
       <div className="max-w-[800px] mx-auto px-6 pt-32 pb-20">
-        <h1 className="font-[family-name:var(--font-cormorant)] text-4xl font-semibold text-white mb-10">
-          Impressum
-        </h1>
+        <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl font-semibold text-white mb-12">Impressum</h1>
+        <div className="text-[var(--text-dim)] text-[15px] leading-relaxed">
 
-        <div className="space-y-6 text-[var(--text-dim)] text-[15px] leading-relaxed">
-          <p>
-            <strong className="text-white">SkinLove Tattoo Piercing</strong>
-          </p>
-          <p>
-            Linzer Straße 35, 1. OG
-            <br />
-            4614 Marchtrenk
-            <br />
-            Österreich
-          </p>
-          <p>Freiberufler und Selbstständige</p>
-          <p>
-            <strong className="text-white">Tel:</strong>{" "}
-            <a
-              href="tel:+436607835346"
-              className="text-[var(--pink)] hover:underline"
-            >
-              +43 660 783 5346
-            </a>
-          </p>
-          <p>
-            <strong className="text-white">E-Mail:</strong>{" "}
-            <a
-              href="mailto:eve@skinlove-tattoo-piercing.at"
-              className="text-[var(--pink)] hover:underline"
-            >
-              eve@skinlove-tattoo-piercing.at
-            </a>
-          </p>
+          <S t="Angaben gem{'\u00E4'}{'\u00DF'} ECG {'\u00A7'} 5">
+            <p><strong className="text-white">SkinLove Tattoo &amp; Piercing</strong></p>
+            <p>Linzer Stra{"\u00DF"}e 35, 1. OG<br />4614 Marchtrenk<br />{"\u00D6"}sterreich</p>
+          </S>
 
-          <h2 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white pt-4">
-            Inhaberin
-          </h2>
-          <p>Eve Paule</p>
+          <S t="Kontakt">
+            <p>Telefon: <A href="tel:+436607835346">+43 660 783 5346</A></p>
+            <p>E-Mail: <A href="mailto:eve@skinlove-tattoo-piercing.at">eve@skinlove-tattoo-piercing.at</A></p>
+            <p>Website: <A href="https://skinlove-tattoo-piercing.at">skinlove-tattoo-piercing.at</A></p>
+          </S>
 
-          <h2 className="font-[family-name:var(--font-cormorant)] text-xl font-semibold text-white pt-4">
-            Mitgründer
-          </h2>
-          <p>Miro Urbanek</p>
+          <S t="Inhaberin">
+            <p><strong className="text-white">Eve Paule</strong></p>
+          </S>
+
+          <S t="Mitgr{'\u00FC'}nder">
+            <p><strong className="text-white">Miro Urbanek</strong></p>
+          </S>
+
+          <S t="Unternehmensgegenstand">
+            <p>T{"\u00E4"}towieren, Piercen, Permanent Make-up, Lash &amp; Brow Lifting, kosmetische Dienstleistungen, Tattoo-Workshops</p>
+          </S>
+
+          <S t="Gewerbeberechtigung">
+            <p>Freies Gewerbe: K{"\u00F6"}rperschmuck (T{"\u00E4"}towieren, Piercen)<br />Reglementiertes Gewerbe: Kosmetik (Schminken, dekorative Pflege)</p>
+            <p>Gewerbebeh{"\u00F6"}rde: Bezirkshauptmannschaft Wels-Land</p>
+          </S>
+
+          <S t="Anwendbare Rechtsvorschriften">
+            <p>Gewerbeordnung (GewO): <A href="https://www.ris.bka.gv.at">www.ris.bka.gv.at</A></p>
+            <p>E-Commerce-Gesetz (ECG)</p>
+            <p>Konsumentenschutzgesetz (KSchG)</p>
+          </S>
+
+          <S t="Aufsichtsbeh{'\u00F6'}rde">
+            <p>Bezirkshauptmannschaft Wels-Land<br />Dr.-Scha{"\u00FC"}er-Stra{"\u00DF"}e 4<br />4600 Wels<br />{"\u00D6"}sterreich</p>
+          </S>
+
+          <S t="Haftungsausschluss">
+            <h3 className="text-white font-medium mt-2">Haftung f{"\u00FC"}r Inhalte</h3>
+            <p>Die Inhalte dieser Website wurden mit gr{"\u00F6"}{"\u00DF"}ter Sorgfalt erstellt. F{"\u00FC"}r die Richtigkeit, Vollst{"\u00E4"}ndigkeit und Aktualit{"\u00E4"}t der Inhalte {"\u00FC"}bernehmen wir jedoch keine Gew{"\u00E4"}hr. Als Diensteanbieter sind wir gem{"\u00E4"}{"\u00DF"} ECG {"\u00A7"} 16 f{"\u00FC"}r eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+
+            <h3 className="text-white font-medium mt-4">Haftung f{"\u00FC"}r Links</h3>
+            <p>Unsere Website enth{"\u00E4"}lt Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. F{"\u00FC"}r die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf m{"\u00F6"}gliche Rechtsverst{"\u00F6"}{"\u00DF"}e {"\u00FC"}berpr{"\u00FC"}ft. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte nicht zumutbar.</p>
+          </S>
+
+          <S t="Urheberrecht">
+            <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf dieser Website unterliegen dem {"\u00F6"}sterreichischen Urheberrecht. Die Vervielf{"\u00E4"}ltigung, Bearbeitung, Verbreitung und jede Art der Verwertung au{"\u00DF"}erhalb der Grenzen des Urheberrechts bed{"\u00FC"}rfen der schriftlichen Zustimmung der Inhaberin. Downloads und Kopien dieser Seite sind nur f{"\u00FC"}r den privaten, nicht kommerziellen Gebrauch gestattet.</p>
+            <p>Alle auf dieser Website verwendeten Fotos und Grafiken sind Eigentum von SkinLove Tattoo &amp; Piercing oder wurden mit Genehmigung der jeweiligen Rechteinhaber verwendet.</p>
+          </S>
+
+          <S t="Streitbeilegung">
+            <p>Die Europ{"\u00E4"}ische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <A href="https://ec.europa.eu/consumers/odr/">ec.europa.eu/consumers/odr</A></p>
+            <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+          </S>
+
+          <div className="mt-16 pt-8 border-t border-[rgba(187,53,153,0.1)]">
+            <p className="text-sm text-[var(--text-dim)] opacity-70">Erstellt mit {"\u2764\uFE0F"} in Marchtrenk</p>
+          </div>
+
         </div>
       </div>
     </div>

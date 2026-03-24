@@ -1,16 +1,16 @@
 {
   "name": "SkinLove Tattoo & Piercing",
   "short_name": "SkinLove",
-  "description": "Tattoo, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels.",
+  "description": "Tattoo Studio, Piercing, Permanent Make-up & Lash Lifting in Marchtrenk bei Wels. Individuelle Körperkunst mit Herz.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#BB3599",
   "icons": [
     {
-      "src": "/favicon.ico",
+      "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/x-icon"
+      "type": "image/svg+xml"
     },
     {
       "src": "/icon-192x192.png",
