@@ -85,8 +85,30 @@ export default function Services({ onBook }: { onBook: () => void }) {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [guestLbOpen, workLbOpen, navWork, navGuest]);
 
-  // Touch swipe ref for work lightbox
+  // Touch swipe for work lightbox — live drag
   const touchStartX = useRef(0);
+  const dragRef = useRef(0);
+  const imgRef = useRef<HTMLDivElement>(null);
+
+  const onWorkTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    dragRef.current = 0;
+    if (imgRef.current) imgRef.current.style.transition = "none";
+  }, []);
+
+  const onWorkTouchMove = useCallback((e: React.TouchEvent) => {
+    dragRef.current = e.touches[0].clientX - touchStartX.current;
+    if (imgRef.current) imgRef.current.style.transform = `translateX(${dragRef.current}px)`;
+  }, []);
+
+  const onWorkTouchEnd = useCallback(() => {
+    if (imgRef.current) {
+      imgRef.current.style.transition = "transform .25s ease-out";
+      imgRef.current.style.transform = "translateX(0)";
+    }
+    if (Math.abs(dragRef.current) > 50) navWork(dragRef.current < 0 ? 1 : -1);
+    dragRef.current = 0;
+  }, [navWork]);
 
   // Touch swipe for guest artist lightbox (navigate between artists)
   const guestTouchX = useRef(0);
@@ -175,14 +197,17 @@ export default function Services({ onBook }: { onBook: () => void }) {
           </div>
         </div>
 
-        {/* Guest Work Lightbox — same structure as Gallery lightbox */}
+        {/* Guest Work Lightbox — live drag swipe */}
         <div className={`lightbox${workLbOpen ? " open" : ""}`} style={{ zIndex: 10002 }}
           onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}
-          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-          onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchStartX.current; if (Math.abs(dx) > 50) navWork(dx < 0 ? 1 : -1); }}>
+          onTouchStart={onWorkTouchStart}
+          onTouchMove={onWorkTouchMove}
+          onTouchEnd={onWorkTouchEnd}>
           <button className="lb-close" onClick={closeWorkLb} aria-label="Schließen">×</button>
           <button className="lb-nav prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
-          {workImgs[workLbIdx] && <Image className="lb-main" src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          <div ref={imgRef} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            {workImgs[workLbIdx] && <Image className="lb-main" src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          </div>
           <button className="lb-nav next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
           <div className="lb-counter">{workLbIdx + 1} / {workImgs.length}</div>
         </div>
