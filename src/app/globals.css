@@ -1628,11 +1628,8 @@ footer a {
 /* ====== WORKSHOP STYLES ====== */
 .ws-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 28px;
-  max-width: 840px;
-  margin: 0 auto;
-  justify-content: center
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px
 }
 
 @media(max-width:768px) {

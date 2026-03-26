@@ -71,20 +71,33 @@ export default function Services({ onBook }: { onBook: () => void }) {
     return () => { document.body.style.overflow = ""; };
   }, [guestLbOpen, workLbOpen]);
 
-  // Touch swipe for work lightbox
+  // Touch swipe for work lightbox — smooth sliding
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
+  const [slideOffset, setSlideOffset] = useState(0);
+  const [slideTransition, setSlideTransition] = useState(false);
+
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    setSlideTransition(false);
   }, []);
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-      navWork(dx < 0 ? 1 : -1);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      setSlideOffset(dx);
     }
-  }, [navWork]);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    setSlideTransition(true);
+    if (Math.abs(slideOffset) > 50) {
+      navWork(slideOffset < 0 ? 1 : -1);
+    }
+    setSlideOffset(0);
+  }, [slideOffset, navWork]);
 
   return (
     <section className="section" id="services">
@@ -157,10 +170,12 @@ export default function Services({ onBook }: { onBook: () => void }) {
         </div>
 
         {/* Guest Work Lightbox */}
-        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           <button className="close-btn" onClick={closeWorkLb} aria-label="Schließen">×</button>
           <button className="nav-btn prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
-          {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          <div style={{ transform: `translateX(${slideOffset}px)`, transition: slideTransition ? "transform .3s ease-out" : "none", display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
+            {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          </div>
           <button className="nav-btn next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
           <span className="lb-counter">{workLbIdx + 1} / {workImgs.length}</span>
         </div>
