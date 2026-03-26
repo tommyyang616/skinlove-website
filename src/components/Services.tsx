@@ -102,11 +102,26 @@ export default function Services({ onBook }: { onBook: () => void }) {
   }, []);
 
   const onWorkTouchEnd = useCallback(() => {
-    if (imgRef.current) {
-      imgRef.current.style.transition = "transform .25s ease-out";
-      imgRef.current.style.transform = "translateX(0)";
+    const el = imgRef.current;
+    if (!el) return;
+    if (Math.abs(dragRef.current) > 50) {
+      const dir = dragRef.current < 0 ? 1 : -1;
+      const exitX = dragRef.current < 0 ? -window.innerWidth : window.innerWidth;
+      el.style.transition = "transform .2s ease-in";
+      el.style.transform = `translateX(${exitX}px)`;
+      setTimeout(() => {
+        navWork(dir);
+        el.style.transition = "none";
+        el.style.transform = `translateX(${-exitX}px)`;
+        requestAnimationFrame(() => {
+          el.style.transition = "transform .2s ease-out";
+          el.style.transform = "translateX(0)";
+        });
+      }, 200);
+    } else {
+      el.style.transition = "transform .2s ease-out";
+      el.style.transform = "translateX(0)";
     }
-    if (Math.abs(dragRef.current) > 50) navWork(dragRef.current < 0 ? 1 : -1);
     dragRef.current = 0;
   }, [navWork]);
 
