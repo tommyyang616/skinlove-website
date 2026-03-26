@@ -85,45 +85,31 @@ export default function Services({ onBook }: { onBook: () => void }) {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [guestLbOpen, workLbOpen, navWork, navGuest]);
 
-  // Touch swipe for work lightbox — live drag
-  const touchStartX = useRef(0);
-  const dragRef = useRef(0);
-  const imgRef = useRef<HTMLDivElement>(null);
+  // Scroll-snap for work lightbox
+  const workTrackRef = useRef<HTMLDivElement>(null);
 
-  const onWorkTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    dragRef.current = 0;
-    if (imgRef.current) imgRef.current.style.transition = "none";
-  }, []);
+  // Scroll to current image when index changes
+  useEffect(() => {
+    if (!workLbOpen || !workTrackRef.current) return;
+    const el = workTrackRef.current.children[workLbIdx] as HTMLElement;
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [workLbIdx, workLbOpen]);
 
-  const onWorkTouchMove = useCallback((e: React.TouchEvent) => {
-    dragRef.current = e.touches[0].clientX - touchStartX.current;
-    if (imgRef.current) imgRef.current.style.transform = `translateX(${dragRef.current}px)`;
-  }, []);
-
-  const onWorkTouchEnd = useCallback(() => {
-    const el = imgRef.current;
-    if (!el) return;
-    if (Math.abs(dragRef.current) > 50) {
-      const dir = dragRef.current < 0 ? 1 : -1;
-      const exitX = dragRef.current < 0 ? -window.innerWidth : window.innerWidth;
-      el.style.transition = "transform .2s ease-in";
-      el.style.transform = `translateX(${exitX}px)`;
-      setTimeout(() => {
-        navWork(dir);
-        el.style.transition = "none";
-        el.style.transform = `translateX(${-exitX}px)`;
-        requestAnimationFrame(() => {
-          el.style.transition = "transform .2s ease-out";
-          el.style.transform = "translateX(0)";
-        });
-      }, 200);
-    } else {
-      el.style.transition = "transform .2s ease-out";
-      el.style.transform = "translateX(0)";
-    }
-    dragRef.current = 0;
-  }, [navWork]);
+  // Sync index from native scroll
+  useEffect(() => {
+    const track = workTrackRef.current;
+    if (!track || !workLbOpen) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const idx = Math.round(track.scrollLeft / track.clientWidth);
+        if (idx >= 0 && idx < workImgs.length) setWorkLbIdx(idx);
+      }, 100);
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => { track.removeEventListener("scroll", onScroll); clearTimeout(timeout); };
+  }, [workLbOpen, workImgs.length]);
 
   // Touch swipe for guest artist lightbox (navigate between artists)
   const guestTouchX = useRef(0);
@@ -212,16 +198,17 @@ export default function Services({ onBook }: { onBook: () => void }) {
           </div>
         </div>
 
-        {/* Guest Work Lightbox — live drag swipe */}
+        {/* Guest Work Lightbox — native scroll-snap */}
         <div className={`lightbox${workLbOpen ? " open" : ""}`} style={{ zIndex: 10002 }}
-          onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}
-          onTouchStart={onWorkTouchStart}
-          onTouchMove={onWorkTouchMove}
-          onTouchEnd={onWorkTouchEnd}>
+          onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}>
           <button className="lb-close" onClick={closeWorkLb} aria-label="Schließen">×</button>
           <button className="lb-nav prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
-          <div ref={imgRef} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            {workImgs[workLbIdx] && <Image className="lb-main" src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          <div className="lb-track" ref={workTrackRef}>
+            {workImgs.map((src, i) => (
+              <div key={i} className="lb-slide">
+                <Image src={src} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />
+              </div>
+            ))}
           </div>
           <button className="lb-nav next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
           <div className="lb-counter">{workLbIdx + 1} / {workImgs.length}</div>

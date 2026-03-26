@@ -31,6 +31,7 @@ export default function Gallery() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIdx, setLbIdx] = useState(0);
+  const lbTrackRef = useRef<HTMLDivElement>(null);
 
   const openLB = (i: number) => { setLbIdx(i); setLbOpen(true); };
   const closeLB = () => { setLbOpen(false); };
@@ -41,45 +42,30 @@ export default function Gallery() {
     });
   }, []);
 
-  // Live-drag swipe refs
-  const touchX = useRef(0);
-  const dragRef = useRef(0);
-  const imgRef = useRef<HTMLDivElement>(null);
+  // Scroll to current image when index changes or lightbox opens
+  useEffect(() => {
+    if (!lbOpen || !lbTrackRef.current) return;
+    const el = lbTrackRef.current.children[lbIdx] as HTMLElement;
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [lbIdx, lbOpen]);
 
-  const onLbTouchStart = useCallback((e: React.TouchEvent) => {
-    touchX.current = e.touches[0].clientX;
-    dragRef.current = 0;
-    if (imgRef.current) imgRef.current.style.transition = "none";
-  }, []);
-
-  const onLbTouchMove = useCallback((e: React.TouchEvent) => {
-    dragRef.current = e.touches[0].clientX - touchX.current;
-    if (imgRef.current) imgRef.current.style.transform = `translateX(${dragRef.current}px)`;
-  }, []);
-
-  const onLbTouchEnd = useCallback(() => {
-    const el = imgRef.current;
-    if (!el) return;
-    if (Math.abs(dragRef.current) > 50) {
-      const dir = dragRef.current < 0 ? 1 : -1;
-      const exitX = dragRef.current < 0 ? -window.innerWidth : window.innerWidth;
-      el.style.transition = "transform .2s ease-in";
-      el.style.transform = `translateX(${exitX}px)`;
-      setTimeout(() => {
-        navLB(dir);
-        el.style.transition = "none";
-        el.style.transform = `translateX(${-exitX}px)`;
-        requestAnimationFrame(() => {
-          el.style.transition = "transform .2s ease-out";
-          el.style.transform = "translateX(0)";
-        });
-      }, 200);
-    } else {
-      el.style.transition = "transform .2s ease-out";
-      el.style.transform = "translateX(0)";
-    }
-    dragRef.current = 0;
-  }, [navLB]);
+  // Sync index from native scroll
+  useEffect(() => {
+    const track = lbTrackRef.current;
+    if (!track || !lbOpen) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const scrollLeft = track.scrollLeft;
+        const w = track.clientWidth;
+        const idx = Math.round(scrollLeft / w);
+        if (idx >= 0 && idx < IMGS.length) setLbIdx(idx);
+      }, 100);
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => { track.removeEventListener("scroll", onScroll); clearTimeout(timeout); };
+  }, [lbOpen]);
 
   useEffect(() => {
     document.body.style.overflow = lbOpen ? "hidden" : "";
@@ -140,14 +126,15 @@ export default function Gallery() {
       </section>
 
       {/* Lightbox */}
-      <div className={`lightbox${lbOpen ? " open" : ""}`} id="lightbox" onClick={(e) => { if (e.target === e.currentTarget) closeLB(); }}
-        onTouchStart={onLbTouchStart}
-        onTouchMove={onLbTouchMove}
-        onTouchEnd={onLbTouchEnd}>
+      <div className={`lightbox${lbOpen ? " open" : ""}`} id="lightbox" onClick={(e) => { if (e.target === e.currentTarget) closeLB(); }}>
         <button className="lb-close" onClick={closeLB} aria-label="Galerie schließen">×</button>
         <button className="lb-nav prev" onClick={() => navLB(-1)} aria-label="Vorheriges Bild">‹</button>
-        <div ref={imgRef} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Image className="lb-main" src={IMGS[lbIdx]} alt="Tattoo vergrößert" width={1200} height={1200} sizes="90vw" />
+        <div className="lb-track" ref={lbTrackRef}>
+          {IMGS.map((src, i) => (
+            <div key={i} className="lb-slide">
+              <Image src={src} alt="Tattoo vergrößert" width={1200} height={1200} sizes="90vw" />
+            </div>
+          ))}
         </div>
         <button className="lb-nav next" onClick={() => navLB(1)} aria-label="Nächstes Bild">›</button>
         <div className="lb-counter">{lbIdx + 1} / {IMGS.length}</div>
