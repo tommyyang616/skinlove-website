@@ -176,12 +176,15 @@ export default function Services({ onBook }: { onBook: () => void }) {
         </div>
 
         {/* Guest Work Lightbox */}
-        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}
-          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-          onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchStartX.current; if (Math.abs(dx) > 50) navWork(dx < 0 ? 1 : -1); }}>
+        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}>
           <button className="close-btn" onClick={closeWorkLb} aria-label="Schließen">×</button>
           <button className="nav-btn prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
           {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          <div className="guest-work-touch"
+            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchStartX.current; if (Math.abs(dx) > 50) navWork(dx < 0 ? 1 : -1); }}
+            onClick={(e) => { e.stopPropagation(); closeWorkLb(); }}
+          />
           <button className="nav-btn next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
           <span className="lb-counter">{workLbIdx + 1} / {workImgs.length}</span>
         </div>
