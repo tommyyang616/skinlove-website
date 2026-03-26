@@ -85,29 +85,8 @@ export default function Services({ onBook }: { onBook: () => void }) {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [guestLbOpen, workLbOpen, navWork, navGuest]);
 
-  // Touch swipe for work lightbox — live drag + snap
+  // Touch swipe ref for work lightbox
   const touchStartX = useRef(0);
-  const [dragX, setDragX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const onWorkTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    setIsDragging(true);
-    setDragX(0);
-  }, []);
-
-  const onWorkTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!isDragging) return;
-    setDragX(e.touches[0].clientX - touchStartX.current);
-  }, [isDragging]);
-
-  const onWorkTouchEnd = useCallback(() => {
-    setIsDragging(false);
-    if (Math.abs(dragX) > 50) {
-      navWork(dragX < 0 ? 1 : -1);
-    }
-    setDragX(0);
-  }, [dragX, navWork]);
 
   // Touch swipe for guest artist lightbox (navigate between artists)
   const guestTouchX = useRef(0);
@@ -196,24 +175,16 @@ export default function Services({ onBook }: { onBook: () => void }) {
           </div>
         </div>
 
-        {/* Guest Work Lightbox */}
-        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}>
-          <button className="close-btn" onClick={closeWorkLb} aria-label="Schließen">×</button>
-          <button className="nav-btn prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
-          <div className="guest-work-slide" style={{
-            transform: `translateX(${dragX}px)`,
-            transition: isDragging ? "none" : "transform .3s ease-out",
-          }}>
-            {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
-          </div>
-          <div className="guest-work-touch"
-            onTouchStart={onWorkTouchStart}
-            onTouchMove={onWorkTouchMove}
-            onTouchEnd={onWorkTouchEnd}
-            onClick={(e) => { e.stopPropagation(); closeWorkLb(); }}
-          />
-          <button className="nav-btn next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
-          <span className="lb-counter">{workLbIdx + 1} / {workImgs.length}</span>
+        {/* Guest Work Lightbox — same structure as Gallery lightbox */}
+        <div className={`lightbox${workLbOpen ? " open" : ""}`} style={{ zIndex: 10002 }}
+          onClick={(e) => { if (e.target === e.currentTarget) closeWorkLb(); }}
+          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+          onTouchEnd={(e) => { const dx = e.changedTouches[0].clientX - touchStartX.current; if (Math.abs(dx) > 50) navWork(dx < 0 ? 1 : -1); }}>
+          <button className="lb-close" onClick={closeWorkLb} aria-label="Schließen">×</button>
+          <button className="lb-nav prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
+          {workImgs[workLbIdx] && <Image className="lb-main" src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
+          <button className="lb-nav next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
+          <div className="lb-counter">{workLbIdx + 1} / {workImgs.length}</div>
         </div>
       </div>
     </section>
