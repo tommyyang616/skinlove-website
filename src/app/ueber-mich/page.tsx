@@ -3,13 +3,11 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Über Eve Paule – Inhaberin & Tattoo-Künstlerin",
-  description:
-    "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk. Über 10 Jahre Erfahrung in Tattoo, Piercing & Permanent Make-up.",
+  description: "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk. Über 10 Jahre Erfahrung in Tattoo, Piercing & Permanent Make-up.",
   alternates: { canonical: "/ueber-mich" },
   openGraph: {
     title: "Über Eve Paule – SkinLove Tattoo & Piercing",
-    description:
-      "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk bei Wels.",
+    description: "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk bei Wels.",
     url: "/ueber-mich",
     type: "profile",
   },
@@ -62,7 +60,7 @@ export default function UeberMichPage() {
           marginBottom: 32,
         }}
       >
-        SkinLove ist mehr als ein Studio – es ist Leidenschaft, Hingabe und
+        SkinLove ist mehr als ein Studio — es ist Leidenschaft, Hingabe und
         Liebe zur Körperkunst. Eve Paule hat SkinLove Tattoo &amp; Piercing in
         Marchtrenk gegründet, um jedem Kunden ein einzigartiges und
         persönliches Erlebnis zu bieten. Mit über einem Jahrzehnt Erfahrung in

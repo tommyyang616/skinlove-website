@@ -3,13 +3,11 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Workshops & Tattoo Kurse – Lerne tätowieren",
-  description:
-    "Tattoo Workshops & Kurse bei SkinLove in Marchtrenk. Lerne tätowieren unter professioneller Anleitung – für Anfänger & Fortgeschrittene. Material inklusive!",
+  description: "Tattoo Workshops & Kurse bei SkinLove in Marchtrenk. Lerne tätowieren unter professioneller Anleitung – für Anfänger & Fortgeschrittene. Material inklusive!",
   alternates: { canonical: "/workshops" },
   openGraph: {
     title: "Tattoo Workshops & Kurse bei SkinLove",
-    description:
-      "Lerne tätowieren unter professioneller Anleitung bei SkinLove in Marchtrenk. Material inklusive!",
+    description: "Lerne tätowieren unter professioneller Anleitung bei SkinLove in Marchtrenk. Material inklusive!",
     url: "/workshops",
     type: "website",
   },
@@ -63,7 +61,7 @@ export default function WorkshopsPage() {
         }}
       >
         Du wolltest schon immer selbst tätowieren lernen? In unseren Workshops
-        zeigen wir dir unter professioneller Anleitung die Grundlagen – vom
+        zeigen wir dir unter professioneller Anleitung die Grundlagen — vom
         Maschinenaufbau über Hygiene bis zum ersten Stich auf Übungshaut.
         Sämtliches Material ist inklusive!
       </p>

@@ -6,6 +6,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
   const [mapLoaded, setMapLoaded] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
   const serviceRef = useRef<HTMLSelectElement>(null);
   const msgRef = useRef<HTMLTextAreaElement>(null);
 
@@ -14,16 +15,17 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
   const submit = () => {
     const name = nameRef.current?.value.trim() || "";
     const email = emailRef.current?.value.trim() || "";
+    const phone = phoneRef.current?.value.trim() || "";
     const service = serviceRef.current?.value || "";
     const msg = msgRef.current?.value.trim() || "";
-    if (!email || !email.includes("@")) { if (emailRef.current) emailRef.current.style.borderColor = "#e44"; return; }
     if (!name) { if (nameRef.current) nameRef.current.style.borderColor = "#e44"; return; }
+    if (!email || !email.includes("@")) { if (emailRef.current) emailRef.current.style.borderColor = "#e44"; return; }
+    if (!phone) { if (phoneRef.current) phoneRef.current.style.borderColor = "#e44"; return; }
 
-    // Save via API (rate limited + telegram notification)
     fetch("/api/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, service: service || null, message: msg || null }),
+      body: JSON.stringify({ name, email, phone, service: service || null, message: msg || null }),
     }).catch(() => { });
 
     setSuccess(true);
@@ -102,6 +104,8 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
             <input ref={nameRef} type="text" placeholder="Dein Name" />
             <label>E-Mail</label>
             <input ref={emailRef} type="email" placeholder="deine@email.at" />
+            <label>Telefonnummer</label>
+            <input ref={phoneRef} type="tel" placeholder="+43 660 ..." />
             <label>Was möchtest du?</label>
             <select ref={serviceRef}>
               <option value="">Bitte wählen</option>

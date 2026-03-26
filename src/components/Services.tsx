@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 const slugMap: Record<string, string> = {
@@ -63,7 +63,28 @@ export default function Services({ onBook }: { onBook: () => void }) {
   const closeGuestLb = () => setGuestLbOpen(false);
   const openWorkLb = (imgs: string[], idx: number) => { setWorkImgs(imgs); setWorkLbIdx(idx); setWorkLbOpen(true); };
   const closeWorkLb = () => setWorkLbOpen(false);
-  const navWork = (dir: number) => setWorkLbIdx(p => (p + dir + workImgs.length) % workImgs.length);
+  const navWork = useCallback((dir: number) => setWorkLbIdx(p => (p + dir + workImgs.length) % workImgs.length), [workImgs.length]);
+
+  // Lock body scroll when any lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = (guestLbOpen || workLbOpen) ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [guestLbOpen, workLbOpen]);
+
+  // Touch swipe for work lightbox
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      navWork(dx < 0 ? 1 : -1);
+    }
+  }, [navWork]);
 
   return (
     <section className="section" id="services">
@@ -136,11 +157,12 @@ export default function Services({ onBook }: { onBook: () => void }) {
         </div>
 
         {/* Guest Work Lightbox */}
-        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`}>
+        <div className={`guest-work-lb${workLbOpen ? " open" : ""}`} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <button className="close-btn" onClick={closeWorkLb} aria-label="Schließen">×</button>
           <button className="nav-btn prev" onClick={() => navWork(-1)} aria-label="Vorheriges Bild">‹</button>
           {workImgs[workLbIdx] && <Image src={workImgs[workLbIdx]} alt="Gastarbeit vergrößert" width={1200} height={1200} sizes="90vw" />}
           <button className="nav-btn next" onClick={() => navWork(1)} aria-label="Nächstes Bild">›</button>
+          <span className="lb-counter">{workLbIdx + 1} / {workImgs.length}</span>
         </div>
       </div>
     </section>

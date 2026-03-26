@@ -44,6 +44,7 @@ export default function Navigation() {
           {links.map((l) => (
             <a key={l.href} href={l.href} onClick={close}>{l.label}</a>
           ))}
+          <a href="#contact" onClick={close} className="nav-booking-btn">Termin vereinbaren</a>
           <div className="nav-social">
             <a href="https://www.instagram.com/skinlove_tattoopiercing/" target="_blank" rel="noopener noreferrer" onClick={close} aria-label="Instagram" style={{ transition: "opacity 0.2s" }}>
               <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
@@ -66,8 +67,8 @@ export default function Navigation() {
             </a>
           </div>
         </nav>
-        <a href="tel:+436607835346" className="header-cta" style={{ textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
-          Anrufen<span style={{ display: "block", fontSize: 10, fontWeight: 400, opacity: 1, letterSpacing: 0, textTransform: "none", whiteSpace: "nowrap" }}>+43 660 783 5346</span>
+        <a href="#contact" className="header-cta" style={{ textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
+          Termin vereinbaren
         </a>
         <button className="menu-toggle" onClick={() => setNavOpen(!navOpen)} aria-label={navOpen ? "Menü schließen" : "Menü öffnen"}>
           <span /><span /><span />

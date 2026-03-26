@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "Leistungen",
+    title: "Leistungen – SkinLove Tattoo & Piercing",
     description: "Alle Leistungen von SkinLove: Tattoos, Piercings, Permanent Make-up, Lash Lifting & Workshops in Marchtrenk bei Wels.",
     alternates: { canonical: "/leistungen" },
 };
 
 const services = [
-    { slug: "tattoos", icon: "🎨", title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Cover-Ups" },
+    { slug: "tattoos", icon: "🖊️", title: "Tattoos", desc: "Fine-Line, Black & Grey, Mandala, Watercolor, Cover-Ups" },
     { slug: "piercings", icon: "💎", title: "Piercings", desc: "Nase, Ohr, Surface, Bauchnabel, Oral & mehr" },
-    { slug: "permanent-make-up", icon: "✨", title: "Permanent Make-up", desc: "Augenbrauen & Lippen — natürlich betont" },
+    { slug: "permanent-make-up", icon: "💄", title: "Permanent Make-up", desc: "Augenbrauen & Lippen — natürlich betont" },
     { slug: "lash-brow-lifting", icon: "👁️", title: "Lash & Brow Lifting", desc: "Inkl. Färben & Keratin" },
-    { slug: "kinderohrringe", icon: "🧸", title: "Kinderohrringe", desc: "Sanft & sicher mit dem Studex-System, ab 6 Monate" },
+    { slug: "kinderohrringe", icon: "✨", title: "Kinderohrringe", desc: "Sanft & sicher mit dem Studex-System, ab 6 Monate" },
     { slug: "spezialleistungen", icon: "⚡", title: "Spezialleistungen", desc: "Wildfleisch, Dermal Anker, Korrekturen & mehr" },
 ];
 

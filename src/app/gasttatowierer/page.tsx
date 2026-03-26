@@ -3,13 +3,11 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Gasttätowierer – Guest Artists bei SkinLove",
-  description:
-    "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßige Guest Spots mit Top-Künstlern aus ganz Europa – jetzt Termin sichern!",
+  description: "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßige Guest Spots mit Top-Künstlern aus ganz Europa – jetzt Termin sichern!",
   alternates: { canonical: "/gasttatowierer" },
   openGraph: {
     title: "Gasttätowierer bei SkinLove Tattoo & Piercing",
-    description:
-      "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßig wechselnde Guest Artists.",
+    description: "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßig wechselnde Guest Artists.",
     url: "/gasttatowierer",
     type: "website",
   },
@@ -63,7 +61,7 @@ export default function GasttatowiererPage() {
         }}
       >
         Regelmäßig begrüßen wir internationale Tattoo-Künstler als Gäste bei
-        SkinLove. Jeder bringt seinen eigenen Stil mit – von Fine Line über
+        SkinLove. Jeder bringt seinen eigenen Stil mit — von Fine Line über
         Realistic bis hin zu Japanese und Neo-Traditional. Sichere dir deinen
         exklusiven Termin mit einem unserer Guest Artists!
       </p>

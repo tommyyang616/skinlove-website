@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     if (!ok) return NextResponse.json({ error: "Zu viele Anfragen. Bitte warte ein paar Minuten." }, { status: 429 });
 
     const body = await req.json();
-    const { name, email, service, message, courseId } = body;
+    const { name, email, phone, service, message, courseId } = body;
 
     if (!name || !email) return NextResponse.json({ error: "Name und E-Mail sind Pflichtfelder." }, { status: 400 });
 
@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
         `💈 <b>Neue Terminanfrage!</b>\n\n` +
         `<b>Name:</b> ${name}\n` +
         `<b>E-Mail:</b> ${email}\n` +
+        `<b>Telefon:</b> ${phone || "—"}\n` +
         `<b>Service:</b> ${service || "—"}\n` +
         `<b>Nachricht:</b> ${message || "—"}\n\n` +
         `<i>Via skinlove-website</i>`
