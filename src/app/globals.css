@@ -2186,7 +2186,8 @@ footer a {
   max-width: 90%;
   max-height: 90vh;
   object-fit: contain;
-  pointer-events: none
+  user-select: none;
+  -webkit-user-drag: none
 }
 
 .guest-work-lb .lb-counter {
