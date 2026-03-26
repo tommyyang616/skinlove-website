@@ -884,6 +884,8 @@ nav a:hover::after {
   z-index: 10000;
   justify-content: center;
   align-items: center;
+  touch-action: none;
+  user-select: none
 }
 
 .lightbox.open {
@@ -2143,7 +2145,7 @@ footer a {
   background: rgba(0, 0, 0, .95);
   justify-content: center;
   align-items: center;
-  touch-action: pan-y;
+  touch-action: none;
   user-select: none
 }
 
