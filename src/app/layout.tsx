@@ -138,21 +138,39 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "SiteNavigationElement",
-                  name: "\u00DCber mich",
-                  description: "Lerne Eve Paule kennen \u2013 Gr\u00FCnderin & Tattoo-K\u00FCnstlerin",
+                  name: "Über mich",
+                  description: "Lerne Eve Paule kennen – Gründerin & Tattoo-Künstlerin",
                   url: `${baseUrl}/ueber-mich`,
                 },
                 {
                   "@type": "SiteNavigationElement",
-                  name: "Gastt\u00E4towierer",
+                  name: "Leistungen",
+                  description: "Tattoos, Piercings, Permanent Make-up, Lash & Brow Lifting",
+                  url: `${baseUrl}/leistungen`,
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Gasttätowierer",
                   description: "Internationale Guest Artists bei SkinLove",
                   url: `${baseUrl}/gasttatowierer`,
                 },
                 {
                   "@type": "SiteNavigationElement",
                   name: "Workshops",
-                  description: "Tattoo Workshops & Kurse \u2013 Lerne t\u00E4towieren",
+                  description: "Tattoo & Piercing Workshops – Lerne tätowieren",
                   url: `${baseUrl}/workshops`,
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Impressum",
+                  description: "Impressum – SkinLove Tattoo & Piercing",
+                  url: `${baseUrl}/impressum`,
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  name: "Datenschutz",
+                  description: "Datenschutzerklärung – SkinLove Tattoo & Piercing",
+                  url: `${baseUrl}/datenschutz`,
                 },
               ],
             }),
