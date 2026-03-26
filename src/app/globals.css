@@ -2183,11 +2183,18 @@ footer a {
 }
 
 .guest-work-lb img {
-  max-width: 90%;
-  max-height: 90vh;
+  max-width: 90vw;
+  max-height: 85vh;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none
+}
+
+.guest-work-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform
 }
 
 .guest-work-touch {
