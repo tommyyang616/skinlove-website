@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean; onOpen: () => void; onClose: () => void }) {
   const [success, setSuccess] = useState(false);
@@ -9,6 +9,11 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
   const phoneRef = useRef<HTMLInputElement>(null);
   const serviceRef = useRef<HTMLSelectElement>(null);
   const msgRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = bookingOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [bookingOpen]);
 
   const closeModal = () => { onClose(); setTimeout(() => setSuccess(false), 400); };
 

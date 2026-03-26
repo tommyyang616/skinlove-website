@@ -35,7 +35,7 @@ export default function HomeClient() {
 
   return (
     <>
-      <Navigation />
+      <Navigation onBook={() => setBookingOpen(true)} />
       <Hero onBook={() => setBookingOpen(true)} />
       <About />
       <Services onBook={() => setBookingOpen(true)} />

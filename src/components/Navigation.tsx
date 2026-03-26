@@ -17,7 +17,7 @@ const links = [
   { href: "#contact", label: "Kontakt" },
 ];
 
-export default function Navigation() {
+export default function Navigation({ onBook }: { onBook?: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
@@ -28,6 +28,12 @@ export default function Navigation() {
   }, []);
 
   const close = () => setNavOpen(false);
+
+  const handleBook = (e: React.MouseEvent) => {
+    e.preventDefault();
+    close();
+    if (onBook) onBook();
+  };
 
   return (
     <header id="header" className={scrolled ? "scrolled" : ""}>
@@ -44,7 +50,7 @@ export default function Navigation() {
           {links.map((l) => (
             <a key={l.href} href={l.href} onClick={close}>{l.label}</a>
           ))}
-          <a href="#contact" onClick={close} className="nav-booking-btn">Termin vereinbaren</a>
+          <button type="button" onClick={handleBook} className="nav-booking-btn">Termin anfragen</button>
           <div className="nav-social">
             <a href="https://www.instagram.com/skinlove_tattoopiercing/" target="_blank" rel="noopener noreferrer" onClick={close} aria-label="Instagram" style={{ transition: "opacity 0.2s" }}>
               <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
@@ -67,9 +73,7 @@ export default function Navigation() {
             </a>
           </div>
         </nav>
-        <a href="#contact" className="header-cta" style={{ textAlign: "center", lineHeight: 1.3, whiteSpace: "nowrap" }}>
-          Termin vereinbaren
-        </a>
+        <button type="button" className="header-cta" onClick={handleBook}>Termin anfragen</button>
         <button className="menu-toggle" onClick={() => setNavOpen(!navOpen)} aria-label={navOpen ? "Menü schließen" : "Menü öffnen"}>
           <span /><span /><span />
         </button>

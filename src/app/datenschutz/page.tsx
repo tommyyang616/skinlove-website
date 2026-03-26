@@ -19,7 +19,7 @@ export default function Datenschutz() {
       </header>
       <div className="legal-content">
         <h1>Datenschutzerklärung</h1>
-        <p className="legal-date">Stand: März 2025</p>
+        <p className="legal-date">Stand: März 2026</p>
 
         <section className="legal-section">
           <h2>1. Verantwortliche Stelle</h2>
@@ -126,7 +126,7 @@ export default function Datenschutz() {
         </section>
 
         <div className="legal-footer">
-          <p>Stand: März 2025</p>
+          <p>Stand: März 2026</p>
         </div>
       </div>
     </div>

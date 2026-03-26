@@ -98,7 +98,7 @@ export default function Impressum() {
         </section>
 
         <div className="legal-footer">
-          <p>Stand: März 2025</p>
+          <p>Stand: März 2026</p>
         </div>
       </div>
     </div>
