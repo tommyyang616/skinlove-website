@@ -61,6 +61,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
 
   const openGuestLb = (idx: number) => { setGuestLbIdx(idx); setGuestLbOpen(true); };
   const closeGuestLb = () => setGuestLbOpen(false);
+  const navGuest = useCallback((dir: number) => setGuestLbIdx(p => (p + dir + guestArtists.length) % guestArtists.length), []);
   const openWorkLb = (imgs: string[], idx: number) => { setWorkImgs(imgs); setWorkLbIdx(idx); setWorkLbOpen(true); };
   const closeWorkLb = () => setWorkLbOpen(false);
   const navWork = useCallback((dir: number) => setWorkLbIdx(p => (p + dir + workImgs.length) % workImgs.length), [workImgs.length]);
@@ -68,8 +69,21 @@ export default function Services({ onBook }: { onBook: () => void }) {
   // Lock body scroll when any lightbox is open
   useEffect(() => {
     document.body.style.overflow = (guestLbOpen || workLbOpen) ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [guestLbOpen, workLbOpen]);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (workLbOpen) {
+        if (e.key === "Escape") closeWorkLb();
+        if (e.key === "ArrowLeft") navWork(-1);
+        if (e.key === "ArrowRight") navWork(1);
+      } else if (guestLbOpen) {
+        if (e.key === "Escape") closeGuestLb();
+        if (e.key === "ArrowLeft") navGuest(-1);
+        if (e.key === "ArrowRight") navGuest(1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [guestLbOpen, workLbOpen, navWork, navGuest]);
 
   // Touch swipe for work lightbox — same as Gallery
   const touchStartX = useRef(0);
@@ -80,6 +94,16 @@ export default function Services({ onBook }: { onBook: () => void }) {
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     if (Math.abs(dx) > 50) navWork(dx < 0 ? 1 : -1);
   }, [navWork]);
+
+  // Touch swipe for guest artist lightbox (navigate between artists)
+  const guestTouchX = useRef(0);
+  const handleGuestTouchStart = useCallback((e: React.TouchEvent) => {
+    guestTouchX.current = e.touches[0].clientX;
+  }, []);
+  const handleGuestTouchEnd = useCallback((e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - guestTouchX.current;
+    if (Math.abs(dx) > 50) navGuest(dx < 0 ? 1 : -1);
+  }, [navGuest]);
 
   return (
     <section className="section" id="services">
@@ -130,9 +154,16 @@ export default function Services({ onBook }: { onBook: () => void }) {
         </div>
 
         {/* Guest Artist Lightbox */}
-        <div className={`guest-lb${guestLbOpen ? " open" : ""}`} id="guestLb">
+        <div className={`guest-lb${guestLbOpen ? " open" : ""}`} id="guestLb"
+          onTouchStart={handleGuestTouchStart} onTouchEnd={handleGuestTouchEnd}>
           <div className="guest-lb-inner">
             <button className="guest-lb-close" onClick={closeGuestLb} aria-label="Schließen">×</button>
+            {guestArtists.length > 1 && (
+              <>
+                <button className="guest-lb-nav prev" onClick={() => navGuest(-1)} aria-label="Vorheriger Künstler">‹</button>
+                <button className="guest-lb-nav next" onClick={() => navGuest(1)} aria-label="Nächster Künstler">›</button>
+              </>
+            )}
             {guestArtists[guestLbIdx] && (
               <>
                 <div className="guest-lb-header">
