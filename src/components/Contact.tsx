@@ -105,12 +105,13 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
           <div className={`modal-form${success ? " hidden" : ""}`} id="bookingForm">
             <h3>Termin anfragen</h3>
             <p>Fülle das Formular aus und du bekommst eine Bestätigungsmail. Eve meldet sich in Kürze bei dir!</p>
-            <label>Name</label>
-            <input ref={nameRef} type="text" placeholder="Dein Name" />
-            <label>E-Mail</label>
-            <input ref={emailRef} type="email" placeholder="deine@email.at" />
-            <label>Telefonnummer</label>
-            <input ref={phoneRef} type="tel" placeholder="+43 660 ..." />
+            <label>Name <span style={{ color: "var(--pink)" }}>*</span></label>
+            <input ref={nameRef} type="text" placeholder="Dein Name" required />
+            <label>E-Mail <span style={{ color: "var(--pink)" }}>*</span></label>
+            <input ref={emailRef} type="email" placeholder="deine@email.at" required />
+            <label>Telefonnummer <span style={{ color: "var(--pink)" }}>*</span></label>
+            <input ref={phoneRef} type="tel" placeholder="+43 660 ..." required />
+            <p style={{ fontSize: 12, color: "var(--text-dim)", margin: "-8px 0 12px 0" }}>Pflichtfeld — wir rufen dich für die Terminbestätigung zurück.</p>
             <label>Was möchtest du?</label>
             <select ref={serviceRef}>
               <option value="">Bitte wählen</option>

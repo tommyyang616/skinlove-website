@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
     const { name, email, phone, service, message, courseId } = body;
 
     if (!name || !email) return NextResponse.json({ error: "Name und E-Mail sind Pflichtfelder." }, { status: 400 });
+    if (!phone) return NextResponse.json({ error: "Telefonnummer ist ein Pflichtfeld." }, { status: 400 });
 
     const tenantId = await getTenantId();
     if (!tenantId) return NextResponse.json({ error: "Tenant nicht gefunden" }, { status: 500 });
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     } else {
       // Contact request
       await prisma.contactRequest.create({
-        data: { tenantId, name, email, service: service || null, message: message || null, status: "PENDING" },
+        data: { tenantId, name, email, phone: phone || null, service: service || null, message: message || null, status: "PENDING" },
       });
 
       await sendTelegram(
