@@ -5,14 +5,11 @@ interface WS { id: string; title: string; desc: string; date: string; time: stri
 
 type ApiCourse = Omit<WS, "img"> & { img?: string };
 
-const FALLBACK: WS[] = [
-  { id: "tattoo-kurs", title: "Tattoo Kurs", desc: "Lerne Tätowieren von Grund auf — Theorie, Hygiene, Technik & Praxis. Jeden Mittwoch & Donnerstag, fortlaufend.", date: "2026-04-01", time: "Mi 17:00 – 19:00 · Do 17:00 – 20:00", price: 499, deposit: 150, maxSpots: 6, takenSpots: 0, category: "Tattoo", includes: "Material, Übungshaut, Zertifikat", img: "/images/workshop1.jpg" },
-  { id: "piercing-kurs", title: "Piercing Kurs", desc: "Hygiene, Anatomie, Materialien & erste Stiche unter Anleitung. Für alle die ins Piercing-Business einsteigen wollen.", date: "2026-04-13", time: "Mo & Di 17:00 – 19:00", price: 499, deposit: 150, maxSpots: 4, takenSpots: 0, category: "Piercing", includes: "Starter-Kit, Zertifikat, Modell-Praxis", img: "/images/workshop2.jpg" },
-  { id: "lash-lifting-basics", title: "Lash & Brow Lifting — Basics", desc: "Lerne die Grundlagen des Lash & Brow Liftings. Theorie, Praxis an Modellen, Materialien inklusive. Perfekt für Einsteigerinnen!", date: "2026-04-12", time: "10:00 – 16:00", price: 349, deposit: 100, maxSpots: 6, takenSpots: 0, category: "Lash & Brow", includes: "Material, Zertifikat, Verpflegung", img: "/images/workshop3.jpg" },
-];
+const WORKSHOP_IMGS = ["/images/workshop1.jpg", "/images/workshop2.jpg", "/images/workshop3.jpg"];
 
 export default function Workshop() {
-  const [workshops, setWorkshops] = useState<WS[]>(FALLBACK);
+  const [workshops, setWorkshops] = useState<WS[]>([]);
+  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -25,14 +22,14 @@ export default function Workshop() {
       try {
         const res = await fetch("/api/courses");
         const data: unknown = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const fallbackImgs = ["/images/workshop1.jpg", "/images/workshop2.jpg", "/images/workshop3.jpg"];
-          setWorkshops((data as ApiCourse[]).map((c, i: number) => {
-            const img = c.img || fallbackImgs[i % fallbackImgs.length];
-            return { ...c, img };
-          }));
+        if (Array.isArray(data)) {
+          setWorkshops((data as ApiCourse[]).map((c, i: number) => ({
+            ...c,
+            img: c.img || WORKSHOP_IMGS[i % WORKSHOP_IMGS.length],
+          })));
         }
-      } catch { /* fallback */ }
+      } catch { /* empty = no workshops shown */ }
+      finally { setLoading(false); }
     })();
   }, []);
 
@@ -89,6 +86,11 @@ export default function Workshop() {
           <span className="section-label reveal">Workshop</span>
           <h2 className="section-title reveal">Workshops &amp; Kurse</h2>
           <p className="reveal" style={{ maxWidth: 600, color: "var(--text-dim)", fontSize: 14, lineHeight: 1.8, marginBottom: 48 }}>Lerne von Eve persönlich — in kleinen Gruppen, hands-on, mit allem was du brauchst. Plätze sind begrenzt!</p>
+          {loading ? (
+            <p style={{ color: "var(--text-dim)", fontSize: 14, textAlign: "center", padding: "40px 0" }}>Workshops laden…</p>
+          ) : workshops.length === 0 ? (
+            <p style={{ color: "var(--text-dim)", fontSize: 14, textAlign: "center", padding: "40px 0" }}>Aktuell keine Workshops geplant — schau bald wieder vorbei!</p>
+          ) : (
           <div style={{ position: "relative" }}>
             <div className="ws-grid" ref={gridRef}>
               {workshops.map(ws => {
@@ -139,6 +141,7 @@ export default function Workshop() {
               <button onClick={() => scrollWs(1)} aria-label="Nächster Workshop">›</button>
             </div>
           </div>
+          )}
         </div>
       </section>
 
