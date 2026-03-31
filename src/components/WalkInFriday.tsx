@@ -24,137 +24,141 @@ export default function WalkInFriday() {
       >
         <span className="walkin-ring walkin-ring-1" />
         <span className="walkin-ring walkin-ring-2" />
-        <span className="walkin-ring walkin-ring-3" />
 
-        {/* Szene: Person klopft an Tür */}
         <span className="walkin-scene">
-          <svg className="walkin-scene-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* === TÜR mit 3D-Effekt === */}
-            {/* Türrahmen-Schatten (3D Tiefe) */}
-            <rect x="50" y="8" width="42" height="80" rx="3" fill="rgba(0,0,0,.3)" />
-            {/* Türrahmen */}
-            <rect x="48" y="6" width="42" height="80" rx="3" fill="rgba(30,15,25,1)" stroke="rgba(255,255,255,.4)" strokeWidth="2" />
-            {/* Tür-Fläche mit Gradient */}
+          <svg className="walkin-scene-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="doorGrad" x1="48" y1="6" x2="90" y2="86" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="rgba(60,20,50,.9)" />
-                <stop offset="100%" stopColor="rgba(30,10,25,.95)" />
+              <linearGradient id="wDoorFace" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#3d1832" />
+                <stop offset="100%" stopColor="#1e0d18" />
               </linearGradient>
-              <linearGradient id="windowGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(187,53,153,.5)" />
+              <linearGradient id="wDoorOpen" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#2a1222" />
+                <stop offset="100%" stopColor="#150a10" />
+              </linearGradient>
+              <linearGradient id="wWindowGlow" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="rgba(187,53,153,.55)" />
                 <stop offset="100%" stopColor="rgba(187,53,153,.15)" />
               </linearGradient>
-              <radialGradient id="skinGrad" cx=".4" cy=".3" r=".6">
-                <stop offset="0%" stopColor="#ffe0c8" />
-                <stop offset="100%" stopColor="#e8b89a" />
+              <radialGradient id="wSkin" cx=".4" cy=".35" r=".65">
+                <stop offset="0%" stopColor="#ffe4cc" />
+                <stop offset="100%" stopColor="#e0aa88" />
               </radialGradient>
-              <linearGradient id="jacketGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(187,53,153,.7)" />
-                <stop offset="100%" stopColor="rgba(120,25,100,.8)" />
+              <linearGradient id="wJacket" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#c244a0" />
+                <stop offset="100%" stopColor="#7a1e65" />
               </linearGradient>
-              <linearGradient id="pantsGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(50,50,60,1)" />
-                <stop offset="100%" stopColor="rgba(30,30,40,1)" />
+              <linearGradient id="wPants" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3a3a48" />
+                <stop offset="100%" stopColor="#222230" />
               </linearGradient>
+              <radialGradient id="wLightSpill" cx=".3" cy=".5" r=".7">
+                <stop offset="0%" stopColor="rgba(187,53,153,.3)" />
+                <stop offset="60%" stopColor="rgba(187,53,153,.05)" />
+                <stop offset="100%" stopColor="rgba(187,53,153,0)" />
+              </radialGradient>
+              <clipPath id="wDoorClip">
+                <rect x="60" y="8" width="36" height="72" rx="2" />
+              </clipPath>
             </defs>
-            <rect x="51" y="9" width="36" height="74" rx="2" fill="url(#doorGrad)" />
-            {/* Türfenster mit Glow */}
-            <rect x="56" y="15" width="26" height="18" rx="2.5" fill="url(#windowGlow)" stroke="rgba(255,255,255,.25)" strokeWidth="1" />
-            {/* Fensterkreuz */}
-            <line x1="69" y1="15" x2="69" y2="33" stroke="rgba(255,255,255,.2)" strokeWidth="1" />
-            <line x1="56" y1="24" x2="82" y2="24" stroke="rgba(255,255,255,.2)" strokeWidth="1" />
-            {/* Fenster-Lichtschein */}
-            <rect x="58" y="17" width="10" height="6" rx="1" fill="rgba(255,200,230,.25)" />
-            <rect x="70" y="17" width="10" height="6" rx="1" fill="rgba(255,180,220,.15)" />
-            {/* Unteres Türpanel */}
-            <rect x="56" y="40" width="26" height="36" rx="2.5" fill="rgba(187,53,153,.06)" stroke="rgba(255,255,255,.08)" strokeWidth="1" />
-            {/* Türklinke 3D */}
-            <ellipse cx="78" cy="54" rx="3" ry="2.5" fill="rgba(187,53,153,.9)" />
-            <ellipse cx="77.5" cy="53.5" rx="1.5" ry="1" fill="rgba(255,255,255,.35)" />
-            <rect x="76" y="55" width="4" height="9" rx="2" fill="rgba(187,53,153,.6)" />
-            {/* Türklinken-Schatten */}
-            <ellipse cx="78.5" cy="64.5" rx="3" ry="1" fill="rgba(0,0,0,.15)" />
 
-            {/* === PERSON (3D-Look, Seitenansicht) === */}
-            {/* Schatten am Boden */}
-            <ellipse cx="24" cy="86" rx="14" ry="3" fill="rgba(0,0,0,.25)" />
+            {/* === LICHT das rausströmt wenn Tür offen === */}
+            <ellipse className="walkin-light-spill" cx="78" cy="50" rx="50" ry="40" fill="url(#wLightSpill)" />
 
-            {/* Schuhe */}
-            <ellipse cx="18" cy="84" rx="5" ry="2.5" fill="rgba(40,40,45,1)" />
-            <ellipse cx="30" cy="84" rx="5" ry="2.5" fill="rgba(40,40,45,1)" />
-            {/* Schuh-Highlights */}
-            <ellipse cx="17" cy="83" rx="2.5" ry="1" fill="rgba(70,70,80,.6)" />
-            <ellipse cx="29" cy="83" rx="2.5" ry="1" fill="rgba(70,70,80,.6)" />
+            {/* === WAND / RAHMEN === */}
+            <rect x="56" y="4" width="44" height="82" rx="3" fill="#1a0e16" stroke="rgba(255,255,255,.35)" strokeWidth="2" />
+            {/* Rahmen-Innen */}
+            <rect x="59" y="7" width="38" height="76" rx="2" fill="#0d070b" />
 
-            {/* Beine (Hose) */}
-            <path d="M16 66 L14 81 L22 81 L21 66 Z" fill="url(#pantsGrad)" />
-            <path d="M23 66 L22 81 L30 81 L28 66 Z" fill="url(#pantsGrad)" />
-            {/* Hosenschatten Innenseite */}
-            <path d="M21 66 L21 81 L23 81 L23 66 Z" fill="rgba(0,0,0,.15)" />
+            {/* === TÜR (öffnet sich per CSS transform) === */}
+            <g className="walkin-door-panel">
+              <rect x="60" y="8" width="36" height="74" rx="2" fill="url(#wDoorFace)" />
+              {/* Fenster */}
+              <rect x="65" y="14" width="26" height="16" rx="2" fill="url(#wWindowGlow)" stroke="rgba(255,255,255,.2)" strokeWidth=".8" />
+              <line x1="78" y1="14" x2="78" y2="30" stroke="rgba(255,255,255,.15)" strokeWidth=".8" />
+              <line x1="65" y1="22" x2="91" y2="22" stroke="rgba(255,255,255,.15)" strokeWidth=".8" />
+              {/* Unteres Panel */}
+              <rect x="65" y="38" width="26" height="36" rx="2" fill="rgba(187,53,153,.05)" stroke="rgba(255,255,255,.07)" strokeWidth=".8" />
+              {/* Klinke */}
+              <ellipse cx="87" cy="52" rx="2.5" ry="2" fill="#bb3599" />
+              <ellipse cx="86.5" cy="51.5" rx="1" ry=".7" fill="rgba(255,255,255,.3)" />
+              <rect x="85.5" y="53" width="3" height="7" rx="1.5" fill="rgba(187,53,153,.5)" />
+            </g>
 
-            {/* Oberkörper/Jacke */}
-            <path d="M14 38 C13 42 12 56 14 66 L30 66 C32 56 31 42 30 38 Z" fill="url(#jacketGrad)" />
-            {/* Jacken-Highlight links */}
-            <path d="M15 40 C14 46 14 56 15 64 L18 64 C17 56 17 46 18 40 Z" fill="rgba(255,255,255,.08)" />
-            {/* Kragen */}
-            <path d="M17 38 L22 42 L27 38" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth="1" />
-            {/* Jacken-Reißverschluss */}
-            <line x1="22" y1="42" x2="22" y2="65" stroke="rgba(255,255,255,.1)" strokeWidth=".8" />
+            {/* === PERSON === */}
+            <g className="walkin-person">
+              {/* Schatten */}
+              <ellipse cx="30" cy="86" rx="12" ry="2.5" fill="rgba(0,0,0,.2)" />
 
-            {/* Hals */}
-            <rect x="19" y="32" width="6" height="7" rx="2" fill="url(#skinGrad)" />
+              {/* Schuhe */}
+              <ellipse cx="24" cy="84.5" rx="5" ry="2" fill="#2d2d35" />
+              <ellipse cx="36" cy="84.5" rx="5" ry="2" fill="#2d2d35" />
+              <ellipse cx="23" cy="83.8" rx="2" ry=".8" fill="rgba(80,80,90,.5)" />
+              <ellipse cx="35" cy="83.8" rx="2" ry=".8" fill="rgba(80,80,90,.5)" />
 
-            {/* Kopf (3D durch Gradient) */}
-            <circle cx="22" cy="24" r="9" fill="url(#skinGrad)" />
-            {/* Ohr */}
-            <ellipse cx="13.5" cy="25" rx="2" ry="3" fill="#e8b89a" stroke="rgba(200,160,130,.5)" strokeWidth=".5" />
-            {/* Haare */}
-            <path d="M13 20 C13 12 18 10 24 10 C30 10 33 14 32 20 C32 22 30 18 24 17 C18 16 14 18 13 20 Z" fill="rgba(60,30,50,1)" />
-            {/* Haar-Highlight */}
-            <path d="M18 12 C20 11 24 11 27 13" fill="none" stroke="rgba(100,50,80,.5)" strokeWidth="1" />
-            {/* Auge */}
-            <ellipse cx="26" cy="23" rx="1.5" ry="1.8" fill="rgba(40,25,35,1)" />
-            <circle cx="26.5" cy="22.5" r=".5" fill="rgba(255,255,255,.6)" />
-            {/* Augenbraue */}
-            <path d="M24 20.5 Q26 19.5 28 20.5" fill="none" stroke="rgba(60,30,50,.8)" strokeWidth="1" strokeLinecap="round" />
-            {/* Nase */}
-            <path d="M28 24 Q29 25.5 27.5 26" fill="none" stroke="rgba(200,160,130,.6)" strokeWidth=".8" strokeLinecap="round" />
-            {/* Leichtes Lächeln */}
-            <path d="M25 28 Q27 29.5 29 28" fill="none" stroke="rgba(180,100,120,.5)" strokeWidth=".8" strokeLinecap="round" />
+              {/* Beine */}
+              <path d="M22 68 L20.5 82 L27.5 82 L27 68 Z" fill="url(#wPants)" />
+              <path d="M29 68 L28.5 82 L35.5 82 L34 68 Z" fill="url(#wPants)" />
+              <path d="M27 68 L27 82 L29 82 L29 68 Z" fill="rgba(0,0,0,.12)" />
 
-            {/* === KLOPFENDER ARM === */}
-            <g className="walkin-arm">
-              {/* Oberarm */}
-              <path d="M30 42 L36 36" stroke="url(#jacketGrad)" strokeWidth="5" strokeLinecap="round" />
-              {/* Unterarm */}
-              <path d="M36 36 L44 28" stroke="url(#jacketGrad)" strokeWidth="4.5" strokeLinecap="round" />
-              {/* Ärmel-Saum */}
-              <circle cx="43" cy="29" r="3" fill="url(#skinGrad)" />
-              {/* Faust */}
-              <path d="M43 24 C41 22 41 26 43 28 C45 30 47 28 47 26 C47 24 45 22 43 24 Z" fill="url(#skinGrad)" stroke="rgba(200,160,130,.4)" strokeWidth=".5" />
-              {/* Knöchel */}
-              <circle cx="44" cy="24.5" r=".8" fill="rgba(200,160,130,.6)" />
-              <circle cx="45.5" cy="25.5" r=".8" fill="rgba(200,160,130,.6)" />
+              {/* Oberkörper */}
+              <path d="M20 40 C19 46 18 58 20 68 L36 68 C38 58 37 46 36 40 Z" fill="url(#wJacket)" />
+              {/* Highlight */}
+              <path d="M21 42 C20.5 50 20.5 60 21 67 L24 67 C23 60 23 50 23.5 42 Z" fill="rgba(255,255,255,.07)" />
+              {/* Reißverschluss */}
+              <line x1="28" y1="43" x2="28" y2="67" stroke="rgba(255,255,255,.08)" strokeWidth=".6" />
+
+              {/* Hals */}
+              <rect x="25" y="34" width="6" height="7" rx="2.5" fill="url(#wSkin)" />
+
+              {/* Kopf */}
+              <circle cx="28" cy="26" r="9.5" fill="url(#wSkin)" />
+              {/* Ohr */}
+              <ellipse cx="19" cy="27" rx="2" ry="3" fill="#dda880" stroke="rgba(190,140,110,.4)" strokeWidth=".5" />
+              {/* Haare */}
+              <path d="M19 22 C19 14 23 11 29 11 C35 11 38 15 37 22 C36 24 34 19 29 18 C24 17 20 20 19 22 Z" fill="#3d1e30" />
+              <path d="M23 13 C26 12 30 12 33 14" fill="none" stroke="rgba(90,45,70,.5)" strokeWidth=".8" />
+              {/* Auge */}
+              <ellipse cx="32" cy="25" rx="1.6" ry="2" fill="#2d1a24" />
+              <circle cx="32.5" cy="24.5" r=".6" fill="rgba(255,255,255,.5)" />
+              {/* Augenbraue */}
+              <path d="M30 22.5 Q32 21.5 34 22.5" fill="none" stroke="#3d1e30" strokeWidth=".9" strokeLinecap="round" />
+              {/* Nase */}
+              <path d="M34 25.5 Q35 27 33.5 28" fill="none" stroke="rgba(190,140,110,.5)" strokeWidth=".7" strokeLinecap="round" />
+              {/* Lächeln */}
+              <path d="M31 30 Q33 31.5 35 30" fill="none" stroke="rgba(170,90,110,.45)" strokeWidth=".7" strokeLinecap="round" />
+
+              {/* === ARM (klopft) === */}
+              <g className="walkin-arm">
+                <path d="M36 44 L42 38" stroke="url(#wJacket)" strokeWidth="5.5" strokeLinecap="round" />
+                <path d="M42 38 L50 30" stroke="url(#wJacket)" strokeWidth="5" strokeLinecap="round" />
+                {/* Handgelenk */}
+                <circle cx="49" cy="31" r="3.2" fill="url(#wSkin)" />
+                {/* Faust */}
+                <ellipse cx="52" cy="28" rx="4" ry="3.5" fill="url(#wSkin)" stroke="rgba(190,140,110,.3)" strokeWidth=".5" />
+                {/* Knöchel Detail */}
+                <circle cx="52" cy="26.5" r=".7" fill="rgba(190,140,110,.5)" />
+                <circle cx="53.5" cy="27.5" r=".7" fill="rgba(190,140,110,.5)" />
+                <circle cx="50.5" cy="27" r=".6" fill="rgba(190,140,110,.4)" />
+              </g>
             </g>
 
             {/* Klopf-Wellen */}
-            <circle className="walkin-wave walkin-wave-1" cx="48" cy="26" r="4" fill="none" stroke="rgba(187,53,153,.5)" strokeWidth="1.5" />
-            <circle className="walkin-wave walkin-wave-2" cx="48" cy="26" r="4" fill="none" stroke="rgba(187,53,153,.35)" strokeWidth="1" />
-            <circle className="walkin-wave walkin-wave-3" cx="48" cy="26" r="4" fill="none" stroke="rgba(187,53,153,.2)" strokeWidth=".8" />
+            <circle className="walkin-wave walkin-wave-1" cx="58" cy="28" r="3" fill="none" stroke="rgba(187,53,153,.6)" strokeWidth="1.5" />
+            <circle className="walkin-wave walkin-wave-2" cx="58" cy="28" r="3" fill="none" stroke="rgba(187,53,153,.4)" strokeWidth="1" />
+            <circle className="walkin-wave walkin-wave-3" cx="58" cy="28" r="3" fill="none" stroke="rgba(187,53,153,.25)" strokeWidth=".7" />
 
-            {/* Boden-Linie */}
-            <rect x="0" y="86" width="100" height="2" rx="1" fill="rgba(255,255,255,.06)" />
+            {/* Boden */}
+            <rect x="0" y="86" width="120" height="2" rx="1" fill="rgba(255,255,255,.05)" />
           </svg>
         </span>
 
-        {/* Text */}
         <span className="walkin-badge-label">
           <span className="walkin-badge-title">Walk-In</span>
           <span className="walkin-badge-day">Friday</span>
           <span className="walkin-badge-sub">Anklopfen!</span>
         </span>
 
-        {/* Klingel-Noten */}
         <span className="walkin-notes">
           <span className="walkin-note walkin-note-1">🔔</span>
           <span className="walkin-note walkin-note-2">✨</span>
