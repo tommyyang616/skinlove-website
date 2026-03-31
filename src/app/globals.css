@@ -575,6 +575,216 @@ nav a:hover::after {
   color: var(--pink)
 }
 
+/* WALK-IN FRIDAY BADGE */
+.walkin-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(187, 53, 153, .15);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(187, 53, 153, .4);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .3s ease;
+  font-family: inherit;
+  animation: walkin-glow 2s ease-in-out infinite;
+}
+
+.walkin-badge:hover {
+  background: rgba(187, 53, 153, .3);
+  border-color: var(--pink);
+  transform: scale(1.05);
+}
+
+.walkin-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--pink);
+  border-radius: 50%;
+  animation: walkin-pulse 1.5s ease-in-out infinite;
+}
+
+.walkin-badge-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.2;
+}
+
+@keyframes walkin-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(187, 53, 153, .6); }
+  50% { opacity: .7; box-shadow: 0 0 0 6px rgba(187, 53, 153, 0); }
+}
+
+@keyframes walkin-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(187, 53, 153, .1); }
+  50% { box-shadow: 0 0 25px rgba(187, 53, 153, .25); }
+}
+
+/* WALK-IN FRIDAY MODAL */
+.walkin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, .7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: walkin-fade-in .3s ease;
+}
+
+.walkin-modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(160deg, #1a1a1a 0%, #111 100%);
+  border: 1px solid rgba(187, 53, 153, .3);
+  border-radius: 20px;
+  padding: 40px 32px 32px;
+  animation: walkin-slide-up .4s ease;
+}
+
+.walkin-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, .05);
+  color: #999;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+}
+
+.walkin-close:hover {
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+}
+
+.walkin-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.walkin-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.walkin-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.walkin-subtitle {
+  font-size: 13px;
+  color: #999;
+  letter-spacing: .5px;
+}
+
+.walkin-intro {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.walkin-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.walkin-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.walkin-name {
+  font-size: 14px;
+  color: #e8e4df;
+  white-space: nowrap;
+}
+
+.walkin-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(255, 255, 255, .15);
+  min-width: 20px;
+  margin-bottom: 4px;
+}
+
+.walkin-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pink-text);
+  white-space: nowrap;
+}
+
+.walkin-footer-info {
+  background: rgba(187, 53, 153, .08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.walkin-footer-info p {
+  font-size: 13px;
+  color: #bbb;
+}
+
+@keyframes walkin-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes walkin-slide-up {
+  from { opacity: 0; transform: translateY(20px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .walkin-badge {
+    top: 16px;
+    right: 16px;
+    padding: 8px 14px;
+    gap: 6px;
+  }
+  .walkin-badge-text {
+    font-size: 10px;
+  }
+  .walkin-modal {
+    padding: 32px 24px 24px;
+  }
+  .walkin-header h2 {
+    font-size: 20px;
+  }
+}
+
 /* ABOUT */
 .about-grid {
   display: grid;

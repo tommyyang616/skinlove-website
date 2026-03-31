@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import WalkInFriday from "./WalkInFriday";
 
 const heroImages = [
   { src: "/images/hero-strip1.webp", alt: "SkinLove Tattoo Studio", w: 1140, h: 1200 },
@@ -130,6 +131,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
         </div>
       </div>
       <div className="hero-overlay" />
+      <WalkInFriday />
       <div className="hero-content" style={{ margin: 0, paddingLeft: 48, paddingRight: 24, width: "100%" }}>
         <h1 className="hero-anim">
           <span className="ha-line">
