@@ -64,9 +64,10 @@ export default function Hero({ onBook }: { onBook: () => void }) {
             priority
             fill
             sizes="100vw"
+            quality={90}
             style={{
               objectFit: "cover",
-              objectPosition: "center center",
+              objectPosition: "center 20%",
               zIndex: 0,
               opacity: activeDesktopImage === 1 ? 1 : 0,
               transition: "opacity 0.8s ease",
@@ -78,9 +79,10 @@ export default function Hero({ onBook }: { onBook: () => void }) {
             priority
             fill
             sizes="100vw"
+            quality={90}
             style={{
               objectFit: "cover",
-              objectPosition: "center center",
+              objectPosition: "center 20%",
               zIndex: 0,
               opacity: activeDesktopImage === 2 ? 1 : 0,
               transition: "opacity 0.8s ease",

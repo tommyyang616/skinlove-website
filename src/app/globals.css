@@ -320,6 +320,7 @@ nav a:hover::after {
 /* HERO */
 .hero {
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
