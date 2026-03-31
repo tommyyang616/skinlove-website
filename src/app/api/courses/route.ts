@@ -11,7 +11,7 @@ export async function GET() {
 
     const courses = await prisma.course.findMany({
       where: { tenantId, isActive: true },
-      include: { enrollments: { select: { id: true } } },
+      include: { enrollments: { select: { id: true }, where: { status: { not: "CANCELLED" } } } },
       orderBy: { startDate: "asc" },
     });
 

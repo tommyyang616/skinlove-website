@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
   if (!tenantId) return NextResponse.json([]);
   const courses = await prisma.course.findMany({
     where: { tenantId },
-    include: { enrollments: true },
+    include: { enrollments: { where: { status: { not: "CANCELLED" } } } },
     orderBy: { startDate: "asc" },
   });
   return NextResponse.json(courses);
