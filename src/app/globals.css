@@ -578,17 +578,17 @@ nav a:hover::after {
 /* WALK-IN FRIDAY BADGE — Animated Door Knock */
 .walkin-badge {
   position: absolute;
-  top: 100px;
-  right: 24px;
+  top: 90px;
+  right: 28px;
   z-index: 5;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 24px 16px 18px;
+  gap: 16px;
+  padding: 18px 28px 18px 20px;
   background: rgba(10, 10, 10, .7);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(187, 53, 153, .5);
-  border-radius: 18px;
+  border-radius: 20px;
   cursor: pointer;
   transition: all .3s ease;
   font-family: inherit;
@@ -625,8 +625,8 @@ nav a:hover::after {
 /* Tür-Szene mit Person */
 .walkin-scene {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   flex-shrink: 0;
 }
 
@@ -638,16 +638,16 @@ nav a:hover::after {
 /* Klopfender Arm */
 .walkin-arm {
   animation: walkin-knock 2.8s ease-in-out infinite;
-  transform-origin: 26px 34px;
+  transform-origin: 30px 42px;
 }
 
 @keyframes walkin-knock {
   0%, 100% { transform: rotate(0deg); }
-  12% { transform: rotate(-8deg); }
-  18% { transform: rotate(3deg); }
-  28% { transform: rotate(-8deg); }
-  34% { transform: rotate(3deg); }
-  44% { transform: rotate(-8deg); }
+  12% { transform: rotate(-10deg); }
+  18% { transform: rotate(4deg); }
+  28% { transform: rotate(-10deg); }
+  34% { transform: rotate(4deg); }
+  44% { transform: rotate(-10deg); }
   50% { transform: rotate(0deg); }
 }
 
@@ -655,12 +655,13 @@ nav a:hover::after {
 .walkin-wave { opacity: 0; }
 .walkin-wave-1 { animation: walkin-wave-burst 2.8s ease-out infinite; }
 .walkin-wave-2 { animation: walkin-wave-burst 2.8s ease-out .12s infinite; }
+.walkin-wave-3 { animation: walkin-wave-burst 2.8s ease-out .24s infinite; }
 
 @keyframes walkin-wave-burst {
   0%, 10% { opacity: 0; r: 4; }
-  14% { opacity: .7; r: 5; }
-  35% { opacity: 0; r: 14; }
-  100% { opacity: 0; r: 14; }
+  14% { opacity: .7; r: 6; }
+  35% { opacity: 0; r: 16; }
+  100% { opacity: 0; r: 16; }
 }
 
 /* Badge Text */
@@ -671,7 +672,7 @@ nav a:hover::after {
 }
 
 .walkin-badge-title {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -680,7 +681,7 @@ nav a:hover::after {
 }
 
 .walkin-badge-day {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -689,7 +690,7 @@ nav a:hover::after {
 }
 
 .walkin-badge-sub {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -884,8 +885,8 @@ nav a:hover::after {
     border-radius: 16px;
   }
   .walkin-scene {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
   }
   .walkin-badge-title {
     font-size: 13px;
