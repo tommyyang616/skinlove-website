@@ -444,7 +444,7 @@ function Buchungen({ buchungen, onUpdate }: { buchungen: Booking[]; courses: Cou
                   <div style={{ display: "flex", gap: 6 }}>
                     {!b.paid && b.status !== "CANCELLED" && <button style={btnP} onClick={() => update(b.id, { paid: true, status: "CONFIRMED" })}>💰 Anzahlung erhalten</button>}
                     {b.status !== "CANCELLED" && <button style={btnD} onClick={() => { if (confirm("Buchung stornieren?")) update(b.id, { status: "CANCELLED", paid: false }); }}>✕</button>}
-                    {b.status === "CANCELLED" && <Badge color="red">Storniert</Badge>}
+                    {b.status === "CANCELLED" && <><Badge color="red">Storniert</Badge><button style={btnP} onClick={() => { if (confirm("Buchung wiederherstellen?")) update(b.id, { status: "PENDING", paid: false }); }}>↩ Wiederherstellen</button></>}
                   </div>
                 </td>
               </tr>
