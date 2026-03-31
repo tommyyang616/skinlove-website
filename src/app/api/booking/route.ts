@@ -22,13 +22,14 @@ export async function POST(req: NextRequest) {
     if (courseId) {
       // Workshop booking → CourseEnrollment
       await prisma.courseEnrollment.create({
-        data: { courseId, name, email, phone: email, status: "PENDING", paid: false },
+        data: { courseId, name, email, phone: phone || "", status: "PENDING", paid: false },
       });
 
       await sendTelegram(
         `📅 <b>Neue Workshop-Buchung!</b>\n\n` +
         `<b>Name:</b> ${name}\n` +
-        `<b>Kontakt:</b> ${email}\n` +
+        `<b>E-Mail:</b> ${email}\n` +
+        `<b>Telefon:</b> ${phone || "—"}\n` +
         `<b>Kurs-ID:</b> ${courseId}\n\n` +
         `<i>Via skinlove-website</i>`
       );

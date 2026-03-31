@@ -14,7 +14,8 @@ export default function Workshop() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
-  const contactRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,16 +51,18 @@ export default function Workshop() {
 
   const submit = () => {
     const name = nameRef.current?.value.trim() || "";
-    const contact = contactRef.current?.value.trim() || "";
-    if (!name) { if (nameRef.current) nameRef.current.style.borderColor = "#bb3599"; return; }
-    if (!contact) { if (contactRef.current) contactRef.current.style.borderColor = "#bb3599"; return; }
-    if (!selected) return;
+    const email = emailRef.current?.value.trim() || "";
+    const phone = phoneRef.current?.value.trim() || "";
+    let valid = true;
+    if (!name) { if (nameRef.current) nameRef.current.style.borderColor = "#bb3599"; valid = false; }
+    if (!email) { if (emailRef.current) emailRef.current.style.borderColor = "#bb3599"; valid = false; }
+    if (!phone) { if (phoneRef.current) phoneRef.current.style.borderColor = "#bb3599"; valid = false; }
+    if (!valid || !selected) return;
 
-    // Save via API (Prisma + rate limiting + telegram)
     fetch("/api/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email: contact, courseId: selected.id }),
+      body: JSON.stringify({ name, email, phone, courseId: selected.id }),
     }).catch(() => { });
 
     setSuccess(true);
@@ -155,35 +158,20 @@ export default function Workshop() {
               <p style={{ marginBottom: 20 }}>
                 {new Date(selected.date + "T00:00").toLocaleDateString("de-AT", { weekday: "long", day: "numeric", month: "long" })} · {selected.time} · € {selected.price}
               </p>
-              <label>Name</label>
-              <input ref={nameRef} type="text" placeholder="Dein Name" className="ws-input" />
-              <label>E-Mail oder Telefon</label>
-              <input ref={contactRef} type="text" placeholder="email@beispiel.at oder 0660 ..." className="ws-input" />
-              <div style={{ marginTop: 8, padding: 16, background: "rgba(187,53,153,.06)", border: "1px solid rgba(187,53,153,.15)", marginBottom: 16 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                  <span style={{ fontSize: 13, color: "var(--text-dim)" }}>Anzahlung</span>
-                  <span style={{ fontFamily: "var(--serif)", fontSize: "1.2rem", color: "#fff", fontWeight: 600 }}>€ {selected.deposit}</span>
-                </div>
-                <div style={{ marginTop: 12, fontSize: 13, color: "var(--text-dim)", lineHeight: 1.8 }}>
-                  <strong style={{ color: "#fff" }}>Banküberweisung:</strong><br />
-                  <strong style={{ color: "#fff" }}>AT37 2032 6000 0123 9441</strong><br />
-                  BIC: SPNAKT21XXX<br />
-                  <span style={{ fontSize: 11 }}>Betreff: Workshop + dein Name</span>
-                </div>
-              </div>
-              <button className="btn-primary" onClick={submit} style={{ width: "100%", border: "none", cursor: "pointer" }}>📅 Platz reservieren</button>
+              <label>Name *</label>
+              <input ref={nameRef} type="text" placeholder="Dein Name" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
+              <label>E-Mail *</label>
+              <input ref={emailRef} type="email" placeholder="email@beispiel.at" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
+              <label>Telefon *</label>
+              <input ref={phoneRef} type="tel" placeholder="0660 1234567" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
+              <button className="btn-primary" onClick={submit} style={{ width: "100%", border: "none", cursor: "pointer", marginTop: 16 }}>📅 Platz reservieren</button>
               <p style={{ fontSize: 11, color: "var(--text-dim)", textAlign: "center", marginTop: 12 }}>Eve meldet sich bei dir zur Bestätigung</p>
             </div>
           ) : success ? (
             <div style={{ textAlign: "center", padding: "20px 0" }}>
               <div style={{ fontSize: 48, color: "var(--pink)", marginBottom: 16 }}>✓</div>
               <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "#fff", marginBottom: 12 }}>Buchung bestätigt!</h3>
-              <p style={{ fontSize: 14, color: "var(--text-dim)", lineHeight: 1.7, marginBottom: 8 }}>Dein Platz ist reserviert. Eve meldet sich bei dir.</p>
-              <p style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.7, marginBottom: 24 }}>
-                Bitte überweise die Anzahlung auf:<br />
-                <strong style={{ color: "#fff" }}>AT37 2032 6000 0123 9441</strong><br />
-                <span style={{ fontSize: 11 }}>BIC: SPNAKT21XXX · Betreff: Workshop + dein Name</span>
-              </p>
+              <p style={{ fontSize: 14, color: "var(--text-dim)", lineHeight: 1.7, marginBottom: 24 }}>Dein Platz ist reserviert. Eve meldet sich bei dir zur Bestätigung.</p>
               <button className="btn-primary" onClick={closeModal} style={{ border: "none", cursor: "pointer", display: "inline-flex" }}>Schließen</button>
             </div>
           ) : null}
