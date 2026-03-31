@@ -937,8 +937,8 @@ nav a:hover::after {
     border-radius: 16px;
   }
   .walkin-scene {
-    width: 90px;
-    height: 82px;
+    width: 56px;
+    height: 64px;
   }
   .walkin-badge-title {
     font-size: 13px;
