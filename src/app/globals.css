@@ -575,7 +575,7 @@ nav a:hover::after {
   color: var(--pink)
 }
 
-/* WALK-IN FRIDAY BADGE */
+/* WALK-IN FRIDAY BADGE — Animated Door Knock */
 .walkin-badge {
   position: absolute;
   top: 100px;
@@ -583,49 +583,150 @@ nav a:hover::after {
   z-index: 5;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: rgba(187, 53, 153, .15);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(187, 53, 153, .4);
-  border-radius: 50px;
+  gap: 12px;
+  padding: 14px 22px 14px 16px;
+  background: rgba(10, 10, 10, .6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(187, 53, 153, .5);
+  border-radius: 16px;
   cursor: pointer;
   transition: all .3s ease;
   font-family: inherit;
-  animation: walkin-glow 2s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(187, 53, 153, .2), 0 0 60px rgba(187, 53, 153, .08);
+  animation: walkin-badge-glow 3s ease-in-out infinite;
+  overflow: visible;
 }
 
 .walkin-badge:hover {
-  background: rgba(187, 53, 153, .3);
+  background: rgba(187, 53, 153, .2);
   border-color: var(--pink);
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(187, 53, 153, .4), 0 0 80px rgba(187, 53, 153, .15);
 }
 
-.walkin-badge-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--pink);
-  border-radius: 50%;
-  animation: walkin-pulse 1.5s ease-in-out infinite;
+/* Leuchtende Pulse-Ringe */
+.walkin-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 20px;
+  border: 1px solid rgba(187, 53, 153, .3);
+  pointer-events: none;
 }
 
-.walkin-badge-text {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1px;
+.walkin-ring-1 {
+  animation: walkin-ring-expand 3s ease-out infinite;
+}
+
+.walkin-ring-2 {
+  animation: walkin-ring-expand 3s ease-out 1s infinite;
+}
+
+.walkin-ring-3 {
+  animation: walkin-ring-expand 3s ease-out 2s infinite;
+}
+
+@keyframes walkin-ring-expand {
+  0% { inset: -2px; opacity: .6; }
+  100% { inset: -18px; opacity: 0; }
+}
+
+/* Tür-Icon */
+.walkin-door {
+  position: relative;
+  width: 40px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.walkin-door-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Klopfende Hand */
+.walkin-hand {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  font-size: 16px;
+  animation: walkin-knock 2.5s ease-in-out infinite;
+  transform-origin: right center;
+}
+
+@keyframes walkin-knock {
+  0%, 100% { transform: translateX(4px) rotate(0deg); }
+  15% { transform: translateX(-2px) rotate(-10deg); }
+  20% { transform: translateX(4px) rotate(0deg); }
+  30% { transform: translateX(-2px) rotate(-10deg); }
+  35% { transform: translateX(4px) rotate(0deg); }
+  45% { transform: translateX(-2px) rotate(-10deg); }
+  50% { transform: translateX(4px) rotate(0deg); }
+}
+
+/* Badge Text */
+.walkin-badge-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.walkin-badge-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
-@keyframes walkin-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(187, 53, 153, .6); }
-  50% { opacity: .7; box-shadow: 0 0 0 6px rgba(187, 53, 153, 0); }
+.walkin-badge-day {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pink-text);
+  line-height: 1.1;
 }
 
-@keyframes walkin-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(187, 53, 153, .1); }
-  50% { box-shadow: 0 0 25px rgba(187, 53, 153, .25); }
+/* Klingel-Noten die aufsteigen */
+.walkin-notes {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  pointer-events: none;
+}
+
+.walkin-note {
+  position: absolute;
+  font-size: 12px;
+  opacity: 0;
+}
+
+.walkin-note-1 {
+  animation: walkin-float 2.5s ease-out 0.2s infinite;
+  right: 0;
+}
+
+.walkin-note-2 {
+  animation: walkin-float 2.5s ease-out 1s infinite;
+  right: 12px;
+}
+
+.walkin-note-3 {
+  animation: walkin-float 2.5s ease-out 1.8s infinite;
+  right: 6px;
+}
+
+@keyframes walkin-float {
+  0% { opacity: 0; transform: translateY(0) scale(.5); }
+  20% { opacity: 1; transform: translateY(-8px) scale(1); }
+  80% { opacity: .6; transform: translateY(-24px) scale(.8); }
+  100% { opacity: 0; transform: translateY(-36px) scale(.5); }
+}
+
+@keyframes walkin-badge-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(187, 53, 153, .2), 0 0 60px rgba(187, 53, 153, .08); }
+  50% { box-shadow: 0 0 30px rgba(187, 53, 153, .35), 0 0 80px rgba(187, 53, 153, .12); }
 }
 
 /* WALK-IN FRIDAY MODAL */
@@ -778,12 +879,23 @@ nav a:hover::after {
 @media (max-width: 768px) {
   .walkin-badge {
     top: 80px;
-    right: 16px;
-    padding: 8px 14px;
-    gap: 6px;
+    right: 12px;
+    padding: 10px 16px 10px 12px;
+    gap: 8px;
+    border-radius: 14px;
   }
-  .walkin-badge-text {
+  .walkin-door {
+    width: 32px;
+    height: 42px;
+  }
+  .walkin-badge-title {
+    font-size: 11px;
+  }
+  .walkin-badge-day {
     font-size: 10px;
+  }
+  .walkin-hand {
+    font-size: 13px;
   }
   .walkin-modal {
     padding: 32px 24px 24px;

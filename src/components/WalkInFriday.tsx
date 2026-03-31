@@ -17,19 +17,51 @@ export default function WalkInFriday() {
 
   return (
     <>
-      {/* Badge im Hero */}
+      {/* Animierte Badge im Hero — Tür mit Klopf-Animation */}
       <button
         className="walkin-badge"
         onClick={() => setOpen(true)}
         aria-label="Walk-In Friday Angebot öffnen"
       >
-        <span className="walkin-badge-dot" />
-        <span className="walkin-badge-text">
-          Walk-In<br />Friday
+        {/* Leuchtender Ring-Pulse */}
+        <span className="walkin-ring walkin-ring-1" />
+        <span className="walkin-ring walkin-ring-2" />
+        <span className="walkin-ring walkin-ring-3" />
+
+        {/* Tür-Icon mit klopfender Hand */}
+        <span className="walkin-door">
+          {/* Tür */}
+          <svg className="walkin-door-svg" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Türrahmen */}
+            <rect x="4" y="2" width="32" height="48" rx="3" stroke="rgba(255,255,255,.6)" strokeWidth="2" fill="rgba(187,53,153,.15)" />
+            {/* Türklinke */}
+            <circle cx="28" cy="28" r="2.5" fill="#bb3599" />
+            {/* Fenster oben */}
+            <rect x="12" y="8" width="16" height="10" rx="1.5" fill="rgba(187,53,153,.25)" stroke="rgba(255,255,255,.3)" strokeWidth="1" />
+            {/* Licht durchs Fenster */}
+            <rect x="14" y="10" width="5" height="6" rx="1" fill="rgba(187,53,153,.4)" />
+            <rect x="21" y="10" width="5" height="6" rx="1" fill="rgba(187,53,153,.3)" />
+          </svg>
+
+          {/* Klopfende Hand */}
+          <span className="walkin-hand">🤚</span>
+        </span>
+
+        {/* Text */}
+        <span className="walkin-badge-label">
+          <span className="walkin-badge-title">Walk-In</span>
+          <span className="walkin-badge-day">Friday</span>
+        </span>
+
+        {/* Klingel-Noten */}
+        <span className="walkin-notes">
+          <span className="walkin-note walkin-note-1">🔔</span>
+          <span className="walkin-note walkin-note-2">✨</span>
+          <span className="walkin-note walkin-note-3">🔔</span>
         </span>
       </button>
 
-      {/* Modal — als Portal auf body-level via fixed positioning */}
+      {/* Modal */}
       {open && (
         <div className="walkin-overlay" onClick={() => setOpen(false)}>
           <div className="walkin-modal" onClick={(e) => e.stopPropagation()}>
