@@ -2,29 +2,24 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+const heroImages = [
+  { src: "/images/hero-strip1.webp", alt: "SkinLove Tattoo Studio", w: 1140, h: 1200 },
+  { src: "/images/hero-strip2.webp", alt: "SkinLove Studio Arbeit", w: 1140, h: 1200 },
+  { src: "/images/hero-strip3.webp", alt: "Eve Paule Tattoo", w: 969, h: 1200 },
+  { src: "/images/hero-strip4.webp", alt: "SkinLove Piercing", w: 1001, h: 1200 },
+];
+
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
   const vid2 = useRef<HTMLVideoElement>(null);
   const [videosReady, setVideosReady] = useState(false);
-  const [activeDesktopImage, setActiveDesktopImage] = useState<1 | 2>(1);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
-
-    // Delay video loading until after the initial content is stable
     const timer = setTimeout(() => setVideosReady(true), 2500);
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveDesktopImage((current) => (current === 1 ? 2 : 1));
-    }, 3500);
-
-    return () => window.clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -32,10 +27,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     const v1 = vid1.current;
     const v2 = vid2.current;
     if (!v1 || !v2) return;
-
-    // Start playing video 1
-    v1.play().catch(() => { });
-
+    v1.play().catch(() => {});
     const swap = () => {
       if (v1.classList.contains("active")) {
         v1.classList.remove("active");
@@ -54,41 +46,31 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     return () => { v1.removeEventListener("ended", swap); v2.removeEventListener("ended", swap); };
   }, [videosReady]);
 
+  // Double the images for seamless loop
+  const loopImages = [...heroImages, ...heroImages];
+
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
+        {/* Desktop: scrolling strip */}
         <div className="hero-desktop-media">
-          <Image
-            src="/images/hero.jpg"
-            alt="SkinLove Tattoo Studio"
-            priority
-            fill
-            sizes="100vw"
-            quality={90}
-            style={{
-              objectFit: "cover",
-              objectPosition: "center 20%",
-              zIndex: 0,
-              opacity: activeDesktopImage === 1 ? 1 : 0,
-              transition: "opacity 0.8s ease",
-            }}
-          />
-          <Image
-            src="/images/hero2.jpg"
-            alt="SkinLove Tattoo Studio bei der Arbeit"
-            priority
-            fill
-            sizes="100vw"
-            quality={90}
-            style={{
-              objectFit: "cover",
-              objectPosition: "center 20%",
-              zIndex: 0,
-              opacity: activeDesktopImage === 2 ? 1 : 0,
-              transition: "opacity 0.8s ease",
-            }}
-          />
+          <div className="hero-strip">
+            {loopImages.map((img, i) => (
+              <div key={i} className="hero-strip-item" style={{ aspectRatio: `${img.w}/${img.h}` }}>
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="50vw"
+                  quality={90}
+                  priority={i < 4}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+        {/* Mobile: video swap */}
         <div className="hero-mobile-media">
           <Image
             src="/images/hero.jpg"

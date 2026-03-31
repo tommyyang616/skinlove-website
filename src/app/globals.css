@@ -336,18 +336,38 @@ nav a:hover::after {
   height: 100%
 }
 
-.hero-desktop-media,
 .hero-mobile-media {
   position: absolute;
   inset: 0
 }
 
 .hero-desktop-media {
-  display: block
+  display: block;
+  position: absolute;
+  inset: 0;
+  overflow: hidden
 }
 
 .hero-mobile-media {
   display: none
+}
+
+.hero-strip {
+  display: flex;
+  height: 100%;
+  animation: heroScroll 30s linear infinite;
+  will-change: transform
+}
+
+.hero-strip-item {
+  position: relative;
+  height: 100%;
+  flex-shrink: 0
+}
+
+@keyframes heroScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .hero-bg-vid {
