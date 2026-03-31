@@ -297,20 +297,21 @@ function Anfragen({ contacts, onUpdate }: { contacts: ContactReq[]; onUpdate: ()
 function Workshops({ courses, onUpdate }: { courses: Course[]; onUpdate: () => void }) {
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const empty = { title: "", category: "Tattoo", description: "", start_date: "", time_text: "", price: 0, deposit: 0, max_spots: 6, includes: "" };
+  const empty = { title: "", category: "Tattoo", description: "", start_date: "", time_text: "", price: "" as string | number, deposit: "" as string | number, max_spots: 6 as string | number, includes: "" };
   const [form, setForm] = useState(empty);
 
   const openEdit = (c: Course) => {
-    setForm({ title: c.title, category: c.category || "Tattoo", description: c.description || "", start_date: c.startDate?.split("T")[0] || "", time_text: c.timeText || "", price: toNum(c.price), deposit: toNum(c.deposit), max_spots: c.maxSpots, includes: c.includes || "" });
+    setForm({ title: c.title, category: c.category || "Tattoo", description: c.description || "", start_date: c.startDate ? c.startDate.substring(0, 10) : "", time_text: c.timeText || "", price: toNum(c.price) || "", deposit: toNum(c.deposit) || "", max_spots: c.maxSpots, includes: c.includes || "" });
     setEditId(c.id); setShowForm(true);
   };
 
   const save = async () => {
     if (!form.title.trim()) return;
+    const payload = { ...form, price: Number(form.price) || 0, deposit: Number(form.deposit) || 0, max_spots: Number(form.max_spots) || 1 };
     if (editId) {
-      await api("/api/admin/courses", { method: "PATCH", body: JSON.stringify({ id: editId, ...form }) });
+      await api("/api/admin/courses", { method: "PATCH", body: JSON.stringify({ id: editId, ...payload }) });
     } else {
-      await api("/api/admin/courses", { method: "POST", body: JSON.stringify(form) });
+      await api("/api/admin/courses", { method: "POST", body: JSON.stringify(payload) });
     }
     setShowForm(false); setEditId(null); setForm(empty); onUpdate();
   };
@@ -357,9 +358,9 @@ function Workshops({ courses, onUpdate }: { courses: Course[]; onUpdate: () => v
             <div><span style={lbl}>Uhrzeit / Tage</span><input value={form.time_text} onChange={e => setForm({ ...form, time_text: e.target.value })} placeholder="z.B. Mi 17:00-19:00 · Do 17:00-20:00" style={inp} /></div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 16 }}>
-            <div><span style={lbl}>Gesamtpreis (€)</span><input type="number" value={form.price} onChange={e => setForm({ ...form, price: +e.target.value })} style={inp} /></div>
-            <div><span style={lbl}>Anzahlung (€)</span><input type="number" value={form.deposit} onChange={e => setForm({ ...form, deposit: +e.target.value })} style={inp} /></div>
-            <div><span style={lbl}>Max. Plätze</span><input type="number" value={form.max_spots} onChange={e => setForm({ ...form, max_spots: +e.target.value })} style={inp} /></div>
+            <div><span style={lbl}>Gesamtpreis (€)</span><input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value === "" ? "" : +e.target.value })} style={inp} /></div>
+            <div><span style={lbl}>Anzahlung (€)</span><input type="number" value={form.deposit} onChange={e => setForm({ ...form, deposit: e.target.value === "" ? "" : +e.target.value })} style={inp} /></div>
+            <div><span style={lbl}>Max. Plätze</span><input type="number" value={form.max_spots} onChange={e => setForm({ ...form, max_spots: e.target.value === "" ? "" : +e.target.value })} style={inp} /></div>
           </div>
           <div style={{ marginBottom: 20 }}><span style={lbl}>Inklusive</span><input value={form.includes} onChange={e => setForm({ ...form, includes: e.target.value })} placeholder="Material, Zertifikat, Verpflegung..." style={inp} /></div>
           <div style={{ display: "flex", gap: 8 }}>
