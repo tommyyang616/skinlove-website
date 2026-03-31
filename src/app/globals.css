@@ -635,8 +635,8 @@ nav a:hover::after {
 /* Szene */
 .walkin-scene {
   position: relative;
-  width: 100px;
-  height: 90px;
+  width: 120px;
+  height: 110px;
   flex-shrink: 0;
 }
 
@@ -666,11 +666,11 @@ nav a:hover::after {
 
 @keyframes walkin-knock {
   0%, 18% { transform: rotate(0deg); }
-  22% { transform: rotate(-12deg); }
-  25% { transform: rotate(3deg); }
-  29% { transform: rotate(-12deg); }
-  32% { transform: rotate(3deg); }
-  36% { transform: rotate(-12deg); }
+  22% { transform: rotate(-18deg); }
+  25% { transform: rotate(5deg); }
+  29% { transform: rotate(-18deg); }
+  32% { transform: rotate(5deg); }
+  36% { transform: rotate(-18deg); }
   39% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
 }
@@ -682,11 +682,11 @@ nav a:hover::after {
 }
 
 @keyframes walkin-door-open {
-  0%, 42% { transform: perspective(200px) rotateY(0deg); }
-  55% { transform: perspective(200px) rotateY(-35deg); }
-  75% { transform: perspective(200px) rotateY(-35deg); }
-  90% { transform: perspective(200px) rotateY(0deg); }
-  100% { transform: perspective(200px) rotateY(0deg); }
+  0%, 42% { transform: perspective(180px) rotateY(0deg); }
+  55% { transform: perspective(180px) rotateY(-45deg); }
+  75% { transform: perspective(180px) rotateY(-45deg); }
+  90% { transform: perspective(180px) rotateY(0deg); }
+  100% { transform: perspective(180px) rotateY(0deg); }
 }
 
 /* LICHT: strahlt raus wenn Tür offen */
@@ -932,13 +932,13 @@ nav a:hover::after {
   .walkin-badge {
     top: 80px;
     right: 12px;
-    padding: 12px 18px 12px 12px;
+    padding: 14px 20px 14px 14px;
     gap: 10px;
     border-radius: 16px;
   }
   .walkin-scene {
-    width: 70px;
-    height: 64px;
+    width: 90px;
+    height: 82px;
   }
   .walkin-badge-title {
     font-size: 13px;
