@@ -5,7 +5,7 @@ export default function About() {
       <div className="container">
         <div className="about-grid">
           <div className="about-img-wrap reveal">
-            <Image src="/images/eve-about.webp" alt="Eve Paule – SkinLove" width={426} height={586} />
+            <Image src="/images/eve-about.webp" alt="Eve Paule – SkinLove" width={852} height={1172} quality={100} />
           </div>
           <div className="reveal">
             <span className="section-label">Über mich</span>
