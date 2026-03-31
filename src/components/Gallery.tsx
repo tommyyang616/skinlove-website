@@ -135,7 +135,7 @@ export default function Gallery() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
               Facebook
             </a>
-            <a href="https://www.tiktok.com/@skinlove_tattoopiercing" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <a href="https://www.tiktok.com/@eveskinlovetattoo" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
               <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="#25F4EE" d="M16.708 0h3.418a6.862 6.862 0 004.218 4.573v3.48a10.27 10.27 0 01-4.26-1.163v5.292A8.182 8.182 0 1112.192 4h3.322v3.48a4.7 4.7 0 103.308 4.502V0h-2.114z" />
                 <path fill="#FE2C55" d="M15.402 0h3.418a6.862 6.862 0 004.218 4.573v3.48a10.27 10.27 0 01-4.26-1.163v5.292A8.182 8.182 0 1110.886 4h3.322v3.48a4.7 4.7 0 103.308 4.502V0h-2.114z" />
