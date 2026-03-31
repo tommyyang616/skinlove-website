@@ -355,7 +355,6 @@ nav a:hover::after {
 .hero-strip {
   display: flex;
   height: 100%;
-  animation: heroScroll 30s linear infinite;
   will-change: transform
 }
 
@@ -363,11 +362,6 @@ nav a:hover::after {
   position: relative;
   height: 100%;
   flex-shrink: 0
-}
-
-@keyframes heroScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 .hero-bg-vid {

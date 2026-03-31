@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const heroImages = [
   { src: "/images/hero-strip1.webp", alt: "SkinLove Tattoo Studio", w: 1140, h: 1200 },
@@ -8,6 +8,52 @@ const heroImages = [
   { src: "/images/hero-strip3.webp", alt: "Eve Paule Tattoo", w: 969, h: 1200 },
   { src: "/images/hero-strip4.webp", alt: "SkinLove Piercing", w: 1001, h: 1200 },
 ];
+
+function HeroStrip() {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const offset = useRef(0);
+  const raf = useRef(0);
+  const speed = 0.5; // px per frame (~30px/s at 60fps)
+
+  const animate = useCallback(() => {
+    const el = stripRef.current;
+    if (!el) return;
+    offset.current += speed;
+    // Once we've scrolled past the first set of 4 images, reset to 0
+    const halfWidth = el.scrollWidth / 2;
+    if (offset.current >= halfWidth) {
+      offset.current -= halfWidth;
+    }
+    el.style.transform = `translateX(-${offset.current}px)`;
+    raf.current = requestAnimationFrame(animate);
+  }, []);
+
+  useEffect(() => {
+    raf.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf.current);
+  }, [animate]);
+
+  // Render 3x for plenty of buffer
+  const loopImages = [...heroImages, ...heroImages, ...heroImages];
+
+  return (
+    <div className="hero-strip" ref={stripRef}>
+      {loopImages.map((img, i) => (
+        <div key={i} className="hero-strip-item" style={{ aspectRatio: `${img.w}/${img.h}` }}>
+          <Image
+            src={img.src}
+            alt={img.alt}
+            fill
+            sizes="50vw"
+            quality={90}
+            priority={i < 4}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function Hero({ onBook }: { onBook: () => void }) {
   const vid1 = useRef<HTMLVideoElement>(null);
@@ -46,29 +92,12 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     return () => { v1.removeEventListener("ended", swap); v2.removeEventListener("ended", swap); };
   }, [videosReady]);
 
-  // Double the images for seamless loop
-  const loopImages = [...heroImages, ...heroImages];
-
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
         {/* Desktop: scrolling strip */}
         <div className="hero-desktop-media">
-          <div className="hero-strip">
-            {loopImages.map((img, i) => (
-              <div key={i} className="hero-strip-item" style={{ aspectRatio: `${img.w}/${img.h}` }}>
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="50vw"
-                  quality={90}
-                  priority={i < 4}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-            ))}
-          </div>
+          <HeroStrip />
         </div>
         {/* Mobile: video swap */}
         <div className="hero-mobile-media">
