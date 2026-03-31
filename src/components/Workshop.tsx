@@ -97,8 +97,6 @@ export default function Workshop() {
           <div style={{ position: "relative" }}>
             <div className="ws-grid" ref={gridRef}>
               {workshops.map(ws => {
-                const d = new Date(ws.date + "T00:00");
-                const dateStr = d.toLocaleDateString("de-AT", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
                 const spotsLeft = ws.maxSpots - ws.takenSpots;
                 const soldOut = spotsLeft <= 0;
                 return (
@@ -117,7 +115,6 @@ export default function Workshop() {
                       </div>
                     </div>
                     <div className="ws-card-body">
-                      <div className="ws-card-date">{dateStr}</div>
                       <h3>{ws.title}</h3>
                       <p className="ws-card-desc">{ws.desc}</p>
                       <div className="ws-card-meta">
@@ -156,7 +153,7 @@ export default function Workshop() {
             <div>
               <h3>{selected.title}</h3>
               <p style={{ marginBottom: 20 }}>
-                {new Date(selected.date + "T00:00").toLocaleDateString("de-AT", { weekday: "long", day: "numeric", month: "long" })} · {selected.time} · € {selected.price}
+                {selected.time} · € {selected.price}
               </p>
               <label>Name *</label>
               <input ref={nameRef} type="text" placeholder="Dein Name" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
