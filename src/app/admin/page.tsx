@@ -527,6 +527,7 @@ function Settings() {
             { href: "https://wa.me/436607835346", icon: "💬", text: "WhatsApp" },
             { href: "https://www.instagram.com/skinlove_tattoopiercing/", icon: "📸", text: "Instagram" },
             { href: "https://www.facebook.com/skinlovetattoopiercing", icon: "👍", text: "Facebook" },
+            { href: "https://business.google.com/", icon: "📍", text: "Google Business" },
           ].map(l => (
             <a key={l.href} href={l.href} target="_blank" rel="noopener" style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(255,255,255,.06)", borderRadius: 8, textDecoration: "none", color: "#ccc", fontSize: 13, display: "flex", alignItems: "center", gap: 8, padding: 14 }}>{l.icon} {l.text}</a>
           ))}
