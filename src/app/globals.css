@@ -648,13 +648,13 @@ nav a:hover::after {
 
 /* PERSON: reinlaufen */
 .walkin-person {
-  animation: walkin-person-walk 6s ease-in-out infinite;
+  animation: walkin-person-walk 7s ease-in-out infinite;
 }
 
 @keyframes walkin-person-walk {
   0% { transform: translateX(-12px); opacity: 0; }
   8% { transform: translateX(-6px); opacity: 1; }
-  18% { transform: translateX(0); opacity: 1; }
+  16% { transform: translateX(0); opacity: 1; }
   100% { transform: translateX(0); opacity: 1; }
 }
 
@@ -705,14 +705,14 @@ nav a:hover::after {
 
 /* KLOPF-WELLEN: synchron mit Klopfen */
 .walkin-wave { opacity: 0; }
-.walkin-wave-1 { animation: walkin-wave-hit 6s ease-out infinite; }
-.walkin-wave-2 { animation: walkin-wave-hit 6s ease-out .08s infinite; }
-.walkin-wave-3 { animation: walkin-wave-hit 6s ease-out .16s infinite; }
+.walkin-wave-1 { animation: walkin-wave-hit 7s ease-out infinite; }
+.walkin-wave-2 { animation: walkin-wave-hit 7s ease-out .08s infinite; }
+.walkin-wave-3 { animation: walkin-wave-hit 7s ease-out .16s infinite; }
 
 @keyframes walkin-wave-hit {
-  0%, 20% { opacity: 0; r: 3; }
-  23% { opacity: .8; r: 5; }
-  32% { opacity: 0; r: 18; }
+  0%, 18% { opacity: 0; r: 3; }
+  21% { opacity: .8; r: 5; }
+  30% { opacity: 0; r: 18; }
   100% { opacity: 0; r: 18; }
 }
 
@@ -765,15 +765,15 @@ nav a:hover::after {
   opacity: 0;
 }
 
-.walkin-note-1 { animation: walkin-float 6s ease-out infinite; right: 0; }
-.walkin-note-2 { animation: walkin-float 6s ease-out .5s infinite; right: 16px; }
-.walkin-note-3 { animation: walkin-float 6s ease-out 1s infinite; right: 6px; }
+.walkin-note-1 { animation: walkin-float 7s ease-out infinite; right: 0; }
+.walkin-note-2 { animation: walkin-float 7s ease-out .5s infinite; right: 16px; }
+.walkin-note-3 { animation: walkin-float 7s ease-out 1s infinite; right: 6px; }
 
 @keyframes walkin-float {
-  0%, 50% { opacity: 0; transform: translateY(0) scale(.4); }
-  56% { opacity: 1; transform: translateY(-10px) scale(1); }
-  75% { opacity: .4; transform: translateY(-32px) scale(.7); }
-  85%, 100% { opacity: 0; transform: translateY(-44px) scale(.4); }
+  0%, 48% { opacity: 0; transform: translateY(0) scale(.4); }
+  54% { opacity: 1; transform: translateY(-10px) scale(1); }
+  72% { opacity: .4; transform: translateY(-32px) scale(.7); }
+  82%, 100% { opacity: 0; transform: translateY(-44px) scale(.4); }
 }
 
 @keyframes walkin-badge-glow {

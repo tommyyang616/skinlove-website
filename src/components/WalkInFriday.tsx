@@ -53,8 +53,9 @@ export default function WalkInFriday() {
                 <stop offset="100%" stopColor="#222230" />
               </linearGradient>
               <radialGradient id="wLightSpill" cx=".3" cy=".5" r=".7">
-                <stop offset="0%" stopColor="rgba(187,53,153,.3)" />
-                <stop offset="60%" stopColor="rgba(187,53,153,.05)" />
+                <stop offset="0%" stopColor="rgba(255,0,200,.45)" />
+                <stop offset="30%" stopColor="rgba(255,0,180,.2)" />
+                <stop offset="60%" stopColor="rgba(187,53,153,.08)" />
                 <stop offset="100%" stopColor="rgba(187,53,153,0)" />
               </radialGradient>
               <clipPath id="wDoorClip">
@@ -128,18 +129,14 @@ export default function WalkInFriday() {
               {/* Lächeln */}
               <path d="M31 30 Q33 31.5 35 30" fill="none" stroke="rgba(170,90,110,.45)" strokeWidth=".7" strokeLinecap="round" />
 
-              {/* === ARM (klopft) === */}
+              {/* === ARM (klopft, angewinkelt nah am Körper) === */}
               <g className="walkin-arm">
-                <path d="M36 44 L42 38" stroke="url(#wJacket)" strokeWidth="5.5" strokeLinecap="round" />
-                <path d="M42 38 L50 30" stroke="url(#wJacket)" strokeWidth="5" strokeLinecap="round" />
-                {/* Handgelenk */}
-                <circle cx="49" cy="31" r="3.2" fill="url(#wSkin)" />
-                {/* Faust */}
-                <ellipse cx="52" cy="28" rx="4" ry="3.5" fill="url(#wSkin)" stroke="rgba(190,140,110,.3)" strokeWidth=".5" />
-                {/* Knöchel Detail */}
-                <circle cx="52" cy="26.5" r=".7" fill="rgba(190,140,110,.5)" />
-                <circle cx="53.5" cy="27.5" r=".7" fill="rgba(190,140,110,.5)" />
-                <circle cx="50.5" cy="27" r=".6" fill="rgba(190,140,110,.4)" />
+                <path d="M34 42 L38 38" stroke="url(#wJacket)" strokeWidth="5.5" strokeLinecap="round" />
+                <path d="M38 38 L44 32" stroke="url(#wJacket)" strokeWidth="5" strokeLinecap="round" />
+                <circle cx="44" cy="32" r="3" fill="url(#wSkin)" />
+                <ellipse cx="46" cy="30" rx="3.5" ry="3" fill="url(#wSkin)" stroke="rgba(190,140,110,.3)" strokeWidth=".5" />
+                <circle cx="46" cy="28.5" r=".7" fill="rgba(190,140,110,.5)" />
+                <circle cx="47.5" cy="29.5" r=".6" fill="rgba(190,140,110,.5)" />
               </g>
             </g>
 
