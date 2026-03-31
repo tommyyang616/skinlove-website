@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { sendTelegram } from "@/lib/telegram";
+import { sendBookingEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import { getTenantId } from "@/lib/tenant";
 
@@ -21,6 +22,8 @@ export async function POST(req: NextRequest) {
 
     if (courseId) {
       // Workshop booking → CourseEnrollment
+      const course = await prisma.course.findUnique({ where: { id: courseId }, select: { category: true, title: true } });
+
       await prisma.courseEnrollment.create({
         data: { courseId, name, email, phone: phone || "", status: "PENDING", paid: false },
       });
@@ -30,9 +33,12 @@ export async function POST(req: NextRequest) {
         `<b>Name:</b> ${name}\n` +
         `<b>E-Mail:</b> ${email}\n` +
         `<b>Telefon:</b> ${phone || "—"}\n` +
-        `<b>Kurs-ID:</b> ${courseId}\n\n` +
+        `<b>Kurs:</b> ${course?.title || courseId}\n\n` +
         `<i>Via skinlove-website</i>`
       );
+
+      // Send info email to participant
+      await sendBookingEmail(email, name, course?.category || "Tattoo");
     } else {
       // Contact request
       await prisma.contactRequest.create({
