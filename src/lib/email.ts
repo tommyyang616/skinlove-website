@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = process.env.RESEND_FROM || "SkinLove <onboarding@resend.dev>";
+const FROM = process.env.RESEND_FROM || "SkinLove Tattoo & Piercing <info@skinlove-tattoo-piercing.at>";
 
 export async function sendBookingEmail(to: string, name: string, category: string) {
   const subject = category?.toLowerCase().includes("piercing")
