@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 const piercings = [
@@ -28,7 +29,7 @@ export default function WalkInFriday() {
         </span>
       </button>
 
-      {/* Modal */}
+      {/* Modal — als Portal auf body-level via fixed positioning */}
       {open && (
         <div className="walkin-overlay" onClick={() => setOpen(false)}>
           <div className="walkin-modal" onClick={(e) => e.stopPropagation()}>
@@ -36,8 +37,19 @@ export default function WalkInFriday() {
               ✕
             </button>
 
+            {/* Flyer-Bild */}
+            <div className="walkin-image">
+              <Image
+                src="/images/walkin-friday.jpg"
+                alt="Walk-In Friday — Spontan Piercings zum Fixpreis"
+                width={400}
+                height={500}
+                style={{ width: "100%", height: "auto", borderRadius: "12px" }}
+                quality={85}
+              />
+            </div>
+
             <div className="walkin-header">
-              <span className="walkin-icon">💎</span>
               <h2>Walk-In Friday</h2>
               <p className="walkin-subtitle">Jeden Freitag — Einfach vorbeikommen!</p>
             </div>
