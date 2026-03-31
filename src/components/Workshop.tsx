@@ -97,8 +97,8 @@ export default function Workshop() {
           <div style={{ position: "relative" }}>
             <div className="ws-grid" ref={gridRef}>
               {workshops.map(ws => {
-                const spotsLeft = ws.maxSpots - ws.takenSpots;
-                const soldOut = spotsLeft <= 0;
+                const spotsLeft = ws.maxSpots;
+                const soldOut = false;
                 return (
                   <div key={ws.id} className="ws-card reveal visible">
                     <div className="ws-card-img" style={{ backgroundImage: ws.img ? `url('${ws.img}')` : "linear-gradient(135deg,rgba(187,53,153,.3),rgba(10,10,10,.9))" }}>
@@ -125,11 +125,11 @@ export default function Workshop() {
                       <div className="ws-card-footer">
                         <div>
                           <div className="ws-card-price">€ {ws.price} <small>inkl. Material</small></div>
-                          <div className="ws-card-spots">{soldOut ? <strong>Ausgebucht</strong> : <>Noch <strong>{spotsLeft} Plätze</strong> frei</>}</div>
+                          <div className="ws-card-spots">Noch <strong>{spotsLeft} Plätze</strong> frei</div>
                         </div>
                       </div>
-                      <button className={`ws-card-btn${soldOut ? " sold-out" : ""}`} disabled={soldOut} onClick={() => !soldOut && openModal(ws.id)}>
-                        {soldOut ? "Ausgebucht" : "Platz sichern"}
+                      <button className="ws-card-btn" onClick={() => openModal(ws.id)}>
+                        Platz sichern
                       </button>
                     </div>
                   </div>
