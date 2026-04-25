@@ -791,7 +791,7 @@ nav a:hover::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 12px;
   animation: walkin-fade-in .3s ease;
 }
 
@@ -934,6 +934,7 @@ nav a:hover::after {
   background: transparent;
   border: none;
   max-width: 500px;
+  max-height: none;
   overflow: visible;
 }
 
@@ -942,6 +943,13 @@ nav a:hover::after {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+}
+
+.walkin-modal--image-only .walkin-image img {
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .walkin-modal--image-only .walkin-close {
