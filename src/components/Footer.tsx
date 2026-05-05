@@ -39,7 +39,7 @@ export default function Footer() {
           <a href="/datenschutz">Datenschutz</a>
           <a href="#workshop">Workshop</a>
         </div>
-        <p>© 2026 SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule · Mitgründer Miro Urbanek</p>
+        <p>© 2026 SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule</p>
       </div>
     </footer>
   );

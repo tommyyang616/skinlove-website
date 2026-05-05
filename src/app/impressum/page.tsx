@@ -33,10 +33,6 @@ export default function Impressum() {
           <p>Tätowieren, Piercen, Permanent Make-up, Lash &amp; Brow Lifting, kosmetische Dienstleistungen, Tattoo-Workshops</p>
         </section>
 
-        <section className="legal-section">
-          <h2>Mitgründer</h2>
-          <p><strong>Miro Urbanek</strong></p>
-        </section>
 
         <section className="legal-section">
           <h2>Gewerberechtliche Angaben gemäß GewO § 63</h2>
