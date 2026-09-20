@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Über Eve Paule – Inhaberin & Tattoo-Künstlerin",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 
 export default function UeberMichPage() {
   return (
+    <>
     <main
       style={{
         minHeight: "100vh",
@@ -102,5 +104,7 @@ export default function UeberMichPage() {
         </Link>
       </div>
     </main>
+    <Footer />
+    </>
   );
 }

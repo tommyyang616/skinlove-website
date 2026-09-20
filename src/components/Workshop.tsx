@@ -13,6 +13,8 @@ export default function Workshop() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -49,7 +51,7 @@ export default function Workshop() {
     };
   }, [modalOpen]);
 
-  const submit = () => {
+  const submit = async () => {
     const name = nameRef.current?.value.trim() || "";
     const email = emailRef.current?.value.trim() || "";
     const phone = phoneRef.current?.value.trim() || "";
@@ -59,13 +61,25 @@ export default function Workshop() {
     if (!phone) { if (phoneRef.current) phoneRef.current.style.borderColor = "#bb3599"; valid = false; }
     if (!valid || !selected) return;
 
-    fetch("/api/booking", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, courseId: selected.id }),
-    }).catch(() => { });
-
-    setSuccess(true);
+    setError("");
+    setSending(true);
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, courseId: selected.id }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Die Buchung konnte nicht gesendet werden. Bitte ruf uns kurz an: +43 660 78 353 46");
+        setSending(false);
+        return;
+      }
+      setSuccess(true);
+    } catch {
+      setError("Keine Verbindung zum Server. Bitte ruf uns kurz an: +43 660 78 353 46");
+    }
+    setSending(false);
   };
 
   const scrollWs = (dir: number) => {
@@ -161,7 +175,10 @@ export default function Workshop() {
               <input ref={emailRef} type="email" placeholder="email@beispiel.at" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
               <label>Telefon *</label>
               <input ref={phoneRef} type="tel" placeholder="0660 1234567" className="ws-input" onFocus={(e) => e.currentTarget.style.borderColor = ""} />
-              <button className="btn-primary" onClick={submit} style={{ width: "100%", border: "none", cursor: "pointer", marginTop: 16 }}>📅 Platz reservieren</button>
+              {error && (
+                <p style={{ color: "#ff8080", fontSize: 13, lineHeight: 1.5, margin: "12px 0 0 0" }}>{error}</p>
+              )}
+              <button className="btn-primary" onClick={submit} disabled={sending} style={{ width: "100%", border: "none", cursor: sending ? "wait" : "pointer", opacity: sending ? 0.6 : 1, marginTop: 16 }}>{sending ? "Wird gesendet…" : "📅 Platz reservieren"}</button>
               <p style={{ fontSize: 11, color: "var(--text-dim)", textAlign: "center", marginTop: 12 }}>Eve meldet sich bei dir zur Bestätigung</p>
             </div>
           ) : success ? (

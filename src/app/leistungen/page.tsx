@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "Leistungen – SkinLove Tattoo & Piercing",
@@ -18,6 +19,7 @@ const services = [
 
 export default function LeistungenPage() {
     return (
+      <>
         <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff", fontFamily: "'Outfit',sans-serif" }}>
             <div style={{ padding: "24px 24px 0", maxWidth: 800, margin: "0 auto" }}>
                 <Link href="/" style={{ color: "#BB3599", textDecoration: "none", fontSize: 14 }}>← Startseite</Link>
@@ -41,5 +43,7 @@ export default function LeistungenPage() {
                 </div>
             </div>
         </div>
+      <Footer />
+      </>
     );
 }

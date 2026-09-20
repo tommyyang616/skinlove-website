@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Workshops & Tattoo Kurse – Lerne tätowieren",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 
 export default function WorkshopsPage() {
   return (
+    <>
     <main
       style={{
         minHeight: "100vh",
@@ -112,5 +114,7 @@ export default function WorkshopsPage() {
         </Link>
       </div>
     </main>
+    <Footer />
+    </>
   );
 }

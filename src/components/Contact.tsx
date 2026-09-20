@@ -1,40 +1,9 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import TerminModal from "@/components/TerminModal";
 
 export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean; onOpen: () => void; onClose: () => void }) {
-  const [success, setSuccess] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const serviceRef = useRef<HTMLSelectElement>(null);
-  const msgRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    document.body.style.overflow = bookingOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [bookingOpen]);
-
-  const closeModal = () => { onClose(); setTimeout(() => setSuccess(false), 400); };
-
-  const submit = () => {
-    const name = nameRef.current?.value.trim() || "";
-    const email = emailRef.current?.value.trim() || "";
-    const phone = phoneRef.current?.value.trim() || "";
-    const service = serviceRef.current?.value || "";
-    const msg = msgRef.current?.value.trim() || "";
-    if (!name) { if (nameRef.current) nameRef.current.style.borderColor = "#e44"; return; }
-    if (!email || !email.includes("@")) { if (emailRef.current) emailRef.current.style.borderColor = "#e44"; return; }
-    if (!phone) { if (phoneRef.current) phoneRef.current.style.borderColor = "#e44"; return; }
-
-    fetch("/api/booking", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, service: service || null, message: msg || null }),
-    }).catch(() => { });
-
-    setSuccess(true);
-  };
 
   return (
     <>
@@ -98,41 +67,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
         </div>
       </section>
 
-      {/* Booking Modal */}
-      <div className={`modal-overlay${bookingOpen ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
-        <div className="modal">
-          <button className="modal-close" onClick={closeModal} aria-label="Schließen">×</button>
-          <div className={`modal-form${success ? " hidden" : ""}`} id="bookingForm">
-            <h3>Termin anfragen</h3>
-            <p>Fülle das Formular aus und du bekommst eine Bestätigungsmail. Eve meldet sich in Kürze bei dir!</p>
-            <label>Name <span style={{ color: "var(--pink)" }}>*</span></label>
-            <input ref={nameRef} type="text" placeholder="Dein Name" required />
-            <label>E-Mail <span style={{ color: "var(--pink)" }}>*</span></label>
-            <input ref={emailRef} type="email" placeholder="deine@email.at" required />
-            <label>Telefonnummer <span style={{ color: "var(--pink)" }}>*</span></label>
-            <input ref={phoneRef} type="tel" placeholder="+43 660 ..." required />
-            <p style={{ fontSize: 12, color: "var(--text-dim)", margin: "-8px 0 12px 0" }}>Pflichtfeld — wir rufen dich für die Terminbestätigung zurück.</p>
-            <label>Was möchtest du?</label>
-            <select ref={serviceRef}>
-              <option value="">Bitte wählen</option>
-              <option>Tattoo</option>
-              <option>Piercing</option>
-              <option>Permanent Make-up</option>
-              <option>Lash &amp; Brow Lifting</option>
-              <option>Kinderohrringe</option>
-              <option>Sonstiges</option>
-            </select>
-            <label>Nachricht (optional)</label>
-            <textarea ref={msgRef} placeholder="Kurze Beschreibung, Wunschtermin..." />
-            <button className="btn-primary" onClick={submit}>Termin anfragen</button>
-          </div>
-          <div className={`modal-success${success ? " show" : ""}`}>
-            <div className="check">✓</div>
-            <h3>Danke für deine Anfrage!</h3>
-            <p>Du bekommst in Kürze eine Bestätigungsmail.<br />Eve meldet sich so schnell wie möglich bei dir.<br />Mo–Fr 9–18 · Sa 10–17</p>
-          </div>
-        </div>
-      </div>
+      <TerminModal open={bookingOpen} onClose={onClose} />
     </>
   );
 }
