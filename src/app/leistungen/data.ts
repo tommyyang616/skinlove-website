@@ -32,6 +32,8 @@ export const serviceData: Record<string, {
       "Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust",
     ],
     bilder: [
+      { src: "/images/leistungen/tattoo-ginkgo-fine-line-unterarm.webp", alt: "Fine-Line-Tattoo mit Ginkgo-Blättern am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-federn-voegel-oberarm.webp", alt: "Federn-Tattoo mit aufsteigenden Vögeln über Schulter und Oberarm, SkinLove Marchtrenk" },
       { src: "/images/leistungen/tattoo-minnie-mickey-watercolor.webp", alt: "Minnie- und Mickey-Tattoo im Watercolor-Stil am Oberschenkel, gestochen bei SkinLove in Marchtrenk" },
       { src: "/images/leistungen/tattoo-arielle-meerjungfrau-farbe.webp", alt: "Buntes Arielle-Tattoo am Oberschenkel von SkinLove Marchtrenk" },
       { src: "/images/leistungen/tattoo-stitch-ohana-watercolor.webp", alt: "Stitch-und-Angel-Tattoo mit Ohana-Schriftzug im Watercolor-Stil, SkinLove Marchtrenk" },
