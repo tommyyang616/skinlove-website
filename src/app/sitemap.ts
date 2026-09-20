@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ueber-mich`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/gasttatowierer`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/workshops`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/anfahrt`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/leistungen`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     ...services.map((slug) => ({
       url: `${base}/leistungen/${slug}`,
