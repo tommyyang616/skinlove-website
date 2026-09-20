@@ -14,6 +14,8 @@ type Service = {
   details: string[];
   faq: { q: string; a: string }[];
   bilder?: { src: string; alt: string }[];
+  preise?: { gruppe: string; hinweis?: string; posten: { n: string; p: string }[] }[];
+  preisHinweise?: string[];
 };
 
 export default function ServicePageClient({ service }: { service: Service; slug: string }) {
@@ -76,6 +78,45 @@ export default function ServicePageClient({ service }: { service: Service; slug:
       )}
 
       {/* CTA + Inline Form */}
+      {service.preise && service.preise.length > 0 && (
+        <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 64px" }}>
+          <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 600, textAlign: "center", marginBottom: 28 }}>
+            Preise
+          </h2>
+          {service.preise.map((g) => (
+            <div key={g.gruppe} style={{ marginBottom: 28 }}>
+              <h3 style={{ color: "#bb3599", fontSize: 13, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 4 }}>
+                {g.gruppe}
+              </h3>
+              {g.hinweis && (
+                <p style={{ color: "#666", fontSize: 12, marginBottom: 10 }}>{g.hinweis}</p>
+              )}
+              <dl style={{ margin: 0 }}>
+                {g.posten.map((x) => (
+                  <div
+                    key={x.n}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                      gap: 16,
+                      padding: "9px 0",
+                      borderBottom: "1px solid rgba(255,255,255,.07)",
+                    }}
+                  >
+                    <dt style={{ color: "#ddd", fontSize: 14, lineHeight: 1.45 }}>{x.n}</dt>
+                    <dd style={{ color: "#fff", fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", margin: 0 }}>{x.p}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+          {service.preisHinweise?.map((h) => (
+            <p key={h} style={{ color: "#777", fontSize: 12, lineHeight: 1.6, marginTop: 8 }}>{h}</p>
+          ))}
+        </div>
+      )}
+
       {service.bilder && service.bilder.length > 0 && (
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px 64px" }}>
           <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 600, textAlign: "center", marginBottom: 8 }}>

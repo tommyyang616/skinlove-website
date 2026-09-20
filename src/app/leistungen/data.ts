@@ -8,6 +8,10 @@ export const serviceData: Record<string, {
   /** Arbeitsfotos fuer die Galerie. Alt-Texte beschreiben Motiv, Stil und Ort
    *  — so findet die Google-Bildersuche sie ueberhaupt erst. */
   bilder?: { src: string; alt: string }[];
+  /** Preise, uebernommen aus der Preisliste der Startseite (Pricing.tsx).
+   *  Aendern sich Preise, muessen BEIDE Stellen angefasst werden. */
+  preise?: { gruppe: string; hinweis?: string; posten: { n: string; p: string }[] }[];
+  preisHinweise?: string[];
 }> = {
   tattoos: {
     title: "Tattoos",
@@ -72,6 +76,81 @@ export const serviceData: Record<string, {
       "Intimbereich: Komplettes Angebot für Damen & Herren",
       "Alles inkl. Schmuck & Kontrolltermin",
     ],
+    preise: [
+      { gruppe: "Nase", posten: [
+        { n: "Nasenflügel (Nostril) einfach", p: "53 €" },
+        { n: "Bridge", p: "84 €" },
+        { n: "Septum", p: "65 €" },
+        { n: "Nassallang (mittig durchgehend) / Austin Bar", p: "132 €" },
+      ] },
+      { gruppe: "Ohr", posten: [
+        { n: "Lobe / Horizontal Lobe / Standard Lobe / Upper Lobe", p: "42 €" },
+        { n: "Forward Helix / Helix Rim / Helix / AntiHelix-Sung", p: "55 €" },
+        { n: "Tragus / Anti Tragus", p: "60 €" },
+        { n: "Rook / Conch / Flat / Orbital / Snug / Inner Conch", p: "65 €" },
+        { n: "Industrial / Vertikal Industrial", p: "75 €" },
+        { n: "Daith (Migräne Piercing) / Surface Tragus / Trimix", p: "70 €" },
+      ] },
+      { gruppe: "Surface", posten: [
+        { n: "Augenbraue", p: "60 €" },
+        { n: "Anti Eyebrow", p: "62 €" },
+        { n: "Oberflächenpiercings (Nacken, Bauch, Brustbein, Finger, Arme)", p: "72 €" },
+      ] },
+      { gruppe: "Bauchnabel", posten: [
+        { n: "Standard / Unten / Seitlich", p: "65 €" },
+        { n: "Doppelt (oben & unten)", p: "122 €" },
+        { n: "Stern 4-fach", p: "247 €" },
+        { n: "Dreieck", p: "187 €" },
+      ] },
+      { gruppe: "Oral", posten: [
+        { n: "Zungen-Piercing (Standard)", p: "72 €" },
+        { n: "Doppelt / Vertical / Snake / Zungenspitze", p: "88 €" },
+        { n: "Zungenbändchen / Scoop / Venom", p: "88 €" },
+      ] },
+      { gruppe: "Lippe", posten: [
+        { n: "Lippenbändchen", p: "60 €" },
+        { n: "Lippenbereich (Madonna, Labret, Medusa)", p: "64 €" },
+        { n: "Angel Bites / Cyber Bites / Daliha Bites / Dimple / Vampire", p: "115 €" },
+        { n: "Snake Bites / Horizontal Lips / Shark Bites", p: "117 €" },
+        { n: "Triangle Bites & Cheek", p: "112 €" },
+        { n: "Eskimo / Horizontal Labret / Jestrum", p: "77 €" },
+        { n: "Horizontales Oberlippenpiercing / Ashley", p: "77 €" },
+      ] },
+      { gruppe: "Brustwarze", hinweis: "Ab 16 Jahre", posten: [
+        { n: "Horizontal / Vertikal", p: "72 €" },
+        { n: "Beide gemeinsam (rechts & links)", p: "132 €" },
+      ] },
+      { gruppe: "Intim Damen", hinweis: "Ab 16 Jahre", posten: [
+        { n: "Christina", p: "112 €" },
+        { n: "Klitoris Vorhaut / Isabella / Hymen", p: "112 €" },
+        { n: "Äußere Schamlippe", p: "112 €" },
+        { n: "Innere Schamlippe", p: "112 €" },
+        { n: "Anus / Guiche / Fourchette", p: "142 €" },
+        { n: "Pubic Piercing", p: "242 €" },
+        { n: "Keuschheitspiercing", p: "252 €" },
+        { n: "Magic Cross / Prinzessin Diana", p: "210 €" },
+        { n: "Triangle Piercing", p: "242 €" },
+        { n: "Nefertiti Piercing", p: "137 €" },
+      ] },
+      { gruppe: "Intim Herren", hinweis: "Ab 16 Jahre", posten: [
+        { n: "Ampallang", p: "260 €" },
+        { n: "Deep Dydoe", p: "260 €" },
+        { n: "Dydoe", p: "180 €" },
+        { n: "Frenulum", p: "110 €" },
+        { n: "Guiche", p: "160 €" },
+        { n: "Hafada", p: "140 €" },
+        { n: "Lorum", p: "120 €" },
+        { n: "Oetang / Vorhaut", p: "130 €" },
+        { n: "Pubic", p: "190 €" },
+        { n: "Schaft-Ampallang", p: "260 €" },
+        { n: "Scrotal Ladder (3-4 Stück)", p: "290 €" },
+      ] },
+    ],
+    preisHinweise: [
+      "Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026",
+      "Piercen ab 14 Jahre in Anwesenheit eines Erziehungsberechtigten, ab 16 Jahre alleine.",
+      "Falls du ein Piercing möchtest, das hier nicht aufgezählt ist, ruf mich gerne an!",
+    ],
     faq: [
       { q: "Ab welchem Alter kann ich mir ein Piercing stechen lassen?", a: "Unter 16 mit schriftlicher Einverständniserklärung der Eltern. Ab 16 mit Begleitperson, ab 18 eigenständig." },
       { q: "Wie lange dauert die Heilung?", a: "Je nach Stelle 4 Wochen (Ohrläppchen) bis 12 Monate (Bauchnabel). Du bekommst eine genaue Pflegeanleitung." },
@@ -114,6 +193,18 @@ export const serviceData: Record<string, {
       "Hält 6-9 Wochen",
       "Sanfte Behandlung, kein Kleber, keine Extensions",
       "Natürlicher WOW-Effekt vom ersten Tag an",
+    ],
+    preise: [
+      { gruppe: "Lash & Brow Lifting", posten: [
+        { n: "Lash Lifting inkl. Färben & Keratin", p: "61 €" },
+        { n: "Brow Lifting inkl. Färben & Keratin", p: "52 €" },
+        { n: "Lash & Brow Lifting inkl. Färben, Keratin & Zupfen", p: "110 €" },
+        { n: "Augenbrauen zupfen (nur in Kombination)", p: "15 €" },
+      ] },
+    ],
+    preisHinweise: [
+      "Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 €",
+      "Empfohlen alle 6–9 Wochen.",
     ],
     faq: [
       { q: "Wie oft sollte ich das wiederholen?", a: "Alle 6-9 Wochen für dauerhaft schöne Wimpern & Brauen." },
@@ -158,6 +249,18 @@ export const serviceData: Record<string, {
       "Prontolind Spray & Gel für optimale Pflege — direkt im Studio erhältlich",
       "Stecker kürzen, Fremdschmuck wechseln, Dehnen",
     ],
+    preise: [
+      { gruppe: "Pflege & Service", posten: [
+        { n: "Wildfleischbehandlung inkl. Spezialmaterial", p: "40 €" },
+        { n: "Dermal Anker Entfernung (exkl. Schmuck & Pflege)", p: "60 €" },
+        { n: "Dehnen bis 4 mm", p: "35 €" },
+        { n: "Fremdschmuck wechseln", p: "15 €" },
+        { n: "Stecker kürzen", p: "6 €" },
+        { n: "Prontolind Spray", p: "10 €" },
+        { n: "Prontolind Gel", p: "7 €" },
+      ] },
+    ],
+    preisHinweise: [ "Gültig ab 1.1.2026" ],
     faq: [
       { q: "Was ist Wildfleisch und wie wird es behandelt?", a: "Wildfleisch (Granulationsgewebe) entsteht manchmal bei Piercings. Wir behandeln es professionell — meld dich einfach bei uns." },
       { q: "Kann ich auch Schmuck von anderen Studios wechseln lassen?", a: "Ja klar! Komm einfach vorbei — Fremdschmuck wechseln ist kein Problem." },
