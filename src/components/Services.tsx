@@ -26,19 +26,19 @@ const guestArtists = [
     name: "Nikola",
     style: "Gasttätowierer",
     avatar: "/gallery/guests/guest1-profile.jpg",
-    works: ["/gallery/arbeit1.jpg", "/gallery/arbeit2.jpg", "/gallery/arbeit3.jpg", "/gallery/arbeit4.jpg", "/gallery/arbeit6.jpg", "/gallery/guests/guest1-work1.jpg", "/gallery/guests/guest1-work2.jpg", "/gallery/guests/guest1-work3.jpg", "/gallery/guests/guest1-work4.jpg"],
+    works: ["/gallery/arbeit1.jpg", "/gallery/arbeit2-v2.webp", "/gallery/arbeit3-v2.webp", "/gallery/arbeit4-v2.webp", "/gallery/arbeit6.jpg", "/gallery/guests/guest1-work1-v2.webp", "/gallery/guests/guest1-work2-v2.webp", "/gallery/guests/guest1-work3-v2.webp", "/gallery/guests/guest1-work4-v2.webp"],
   },
   {
     name: "Nadija",
     style: "Gasttätowiererin",
-    avatar: "/gallery/guests/nadija-profilbild.jpg",
-    works: Array.from({ length: 17 }, (_, i) => `/gallery/guests/nadija${i + 1}.jpg`),
+    avatar: "/gallery/guests/nadija-profilbild-v2.webp",
+    works: Array.from({ length: 17 }, (_, i) => `/gallery/guests/nadija${i + 1}-v2.webp`),
   },
   {
     name: "Srdjan",
     style: "Gasttätowierer",
-    avatar: "/gallery/guests/srdjan-profilbild.jpg",
-    works: Array.from({ length: 15 }, (_, i) => `/gallery/guests/srdjan${i + 1}.jpg`),
+    avatar: "/gallery/guests/srdjan-profilbild-v2.webp",
+    works: Array.from({ length: 15 }, (_, i) => `/gallery/guests/srdjan${i + 1}-v2.webp`),
   },
 ];
 

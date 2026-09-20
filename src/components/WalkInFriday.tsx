@@ -89,7 +89,7 @@ export default function WalkInFriday() {
 
             <div className="walkin-image">
               <Image
-                src="/images/walkin-friday.jpg"
+                src="/images/walkin-friday-v2.webp"
                 alt="Walk-In Friday — Spontan Piercings zum Fixpreis"
                 width={400}
                 height={500}

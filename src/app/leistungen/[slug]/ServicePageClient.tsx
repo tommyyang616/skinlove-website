@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 import TerminModal from "@/components/TerminModal";
@@ -12,6 +13,7 @@ type Service = {
   description: string;
   details: string[];
   faq: { q: string; a: string }[];
+  bilder?: { src: string; alt: string }[];
 };
 
 export default function ServicePageClient({ service }: { service: Service; slug: string }) {
@@ -74,6 +76,37 @@ export default function ServicePageClient({ service }: { service: Service; slug:
       )}
 
       {/* CTA + Inline Form */}
+      {service.bilder && service.bilder.length > 0 && (
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px 64px" }}>
+          <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 600, textAlign: "center", marginBottom: 8 }}>
+            Arbeiten aus dem Studio
+          </h2>
+          <p style={{ color: "#888", fontSize: 14, textAlign: "center", marginBottom: 28 }}>
+            {service.bilder.length} Motive, alle von Eve Paule in Marchtrenk gestochen
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+              gap: 12,
+            }}
+          >
+            {service.bilder.map((b) => (
+              <div key={b.src} style={{ position: "relative", aspectRatio: "3 / 4", overflow: "hidden", background: "#141414" }}>
+                <Image
+                  src={b.src}
+                  alt={b.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 700px) 45vw, 260px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 80px", textAlign: "center" }}>
         <button
           onClick={() => setFormOpen(true)}

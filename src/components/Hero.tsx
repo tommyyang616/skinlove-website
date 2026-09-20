@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import WalkInFriday from "./WalkInFriday";
 
 const heroImages = [
-  { src: "/images/hero-strip1.webp", alt: "SkinLove Tattoo Studio", w: 1140, h: 1200 },
-  { src: "/images/hero-strip2.webp", alt: "SkinLove Studio Arbeit", w: 1140, h: 1200 },
-  { src: "/images/hero-strip3.webp", alt: "Eve Paule Tattoo", w: 969, h: 1200 },
-  { src: "/images/hero-strip4.webp", alt: "SkinLove Piercing", w: 1001, h: 1200 },
+  { src: "/images/hero-strip1-v2.webp", alt: "SkinLove Tattoo Studio", w: 1140, h: 1200 },
+  { src: "/images/hero-strip2-v2.webp", alt: "SkinLove Studio Arbeit", w: 1140, h: 1200 },
+  { src: "/images/hero-strip3-v2.webp", alt: "Eve Paule Tattoo", w: 969, h: 1200 },
+  { src: "/images/hero-strip4-v2.webp", alt: "SkinLove Piercing", w: 1001, h: 1200 },
 ];
 
 function HeroStrip() {

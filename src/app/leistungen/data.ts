@@ -5,6 +5,9 @@ export const serviceData: Record<string, {
   hero: string;
   details: string[];
   faq: { q: string; a: string }[];
+  /** Arbeitsfotos fuer die Galerie. Alt-Texte beschreiben Motiv, Stil und Ort
+   *  — so findet die Google-Bildersuche sie ueberhaupt erst. */
+  bilder?: { src: string; alt: string }[];
 }> = {
   tattoos: {
     title: "Tattoos",
@@ -23,6 +26,25 @@ export const serviceData: Record<string, {
       "Narbenüberdeckungen — kleinere Narben kunstvoll kaschieren",
       "Individuelle Zeichnungen — Wunschmotiv persönlich im Studio besprechen",
       "Nachstechen innerhalb 14 Tagen kostenlos bei übermäßigem Farbverlust",
+    ],
+    bilder: [
+      { src: "/images/leistungen/tattoo-minnie-mickey-watercolor.webp", alt: "Minnie- und Mickey-Tattoo im Watercolor-Stil am Oberschenkel, gestochen bei SkinLove in Marchtrenk" },
+      { src: "/images/leistungen/tattoo-arielle-meerjungfrau-farbe.webp", alt: "Buntes Arielle-Tattoo am Oberschenkel von SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-stitch-ohana-watercolor.webp", alt: "Stitch-und-Angel-Tattoo mit Ohana-Schriftzug im Watercolor-Stil, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-drache-ohnezahn-watercolor.webp", alt: "Ohnezahn-Drachen-Tattoo im Watercolor-Stil an der Wade, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-fuchs-mond-watercolor.webp", alt: "Fuchs-Tattoo mit Mond im Watercolor-Stil am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-schmetterling-blueten-farbe.webp", alt: "Farbiges Schmetterling-Tattoo mit Blueten am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-hakuna-matata-watercolor.webp", alt: "Hakuna-Matata-Tattoo im Watercolor-Stil am Oberarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-fuchs-blumen-oberarm.webp", alt: "Grosses Fuchs-Tattoo mit Blumen und Schmetterlingen am Oberarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-stitch-angel-partner.webp", alt: "Stitch-und-Angel-Partnertattoos an beiden Waden im Watercolor-Stil, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-rose-fine-line-wade.webp", alt: "Fine-Line-Rose mit Mond an der Wade samt Zeichenvorlage, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-schlange-pfingstrose.webp", alt: "Schlange mit Pfingstrose in Black and Grey am Oberschenkel, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-rabe-buecher-blackwork.webp", alt: "Rabe auf Buechern in Black and Grey am Oberschenkel samt Vorlage, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-schildkroete-fine-line.webp", alt: "Fine-Line-Schildkroete am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-schmetterling-blueten-sw.webp", alt: "Schmetterling mit Blueten in Black and Grey am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-buecher-tasse-fine-line.webp", alt: "Fine-Line-Tattoo mit Buecherstapel und Teetasse am Oberarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-katze-sketch-stil.webp", alt: "Katzen-Tattoo im Sketch-Stil am Unterarm, SkinLove Marchtrenk" },
+      { src: "/images/leistungen/tattoo-babyfuss-abdruck-name.webp", alt: "Tattoo eines Babyfuss-Abdrucks mit Namen am Unterarm, SkinLove Marchtrenk" },
     ],
     faq: [
       { q: "Wie viel kostet ein Tattoo?", a: "Der Preis hängt von Größe, Motiv und Aufwand ab. Meld dich bei mir für ein kostenloses Beratungsgespräch!" },

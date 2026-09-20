@@ -5,7 +5,7 @@ interface WS { id: string; title: string; desc: string; date: string; time: stri
 
 type ApiCourse = Omit<WS, "img"> & { img?: string };
 
-const WORKSHOP_IMGS = ["/images/workshop1.jpg", "/images/workshop2.jpg", "/images/workshop3.jpg"];
+const WORKSHOP_IMGS = ["/images/workshop1.jpg", "/images/workshop2-v2.webp", "/images/workshop3-v2.webp"];
 
 export default function Workshop() {
   const [workshops, setWorkshops] = useState<WS[]>([]);
