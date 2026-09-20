@@ -117,7 +117,6 @@ export default function RootLayout({
                 "https://www.facebook.com/skinlovetattoopiercing",
                 "https://www.tiktok.com/@eveskinlovetattoo",
               ],
-              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", bestRating: "5", ratingCount: "143" },
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
                 name: "Leistungen",
