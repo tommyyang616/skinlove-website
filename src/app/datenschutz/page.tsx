@@ -80,7 +80,7 @@ export default function Datenschutz() {
 
         <section className="legal-section">
           <h2>9. SSL-/TLS-Verschlüsselung</h2>
-          <p>Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie am Schloss-Symbol in der Adresszeile Ihres Browsers und daran, dass die Adresszeile mit „https://" beginnt.</p>
+          <p>Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie am Schloss-Symbol in der Adresszeile Ihres Browsers und daran, dass die Adresszeile mit „https://“ beginnt.</p>
         </section>
 
         <section className="legal-section">

@@ -112,7 +112,6 @@ export default function Workshop() {
             <div className="ws-grid" ref={gridRef}>
               {workshops.map(ws => {
                 const spotsLeft = ws.maxSpots;
-                const soldOut = false;
                 return (
                   <div key={ws.id} className="ws-card reveal visible">
                     <div className="ws-card-img" style={{ backgroundImage: ws.img ? `url('${ws.img}')` : "linear-gradient(135deg,rgba(187,53,153,.3),rgba(10,10,10,.9))" }}>

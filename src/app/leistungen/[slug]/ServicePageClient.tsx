@@ -16,7 +16,14 @@ type Service = {
   bilder?: { src: string; alt: string }[];
 };
 
-export default function ServicePageClient({ service }: { service: Service; slug: string }) {
+export default function ServicePageClient({
+  service,
+  weitere = [],
+}: {
+  service: Service;
+  slug: string;
+  weitere?: { slug: string; titel: string }[];
+}) {
   const [formOpen, setFormOpen] = useState(false);
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", fontFamily: "'Outfit',sans-serif" }}>
@@ -77,6 +84,45 @@ export default function ServicePageClient({ service }: { service: Service; slug:
           </div>
 
           {/* FAQ schema is rendered server-side in page.tsx */}
+        </div>
+      )}
+
+      {weitere.length > 0 && (
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 48px" }}>
+          <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 600, marginBottom: 14 }}>
+            Weitere Leistungen
+          </h2>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            {weitere.map((w) => (
+              <Link
+                key={w.slug}
+                href={`/leistungen/${w.slug}`}
+                style={{
+                  padding: "10px 18px",
+                  border: "1px solid rgba(255,255,255,.14)",
+                  color: "#ddd",
+                  borderRadius: 50,
+                  fontSize: 14,
+                  textDecoration: "none",
+                }}
+              >
+                {w.titel}
+              </Link>
+            ))}
+            <Link
+              href="/anfahrt"
+              style={{
+                padding: "10px 18px",
+                border: "1px solid rgba(187,53,153,.5)",
+                color: "#bb3599",
+                borderRadius: 50,
+                fontSize: 14,
+                textDecoration: "none",
+              }}
+            >
+              Anfahrt aus Wels &amp; Linz
+            </Link>
+          </div>
         </div>
       )}
 

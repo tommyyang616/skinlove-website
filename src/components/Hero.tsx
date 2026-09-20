@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import WalkInFriday from "./WalkInFriday";
 
 const heroImages = [
@@ -16,23 +16,27 @@ function HeroStrip() {
   const raf = useRef(0);
   const speed = 0.5; // px per frame (~30px/s at 60fps)
 
-  const animate = useCallback(() => {
+  // Die Schleife liegt im Effekt statt in einem useCallback: Dort rief sich
+  // `animate` selbst auf, bevor es deklariert war — der Linter hielt das an
+  // und verhinderte damit jedes Gate. Der Ablauf ist unveraendert.
+  useEffect(() => {
     const el = stripRef.current;
     if (!el) return;
-    offset.current += speed;
-    // Once we've scrolled past the first set of 4 images, reset to 0
-    const halfWidth = el.scrollWidth / 2;
-    if (offset.current >= halfWidth) {
-      offset.current -= halfWidth;
-    }
-    el.style.transform = `translateX(-${offset.current}px)`;
-    raf.current = requestAnimationFrame(animate);
-  }, []);
 
-  useEffect(() => {
-    raf.current = requestAnimationFrame(animate);
+    const schritt = () => {
+      offset.current += speed;
+      // Once we've scrolled past the first set of 4 images, reset to 0
+      const halfWidth = el.scrollWidth / 2;
+      if (offset.current >= halfWidth) {
+        offset.current -= halfWidth;
+      }
+      el.style.transform = `translateX(-${offset.current}px)`;
+      raf.current = requestAnimationFrame(schritt);
+    };
+
+    raf.current = requestAnimationFrame(schritt);
     return () => cancelAnimationFrame(raf.current);
-  }, [animate]);
+  }, []);
 
   // Render 3x for plenty of buffer
   const loopImages = [...heroImages, ...heroImages, ...heroImages];

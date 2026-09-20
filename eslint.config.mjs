@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "scripts/seed-tenant.js",
+    // Einmalige Hilfsskripte, die nicht mit ausgeliefert werden.
+    "check-courses.js",
   ]),
 ]);
 

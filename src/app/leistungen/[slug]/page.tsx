@@ -42,13 +42,20 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     })),
   };
 
+  // Die uebrigen Leistungen, damit jede Seite auf die anderen zeigt.
+  // Google crawlt entlang von Links — vorher fuehrte von hier nur ein Weg
+  // zurueck zur Startseite, und die schwachen Seiten wurden nie besucht.
+  const weitere = slugs
+    .filter((s) => s !== slug)
+    .map((s) => ({ slug: s, titel: serviceData[s].title }));
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <ServicePageClient service={service} slug={slug} />
+      <ServicePageClient service={service} slug={slug} weitere={weitere} />
     </>
   );
 }
