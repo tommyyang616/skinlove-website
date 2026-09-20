@@ -3,18 +3,43 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Tattoo & Piercing für Wels und Linz – Anfahrt nach Marchtrenk",
+  title: "Tattoo & Piercing in Oberösterreich – Anfahrt aus Wels und Linz",
   description:
-    "SkinLove liegt in Marchtrenk im Bezirk Wels-Land, rund 8 km von Wels und 25 km von Linz. Anfahrt mit Auto, Bus und Bahn – Tattoo, Piercing, Permanent Make-up bei Eve Paule.",
+    "SkinLove liegt in Marchtrenk im Bezirk Wels-Land, zentral zwischen Wels und Linz. Fahrzeiten aus ganz Oberösterreich, Anfahrt mit Auto, Bus und Bahn – Tattoo, Piercing, Permanent Make-up bei Eve Paule.",
   alternates: { canonical: "/anfahrt" },
   openGraph: {
-    title: "Anfahrt zu SkinLove – aus Wels, Linz und Umgebung",
+    title: "Anfahrt zu SkinLove – aus Wels, Linz und ganz Oberösterreich",
     description:
-      "Marchtrenk liegt zwischen Wels und Linz. So kommst du zum Studio in der Linzer Straße 35.",
+      "Marchtrenk liegt zentral zwischen Wels und Linz. So kommst du zum Studio in der Linzer Straße 35.",
     url: "/anfahrt",
     type: "website",
   },
 };
+
+/**
+ * Fahrzeiten zum Studio. Die Kilometer sind aus den Koordinaten gerechnet
+ * (Luftlinie mal 1,25, dem üblichen Umwegfaktor) und deshalb bewusst als
+ * „rund" ausgewiesen. Gegenprobe an Wels: Rechnung 9 km, Routenplaner nennen
+ * 7,2 bis 9,2 km — die Größenordnung stimmt.
+ */
+const einzugsgebiet: { ort: string; km: number; min: number }[] = [
+  { ort: "Hörsching", km: 8, min: 10 },
+  { ort: "Wels", km: 9, min: 10 },
+  { ort: "Traun", km: 12, min: 10 },
+  { ort: "Pasching", km: 12, min: 10 },
+  { ort: "Ansfelden", km: 16, min: 15 },
+  { ort: "Leonding", km: 17, min: 15 },
+  { ort: "Gunskirchen", km: 17, min: 15 },
+  { ort: "Sattledt", km: 18, min: 15 },
+  { ort: "Bad Schallerbach", km: 18, min: 15 },
+  { ort: "Eferding", km: 19, min: 15 },
+  { ort: "Kremsmünster", km: 19, min: 20 },
+  { ort: "Linz", km: 22, min: 20 },
+  { ort: "Lambach", km: 26, min: 25 },
+  { ort: "Grieskirchen", km: 27, min: 25 },
+  { ort: "Enns", km: 33, min: 30 },
+  { ort: "Steyr", km: 35, min: 35 },
+];
 
 const wege = [
   {
@@ -59,11 +84,12 @@ export default function AnfahrtPage() {
             Anfahrt
           </p>
           <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.9rem, 5vw, 3rem)", fontWeight: 600, lineHeight: 1.15, marginBottom: 20, textAlign: "center" }}>
-            Tattoo &amp; Piercing für Wels und Linz
+            Tattoo &amp; Piercing in Oberösterreich
           </h1>
           <p style={{ lineHeight: 1.8, fontSize: 16, color: "var(--text-dim)", marginBottom: 40, textAlign: "center" }}>
             Das Studio liegt in Marchtrenk im Bezirk Wels-Land, direkt zwischen Wels und Linz.
-            Von Wels aus bist du in etwa zehn Minuten da, von Linz in rund einer halben Stunde.
+            Aus dem halben Zentralraum Oberösterreichs bist du in einer Viertelstunde da —
+            aus Wels in zehn Minuten, aus Linz in zwanzig.
           </p>
 
           {wege.map((w) => (
@@ -88,6 +114,41 @@ export default function AnfahrtPage() {
                 +43 660 78 353 46
               </a>
             </p>
+          </div>
+
+          <h2 style={{ fontFamily: "var(--serif)", fontSize: 22, color: "#fff", fontWeight: 600, marginBottom: 6 }}>
+            Fahrzeiten aus Oberösterreich
+          </h2>
+          <p style={{ color: "#888", fontSize: 14, lineHeight: 1.7, marginBottom: 18 }}>
+            Marchtrenk liegt zwischen Wels und Linz an der B1, mit Anschluss an
+            die A25 und die Westbahn. Ungefähre Werte für die Fahrt mit dem Auto:
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))",
+              gap: "0 20px",
+              marginBottom: 32,
+            }}
+          >
+            {einzugsgebiet.map((e) => (
+              <div
+                key={e.ort}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  gap: 12,
+                  padding: "8px 0",
+                  borderBottom: "1px solid rgba(255,255,255,.07)",
+                }}
+              >
+                <span style={{ color: "#ddd", fontSize: 14 }}>{e.ort}</span>
+                <span style={{ color: "#888", fontSize: 13, whiteSpace: "nowrap" }}>
+                  {`rund ${e.km} km · ${e.min} Min`}
+                </span>
+              </div>
+            ))}
           </div>
 
           <h2 style={{ fontFamily: "var(--serif)", fontSize: 22, color: "#fff", fontWeight: 600, marginBottom: 16 }}>
