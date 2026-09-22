@@ -29,8 +29,33 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // Keine fremde Seite darf SkinLove unsichtbar einbetten und Besucher
+          // darüber zu Klicks verleiten (Clickjacking).
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          // Der Browser nimmt den angegebenen Dateityp ernst, statt selbst zu raten.
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // Fremde Seiten sehen beim Weiterklicken nur die Domain, nie den Pfad.
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
+      // www → Hauptadresse. Vorher lieferte www dieselbe Seite mit 200 aus und
+      // nur der canonical-Verweis hielt Google bei einer Adresse. Steht zuerst,
+      // damit auch alte www-Pfade erst hierher und dann weiter unten landen.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.skinlove-tattoo-piercing.at" }],
+        destination: "https://skinlove-tattoo-piercing.at/:path*",
+        permanent: true,
+      },
       // Old URLs still indexed by Google → redirect to new structure
       { source: "/preise", destination: "/#pricing", permanent: true },
       { source: "/galerie", destination: "/#gallery", permanent: true },
