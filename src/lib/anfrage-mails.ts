@@ -1,18 +1,23 @@
 /**
- * Die beiden Mails rund um eine Terminanfrage.
+ * Die Eingangsbestätigung an die Kundin nach einer Terminanfrage.
  *
- * ── Warum es diese Datei gibt ──────────────────────────────────────────────
+ * ── Warum hier nur noch eine Mail steht ────────────────────────────────────
  *
- * Am 21.09.2026 nachgemessen: Im Resend-Konto dieser Seite waren seit der
- * Einrichtung im April **null** Mails verschickt worden. Der Grund stand in
- * `api/booking/route.ts`: Bei einer normalen Terminanfrage wurde gar keine
- * Mail ausgeloest — die Kundin bekam keine Bestaetigung, und der Betrieb
- * erfuhr von der Anfrage ausschliesslich ueber Telegram. Faellt Telegram aus,
- * liegt die Anfrage in der Datenbank und **niemand weiss davon**, denn
- * `sendTelegram` verschluckt jeden Fehler still.
+ * Am 21.09.2026 kamen drei Mails dazu: eine an die Kundin, zwei an den
+ * Betrieb. Eve hat am 22.09.2026 gesagt, dass sie **keine Mails** möchte —
+ * ihr reicht die Telegram-Nachricht. Die beiden Betriebsmails sind deshalb
+ * wieder raus.
  *
- * Seitdem gilt: Telegram bleibt, aber Mail ist der zweite Weg. Zwei Wege, die
- * unabhaengig voneinander ausfallen koennen.
+ * Damit ist Telegram wieder Eves einziger Meldeweg. Der Rückhalt ist die
+ * Datenbank: jede Anfrage wird **vor** dem Melden gespeichert und steht im
+ * Dashboard unter *Anfragen*, auch wenn Telegram klemmt.
+ *
+ * **Nicht ungefragt wieder einbauen** — auch nicht „zur Sicherheit". Der
+ * erste Test in `anfrage-mails.test.ts` hält das fest.
+ *
+ * Die Kundin bekommt ihre Bestätigung weiterhin. Sie ist zugleich Eves
+ * Nachweis: was angefragt wurde, wann es ankam, und dass damit noch kein
+ * Termin zugesagt ist.
  *
  * `email.ts` daneben bleibt unangetastet — dort liegen die Kursmails.
  */
@@ -36,10 +41,6 @@ const ABSENDER =
   process.env.RESEND_FROM ||
   "SkinLove Tattoo & Piercing <info@skinlove-tattoo-piercing.at>";
 
-/** Wohin die Anfragen des Betriebs gehen. Aenderbar ohne Codeeingriff. */
-const BETRIEB_EMAIL =
-  process.env.BETRIEB_EMAIL || "eve@skinlove-tattoo-piercing.at";
-
 const STUDIO = {
   name: "SkinLove Tattoo & Piercing",
   inhaberin: "Eve Paule",
@@ -57,6 +58,8 @@ export type Anfrage = {
   phone?: string | null;
   service?: string | null;
   message?: string | null;
+  /** Wann die Anfrage eintraf. Ohne Angabe: jetzt. */
+  eingegangen?: Date;
 };
 
 /** Ergebnis eines Versands — bewusst kein stilles Schlucken. */
@@ -95,6 +98,28 @@ function sicher(text: string | null | undefined): string {
     .replace(/"/g, "&quot;");
 }
 
+/**
+ * Datum und Uhrzeit fest in Wiener Zeit.
+ *
+ * Der Server läuft auf UTC. Ohne feste Zeitzone stünde in der Mail eine
+ * Uhrzeit, die zwei Stunden vor der echten liegt — als Nachweis wertlos.
+ */
+const WIEN_DATUM = new Intl.DateTimeFormat("de-AT", {
+  timeZone: "Europe/Vienna",
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+const WIEN_UHRZEIT = new Intl.DateTimeFormat("de-AT", {
+  timeZone: "Europe/Vienna",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+function zeitpunkt(d: Date): string {
+  return `${WIEN_DATUM.format(d)} um ${WIEN_UHRZEIT.format(d)}`;
+}
+
 function rahmen(inhalt: string): string {
   return `<!DOCTYPE html><html lang="de"><body style="font-family:Arial,Helvetica,sans-serif;background:#0a0a0a;color:#e0e0e0;padding:32px 16px;margin:0">
 <div style="max-width:560px;margin:0 auto;background:#111;border-radius:12px;padding:32px;border:1px solid rgba(187,53,153,.2)">
@@ -109,32 +134,52 @@ ${inhalt}
 /**
  * An die Kundin: Ihre Anfrage ist angekommen.
  *
- * **Sagt ausdruecklich, dass noch kein Termin vereinbart ist.** Eine Mail mit
- * dem Wort „Bestaetigung" im Betreff wird sonst als Terminzusage gelesen, und
- * dann steht jemand vor der Tuer. Und: **keine Zusage, wann geantwortet wird** —
- * eine unbelegte Reaktionszeit ist nach UWG abmahnbar.
+ * Die Mail hat zwei Aufgaben, die sich beissen:
+ *
+ * 1. **Die Kundin soll sich freuen.** Sie hat gerade einen Schritt auf das
+ *    Studio zu gemacht; diese Mail ist der erste Eindruck. Also herzlich und
+ *    ohne Behoerdenton.
+ * 2. **Eve soll keinen Ärger bekommen.** Fehlt ein klarer Satz, wird eine
+ *    „Bestätigung" als Terminzusage gelesen und jemand steht vor der Tür.
+ *    Und: **keine Zusage, wann geantwortet wird** — eine unbelegte
+ *    Reaktionszeit ist nach UWG abmahnbar.
+ *
+ * Der Ausgleich: Der klare Satz steht mitten im normalen Text statt in einem
+ * Warnkasten, und die Angaben der Kundin stehen ruhig darunter — für sie
+ * „so haben wir es notiert", für Eve der Nachweis, was wann kam.
  */
 export function baueAnfrageBestaetigung(a: Anfrage): { subject: string; html: string } {
-  const leistung = a.service ? sicher(a.service) : null;
+  const zeile = (beschriftung: string, wert: string | null | undefined) =>
+    wert
+      ? `<tr>
+<td style="padding:5px 16px 5px 0;color:#8a8a8a;font-size:13px;vertical-align:top;white-space:nowrap">${beschriftung}</td>
+<td style="padding:5px 0;font-size:14px;color:#e6e6e6">${sicher(wert)}</td></tr>`
+      : "";
 
   const html = rahmen(`
-<p style="font-size:16px">Hallo <strong>${sicher(a.name)}</strong>,</p>
-<p>deine Anfrage ist bei uns angekommen — danke dafür!</p>
-${leistung ? `<p style="background:#181818;border-left:3px solid ${LILA};padding:12px 16px;margin:20px 0">
-<span style="color:#888;font-size:13px">Deine Anfrage betrifft</span><br>
-<strong style="font-size:16px">${leistung}</strong></p>` : ""}
-<p><strong>Was jetzt passiert:</strong> Wir schauen uns deine Anfrage an und melden uns
-bei dir, um einen Termin zu vereinbaren.</p>
-<p style="background:#1a1512;border:1px solid rgba(187,53,153,.25);border-radius:8px;padding:12px 16px;color:#d8c9d4;font-size:14px">
-<strong>Wichtig:</strong> Diese Mail bestätigt, dass deine Anfrage angekommen ist —
-sie ist noch <strong>kein fixer Termin</strong>. Der wird erst vereinbart, wenn wir uns
-bei dir gemeldet haben.</p>
-<p>Wenn sich etwas ändert oder du es dir anders überlegst, ruf einfach an:<br>
-<a href="tel:${STUDIO.telefonWahl}" style="color:${LILA};font-size:17px;font-weight:bold">${STUDIO.telefon}</a></p>
-<hr style="border:none;border-top:1px solid rgba(187,53,153,.2);margin:24px 0">
-<p style="color:#888;font-size:13px;line-height:1.7">
+<p style="font-size:17px;margin:0 0 18px">Hallo <strong>${sicher(a.name)}</strong>,</p>
+<p style="margin:0 0 16px;line-height:1.65;font-size:15px">schön, dass du dich bei uns gemeldet hast — deine Anfrage ist angekommen.</p>
+<p style="margin:0 0 24px;line-height:1.65;font-size:15px">Wir schauen sie uns in Ruhe an und melden uns bei dir, damit wir gemeinsam einen Termin finden, der dir passt. Bis dahin ist noch kein fixer Termin vergeben — du musst also nichts weiter tun.</p>
+<div style="background:#181818;border-radius:10px;padding:18px 20px;margin:0 0 10px">
+<p style="color:#7a7a7a;font-size:12px;letter-spacing:.06em;margin:0 0 12px">SO HABEN WIR ES NOTIERT</p>
+<table style="width:100%;border-collapse:collapse">
+${zeile("Eingegangen", `${zeitpunkt(a.eingegangen ?? new Date())} Uhr`)}
+${zeile("Name", a.name)}
+${zeile("Leistung", a.service)}
+${zeile("Telefon", a.phone)}
+${zeile("E-Mail", a.email)}
+</table>
+${a.message ? `<p style="margin:14px 0 0"><span style="color:#8a8a8a;font-size:13px">Deine Nachricht</span><br>
+<span style="display:block;border-left:3px solid ${LILA};padding:8px 0 8px 14px;margin-top:8px;font-size:14px;line-height:1.6;white-space:pre-wrap">${sicher(a.message)}</span></p>` : ""}
+</div>
+<p style="color:#7a7a7a;font-size:12px;line-height:1.6;margin:0 0 26px">Diese Mail bestätigt den Eingang deiner Anfrage. Stimmt etwas davon nicht, sag uns einfach Bescheid.</p>
+<p style="margin:0 0 10px;line-height:1.65;font-size:15px">Hat sich etwas geändert oder fällt dir noch etwas ein? Ruf uns an, wir sind gern für dich da:</p>
+<p style="margin:0 0 26px"><a href="tel:${STUDIO.telefonWahl}" style="color:${LILA};font-size:19px;font-weight:bold;text-decoration:none">${STUDIO.telefon}</a></p>
+<p style="margin:0 0 6px;line-height:1.65;font-size:15px">Wir freuen uns auf dich!</p>
+<p style="margin:0;font-size:15px;line-height:1.6">Liebe Grüße<br><strong>${STUDIO.inhaberin}</strong></p>
+<hr style="border:none;border-top:1px solid rgba(187,53,153,.2);margin:26px 0 20px">
+<p style="color:#888;font-size:13px;line-height:1.7;margin:0">
 <strong style="color:#bbb">${STUDIO.name}</strong><br>
-${STUDIO.inhaberin}<br>
 ${STUDIO.adresse}<br>
 <a href="tel:${STUDIO.telefonWahl}" style="color:#888">${STUDIO.telefon}</a><br>
 <a href="https://${STUDIO.web}" style="color:#888">${STUDIO.web}</a></p>`);
@@ -145,78 +190,4 @@ ${STUDIO.adresse}<br>
 export async function sendAnfrageBestaetigung(a: Anfrage): Promise<Versandergebnis> {
   const { subject, html } = baueAnfrageBestaetigung(a);
   return senden({ to: a.email, subject, html });
-}
-
-/**
- * An den Betrieb: eine neue Anfrage liegt vor.
- *
- * `replyTo` steht auf der Kundin — damit geht „Antworten" direkt an sie und
- * nicht an das Absenderpostfach.
- */
-export function baueAnfrageAnBetrieb(a: Anfrage): { subject: string; html: string } {
-  const zeile = (beschriftung: string, wert: string | null | undefined, link?: string) => {
-    if (!wert) return "";
-    const inhalt = link
-      ? `<a href="${link}" style="color:${LILA};text-decoration:none">${sicher(wert)}</a>`
-      : sicher(wert);
-    return `<tr>
-<td style="padding:8px 12px 8px 0;color:#888;font-size:13px;vertical-align:top;white-space:nowrap">${beschriftung}</td>
-<td style="padding:8px 0;font-size:15px">${inhalt}</td></tr>`;
-  };
-
-  const html = rahmen(`
-<p style="font-size:17px;margin:0 0 20px"><strong style="color:${LILA}">Neue Terminanfrage</strong></p>
-<table style="width:100%;border-collapse:collapse">
-${zeile("Name", a.name)}
-${zeile("E-Mail", a.email, `mailto:${a.email}`)}
-${zeile("Telefon", a.phone, `tel:${String(a.phone ?? "").replace(/[^\d+]/g, "")}`)}
-${zeile("Leistung", a.service)}
-</table>
-${a.message ? `<p style="margin:20px 0 0"><span style="color:#888;font-size:13px">Nachricht</span><br>
-<span style="display:block;background:#181818;border-left:3px solid ${LILA};padding:12px 16px;margin-top:6px;white-space:pre-wrap">${sicher(a.message)}</span></p>` : ""}
-<hr style="border:none;border-top:1px solid rgba(187,53,153,.2);margin:24px 0">
-<p style="color:#888;font-size:13px">Auf „Antworten" zu drücken schreibt direkt an
-${sicher(a.name)}. Die Anfrage steht auch im Dashboard unter <em>Anfragen</em>.</p>`);
-
-  return {
-    subject: `Neue Terminanfrage — ${a.name}${a.service ? ` — ${a.service}` : ""}`,
-    html,
-  };
-}
-
-export async function sendAnfrageAnBetrieb(a: Anfrage): Promise<Versandergebnis> {
-  const { subject, html } = baueAnfrageAnBetrieb(a);
-  return senden({ to: BETRIEB_EMAIL, subject, html, replyTo: a.email });
-}
-
-/**
- * An den Betrieb: eine neue Kursanmeldung liegt vor.
- *
- * Bisher erfuhr der Betrieb auch davon nur ueber Telegram.
- */
-export async function sendKursanmeldungAnBetrieb(
-  a: Anfrage & { kurs: string },
-): Promise<Versandergebnis> {
-  const html = rahmen(`
-<p style="font-size:17px;margin:0 0 20px"><strong style="color:${LILA}">Neue Kursanmeldung</strong></p>
-<table style="width:100%;border-collapse:collapse">
-<tr><td style="padding:8px 12px 8px 0;color:#888;font-size:13px;white-space:nowrap">Kurs</td>
-<td style="padding:8px 0;font-size:15px"><strong>${sicher(a.kurs)}</strong></td></tr>
-<tr><td style="padding:8px 12px 8px 0;color:#888;font-size:13px;white-space:nowrap">Name</td>
-<td style="padding:8px 0;font-size:15px">${sicher(a.name)}</td></tr>
-<tr><td style="padding:8px 12px 8px 0;color:#888;font-size:13px;white-space:nowrap">E-Mail</td>
-<td style="padding:8px 0;font-size:15px"><a href="mailto:${a.email}" style="color:${LILA};text-decoration:none">${sicher(a.email)}</a></td></tr>
-${a.phone ? `<tr><td style="padding:8px 12px 8px 0;color:#888;font-size:13px;white-space:nowrap">Telefon</td>
-<td style="padding:8px 0;font-size:15px">${sicher(a.phone)}</td></tr>` : ""}
-</table>
-<hr style="border:none;border-top:1px solid rgba(187,53,153,.2);margin:24px 0">
-<p style="color:#888;font-size:13px">Die Anmeldung ist erst mit unterschriebenem
-Vertrag und Anzahlung verbindlich. Sie steht im Dashboard unter <em>Kurse</em>.</p>`);
-
-  return senden({
-    to: BETRIEB_EMAIL,
-    subject: `Neue Kursanmeldung — ${a.name} — ${a.kurs}`,
-    html,
-    replyTo: a.email,
-  });
 }

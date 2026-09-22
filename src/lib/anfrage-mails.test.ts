@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { baueAnfrageBestaetigung, baueAnfrageAnBetrieb } from "./anfrage-mails";
+import * as mails from "./anfrage-mails";
+import { baueAnfrageBestaetigung } from "./anfrage-mails";
 
 /**
  * Diese Tests bewachen die Stellen, an denen ein Fehler Geld oder Vertrauen
@@ -16,10 +17,26 @@ const beispiel = {
   message: "Ich hätte gern ein Nasenpiercing.",
 };
 
-test("Bestätigung sagt ausdrücklich, dass noch kein Termin vereinbart ist", () => {
+test("An den Betrieb geht keine Mail — Eve will nur Telegram", () => {
+  // Eve hat am 22.09.2026 gesagt: keine Mails, die Telegram-Nachricht reicht.
+  // Am Tag davor hatte ein Agent gleich zwei Betriebsmails eingebaut, gut
+  // gemeint als zweiter Meldeweg. Dieser Test sorgt dafür, dass das nicht
+  // unbemerkt wiederkommt. Eves Meldeweg ist Telegram, ihr Nachschlagewerk
+  // das Dashboard.
+  const anBetrieb = Object.keys(mails).filter((name) =>
+    /betrieb|kursanmeldung/i.test(name),
+  );
+  assert.deepEqual(
+    anBetrieb,
+    [],
+    `Mail an den Betrieb ist wieder da: ${anBetrieb.join(", ")}`,
+  );
+});
+
+test("Bestätigung sagt, dass noch kein Termin vereinbart ist", () => {
   const { html } = baueAnfrageBestaetigung(beispiel);
-  // Eine Mail mit "Bestätigung" im Betreff wird sonst als Terminzusage
-  // gelesen — dann steht jemand vor verschlossener Tür.
+  // Eine Mail, die als Terminzusage gelesen wird, stellt jemanden vor eine
+  // verschlossene Tür — und der Ärger landet bei Eve.
   assert.match(html, /kein.{0,20}fixer Termin/i);
 });
 
@@ -46,26 +63,29 @@ test("Bestätigung trägt Name und Leistung der Kundin", () => {
   assert.ok(subject.length > 0 && subject.length < 120);
 });
 
+test("Bestätigung hält fest, was wann angefragt wurde", () => {
+  // Der Nachweis-Teil: Eve muss im Streitfall zeigen können, was die Kundin
+  // geschickt hat und wann. Die Uhrzeit steht in Wiener Zeit — der Server
+  // läuft auf UTC, eine um zwei Stunden verschobene Uhrzeit wäre als
+  // Nachweis wertlos.
+  const { html } = baueAnfrageBestaetigung({
+    ...beispiel,
+    eingegangen: new Date("2026-09-22T12:35:00Z"),
+  });
+  assert.match(html, /22\.09\.2026/);
+  assert.match(html, /14:35/);
+  assert.match(html, /\+43 660 1234567/);
+  assert.match(html, /Nasenpiercing/);
+});
+
 test("Bestätigung kommt auch ohne gewählte Leistung zustande", () => {
   const { html } = baueAnfrageBestaetigung({ ...beispiel, service: null });
   assert.match(html, /Maria Musterfrau/);
   assert.match(html, /kein.{0,20}fixer Termin/i);
 });
 
-test("Betriebsmail trägt alle Angaben der Anfrage", () => {
-  const { html, subject } = baueAnfrageAnBetrieb(beispiel);
-  assert.match(html, /Maria Musterfrau/);
-  assert.match(html, /maria@example\.at/);
-  assert.match(html, /\+43 660 1234567/);
-  assert.match(html, /Piercing/);
-  assert.match(html, /Nasenpiercing/);
-  // Der Betreff muss auf dem Handy erkennen lassen, worum es geht.
-  assert.match(subject, /Maria Musterfrau/);
-  assert.match(subject, /Piercing/);
-});
-
-test("Betriebsmail kommt auch mit fehlenden Feldern zustande", () => {
-  const { html } = baueAnfrageAnBetrieb({
+test("Bestätigung kommt auch mit fehlenden Feldern zustande", () => {
+  const { html } = baueAnfrageBestaetigung({
     name: "Nur Name",
     email: "n@example.at",
     phone: null,
@@ -73,29 +93,23 @@ test("Betriebsmail kommt auch mit fehlenden Feldern zustande", () => {
     message: null,
   });
   assert.match(html, /Nur Name/);
-  assert.match(html, /n@example\.at/);
 });
 
 test("Eingeschleustes HTML aus dem Formular wird entschärft", () => {
-  // Der Name kommt ungefiltert aus einem Formular im Internet. Ohne
-  // Entschärfung landet fremdes Markup in Eves Postfach.
+  // Name und Nachricht kommen ungefiltert aus einem Formular im Internet.
+  // Ohne Entschärfung landet fremdes Markup im Postfach der Kundin.
   const boshaft = {
     ...beispiel,
     name: '<img src=x onerror="alert(1)">',
     message: "<script>fetch('http://boese.example')</script>",
   };
-  const betrieb = baueAnfrageAnBetrieb(boshaft);
-  const kundin = baueAnfrageBestaetigung(boshaft);
-  for (const { html } of [betrieb, kundin]) {
-    // Kein echtes Tag: die spitze Klammer muss zu &lt; geworden sein.
-    assert.doesNotMatch(html, /<script/i);
-    assert.doesNotMatch(html, /<img/i);
-    // Und kein roher Ereignis-Handler. `onerror=&quot;` ist harmloser Text,
-    // `onerror="` wäre ausführbar — nur Letzteres darf fehlen.
-    assert.doesNotMatch(html, /onerror="/i);
-  }
-  // Entschärft heißt sichtbar gemacht, nicht verschwunden — Eve soll lesen
-  // können, was ihr jemand geschickt hat.
-  assert.match(betrieb.html, /&lt;script&gt;/);
-  assert.match(betrieb.html, /&lt;img src=x/);
+  const { html } = baueAnfrageBestaetigung(boshaft);
+  // Kein echtes Tag: die spitze Klammer muss zu &lt; geworden sein.
+  assert.doesNotMatch(html, /<script/i);
+  assert.doesNotMatch(html, /<img/i);
+  // Und kein roher Ereignis-Handler. `onerror=&quot;` ist harmloser Text,
+  // `onerror="` wäre ausführbar — nur Letzteres darf fehlen.
+  assert.doesNotMatch(html, /onerror="/i);
+  // Entschärft heißt sichtbar gemacht, nicht verschwunden.
+  assert.match(html, /&lt;script&gt;/);
 });
