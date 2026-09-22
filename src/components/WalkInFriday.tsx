@@ -87,13 +87,23 @@ export default function WalkInFriday() {
               ✕
             </button>
 
+            {/* width/height sind die echten Masse der Datei. Standen hier
+                400x500, wurde das 9:16-Bild in einen 4:5-Rahmen gezwungen -
+                daher die grauen Balken rundherum. */}
             <div className="walkin-image">
               <Image
                 src="/images/walkin-friday-v2.webp"
                 alt="Walk-In Friday — Spontan Piercings zum Fixpreis"
-                width={400}
-                height={500}
-                style={{ width: "100%", height: "auto", borderRadius: "12px" }}
+                width={720}
+                height={1280}
+                style={{
+                  display: "block",
+                  width: "auto",
+                  height: "auto",
+                  maxWidth: "100%",
+                  maxHeight: "85vh",
+                  borderRadius: "12px",
+                }}
                 quality={85}
               />
             </div>
