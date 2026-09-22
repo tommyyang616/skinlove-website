@@ -19,7 +19,12 @@ body {
   background: #0a0a0a;
   color: #e8e4df;
   line-height: 1.6;
+  /* Fangnetz gegen seitliches Wegschieben auf dem Handy.
+     hidden zuerst als Rueckfall fuer alte Browser, clip danach: clip kappt,
+     ohne einen eigenen Scroll-Bereich aufzumachen - deshalb geraet der feste
+     Kopf auf iOS damit nicht ins Zittern. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased
 }
 
@@ -1844,10 +1849,15 @@ footer a {
   color: #fff
 }
 
+/* Umbrechen ist Pflicht: ohne flex-wrap schob diese Zeile die ganze Seite
+   auf dem Handy 94 px nach rechts raus - dadurch liess sich alles seitlich
+   wegschieben, auch das offene Anfrage-Popup. */
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
+  gap: 12px 24px;
+  max-width: 100%;
   margin-bottom: 16px
 }
 
@@ -2016,9 +2026,10 @@ footer a {
     font-size: 18px !important
   }
 
+  /* Neben Knopf und Burger bleibt kein Platz mehr: der Zusatz brach mitten
+     im Wort um. Auf dem Handy weglassen, der Schriftzug allein reicht. */
   .logo-sub {
-    font-size: 8px !important;
-    margin-left: 8px !important
+    display: none !important
   }
 
   .header-cta {
