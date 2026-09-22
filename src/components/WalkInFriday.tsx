@@ -87,15 +87,18 @@ export default function WalkInFriday() {
               ✕
             </button>
 
-            {/* width/height sind die echten Masse der Datei. Standen hier
-                400x500, wurde das 9:16-Bild in einen 4:5-Rahmen gezwungen -
-                daher die grauen Balken rundherum. */}
+            {/* v3 ist v2 ohne den grauen Instagram-Rand (oben 124 px, unten
+                101 px, links 8 px weggeschnitten). width/height muessen die
+                echten Masse der Datei sein - standen hier vorher 400x500,
+                wurde das hohe Bild in einen falsch geformten Rahmen
+                gezwungen. Neuer Dateiname statt Austausch, sonst sehen
+                wiederkehrende Besucher wegen des Caches tagelang das alte. */}
             <div className="walkin-image">
               <Image
-                src="/images/walkin-friday-v2.webp"
+                src="/images/walkin-friday-v3.webp"
                 alt="Walk-In Friday — Spontan Piercings zum Fixpreis"
-                width={720}
-                height={1280}
+                width={712}
+                height={1055}
                 style={{
                   display: "block",
                   width: "auto",
