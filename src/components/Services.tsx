@@ -17,7 +17,7 @@ const services = [
   { title: "Piercings", desc: "Professionell, hygienisch, mit Feingefühl. Nase, Ohr, Surface, Bauchnabel, Oral, Lippe, Brustwarze & Intimbereich.", details: ["Nase: Nostril, Septum, Bridge, Nassallang", "Ohr: Lobe, Helix, Tragus, Conch/Rook, Industrial, Daith/Migräne", "Surface: Augenbraue, Anti Eyebrow, Oberflächen", "Bauchnabel: Standard, Doppelt, 4-fach", "Oral: Zunge, Doppelt/Snake, Lippenbändchen", "Lippe: Madonna/Labret/Medusa, Bites, Ashley", "Brustwarze: Einzel oder Beide", "Intimbereich Damen & Herren — komplettes Angebot", "Alles inkl. Schmuck & Kontrolltermin"] },
   { title: "Permanent Make-up", desc: "Natürliche Schönheit unterstreichen: Fein gezeichnete Augenbrauen und dezente Lippen, die lange halten.", details: ["Augenbrauen — natürlich gezeichnet, typgerecht angepasst", "Lippen — dezente Schattierung für mehr Ausdruck", "Langanhaltend — erleichtert den Alltag, kein tägliches Nachziehen", "Präzise Arbeit mit modernstem Equipment", "Individuelle Beratung vor jeder Behandlung"] },
   { title: "Lash & Brow Lifting", desc: "Naturwimpern sanft nach oben geformt — länger & voller. Brow Lifting für ausdrucksstarke Augenbrauen.", details: ["Lash Lifting inkl. Färben & Keratin", "Brow Lifting inkl. Färben & Keratin", "Kombi Lash & Brow inkl. Zupfen", "Empfohlen alle 6–9 Wochen für dauerhaften WOW-Effekt"] },
-  { title: "Kinderohrringe", desc: "Studex-System — sanft, schmerzarm & sicher. Ab 6 Monaten.", details: ["Studex-System — kein Schießen, speziell für empfindliche Kinderhaut", "Ab 6 Monaten möglich", "Ab 8 Jahren auch andere Ohrringe mit Nadel möglich", "Verschiedene Motiv-Designs verfügbar", "Entspannte Atmosphäre für Kinder und Eltern"] },
+  { title: "Kinderohrringe", desc: "Ohrlöcher stechen mit dem Studex-System — mit Ruhe und Zeit. Ab 6 Monaten.", details: ["Studex-System — steril verpackte Erststecker in Einweg-Kartuschen", "Ab 6 Monaten möglich", "Ab 8 Jahren auch andere Ohrringe mit Nadel möglich", "Verschiedene Motiv-Designs verfügbar", "Entspannte Atmosphäre für Kinder und Eltern"] },
   { title: "Spezialleistungen", desc: "Wildfleischbehandlung, Dermal Anker Entfernung, kostenlose Erstberatung & mehr.", details: ["Wildfleischbehandlung", "Dermal Anker Entfernung — fachgerecht mit minimalem Narbenrisiko", "Nachstechen gratis innerhalb von 14 Tagen", "Kostenlose Beratung & Erstgespräche jederzeit", "Piercing-Korrekturen bei Fehlstichen aus anderen Studios", "Prontolind Spray & Gel für optimale Pflege", "Stecker kürzen, Fremdschmuck wechseln, Dehnen"] },
 ];
 
@@ -128,13 +128,22 @@ export default function Services({ onBook }: { onBook: () => void }) {
               <span className="service-expand">Mehr erfahren</span>
               <div className="service-detail">
                 <ul>{s.details.map((d, j) => <li key={j}>{d}</li>)}</ul>
-                <Link
-                  href={`/leistungen/${slugMap[s.title] || "tattoos"}`}
-                  onClick={(e) => e.stopPropagation()}
-                  style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 13, fontWeight: 600, transition: "opacity .3s" }}
-                >
-                  Details & FAQ →
-                </Link>
+                <div className="service-actions">
+                  <Link
+                    href={`/leistungen/${slugMap[s.title] || "tattoos"}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="service-btn service-btn-outline"
+                  >
+                    Details &amp; FAQ
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); onBook(); }}
+                    className="service-btn"
+                  >
+                    Termin vereinbaren
+                  </button>
+                </div>
               </div>
             </div>
           ))}

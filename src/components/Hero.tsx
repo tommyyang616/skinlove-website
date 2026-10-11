@@ -152,7 +152,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
             <span className="ha-word ha-d5 ha-love">Love</span>
           </span>
           <span className="hero-h1-sub ha-line">
-            <span className="ha-word ha-d6">Ihr professionelles Tattoo- und Piercing-Studio in Marchtrenk bei Wels</span>
+            <span className="ha-word ha-d6">Ihr Tattoo- und Piercingstudio in Marchtrenk – zwischen Wels und Linz</span>
           </span>
         </h1>
         <div className="hero-actions ha-actions">

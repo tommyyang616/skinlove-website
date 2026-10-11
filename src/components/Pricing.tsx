@@ -23,13 +23,13 @@ const prices: Record<string,{ note?: string; noteBottom?: string[]; items: {n:st
   lippe: { items: [
     {n:"Lippenbändchen",p:"60 €"},{n:"Lippenbereich (Madonna, Labret, Medusa)",p:"64 €"},{n:"Angel Bites / Cyber Bites / Daliha Bites / Dimple / Vampire",p:"115 €"},{n:"Snake Bites / Horizontal Lips / Shark Bites",p:"117 €"},{n:"Triangle Bites & Cheek",p:"112 €"},{n:"Eskimo / Horizontal Labret / Jestrum",p:"77 €"},{n:"Horizontales Oberlippenpiercing / Ashley",p:"77 €"},
   ]},
-  brustwarze: { note: "Ab 16 Jahre", items: [
+  brustwarze: { note: "Ab 16 Jahren – unter 18 nur mit schriftlicher Einverständniserklärung der Erziehungsberechtigten", items: [
     {n:"Horizontal / Vertikal",p:"72 €"},{n:"Beide gemeinsam (rechts & links)",p:"132 €"},
   ]},
-  "intim-damen": { note: "Ab 16 Jahre", items: [
+  "intim-damen": { note: "Ab 16 Jahren – unter 18 nur mit schriftlicher Einverständniserklärung der Erziehungsberechtigten", items: [
     {n:"Christina",p:"112 €"},{n:"Klitoris Vorhaut / Isabella / Hymen",p:"112 €"},{n:"Äußere Schamlippe",p:"112 €"},{n:"Innere Schamlippe",p:"112 €"},{n:"Anus Piercing / Guiche Piercing / Fourchette",p:"142 €"},{n:"Pubic Piercing",p:"242 €"},{n:"Keuschheitspiercing",p:"252 €"},{n:"Magic Cross / Prinzessin Diana",p:"210 €"},{n:"Triangle Piercing",p:"242 €"},{n:"Nefertiti Piercing",p:"137 €"},
   ]},
-  "intim-herren": { note: "Ab 16 Jahre", items: [
+  "intim-herren": { note: "Ab 16 Jahren – unter 18 nur mit schriftlicher Einverständniserklärung der Erziehungsberechtigten", items: [
     {n:"Ampallang Piercing",p:"260 €"},{n:"Deep Dydoe Piercing",p:"260 €"},{n:"Dydoe Piercing",p:"180 €"},{n:"Frenulum Piercing",p:"110 €"},{n:"Guiche Piercing",p:"160 €"},{n:"Hafada Piercing",p:"140 €"},{n:"Lorum Piercing",p:"120 €"},{n:"Oetang / Vorhaut Piercing",p:"130 €"},{n:"Pubic Piercing",p:"190 €"},{n:"Schaft-Ampallang Piercing",p:"260 €"},{n:"Scrotal Ladder Piercing (3-4 Stück)",p:"290 €"},
   ]},
   lash: { items: [
@@ -37,7 +37,7 @@ const prices: Record<string,{ note?: string; noteBottom?: string[]; items: {n:st
   ], noteBottom: ["Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 € · Empfohlen alle 6–9 Wochen"]},
   pflege: { items: [
     {n:"Prontolind Spray",p:"10 €"},{n:"Prontolind Gel",p:"7 €"},{n:"Stecker kürzen",p:"6 €"},{n:"Fremdschmuck wechseln",p:"15 €"},{n:"Dehnen bis 4 mm",p:"35 €"},{n:"Wildfleischbehandlung inkl. Spezialmaterial",p:"40 €"},{n:"Dermal Anker Entfernung (exkl. Schmuck & Pflege)",p:"60 €"},
-  ], noteBottom: ["Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahre in Anwesenheit eines Erziehungsberechtigten, ab 16 Jahre alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
+  ], noteBottom: ["Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahren mit schriftlicher Einverständniserklärung und in Anwesenheit eines Erziehungsberechtigten, ab 18 Jahren alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
 };
 
 export default function Pricing() {

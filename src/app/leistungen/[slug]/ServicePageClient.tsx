@@ -9,9 +9,12 @@ import TerminModal from "@/components/TerminModal";
 
 type Service = {
   title: string;
+  h1: string;
   hero: string;
   description: string;
   details: string[];
+  abschnitte?: { h: string; text: string[] }[];
+  stimmen?: { i: string; n: string; d: string; t: string }[];
   faq: { q: string; a: string }[];
   bilder?: { src: string; alt: string }[];
 };
@@ -43,7 +46,8 @@ export default function ServicePageClient({
         style={{ padding: "80px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
       >
         <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#bb3599", fontWeight: 600 }}>{service.title}</span>
-        <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(28px,5vw,48px)", color: "#fff", fontWeight: 600, margin: "16px 0", lineHeight: 1.2 }}>{service.hero}</h1>
+        <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(30px,5vw,50px)", color: "#fff", fontWeight: 600, margin: "16px 0 10px", lineHeight: 1.15 }}>{service.h1}</h1>
+        <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", color: "#d77fc0", fontSize: "clamp(19px,2.6vw,24px)", margin: "0 0 20px", lineHeight: 1.3 }}>{service.hero}</p>
         <p style={{ color: "#aaa", fontSize: 18, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>{service.description}</p>
       </motion.div>
 
@@ -68,6 +72,36 @@ export default function ServicePageClient({
       {/* Bildleiste */}
       {service.bilder && service.bilder.length > 0 && (
         <LeistungsGalerie bilder={service.bilder} titel={service.title} />
+      )}
+
+      {/* Ausführliche Abschnitte */}
+      {service.abschnitte && service.abschnitte.length > 0 && (
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "8px 24px 40px" }}>
+          {service.abschnitte.map((a, i) => (
+            <section key={i} style={{ marginBottom: 36 }}>
+              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 12, lineHeight: 1.2 }}>{a.h}</h2>
+              {a.text.map((t, j) => (
+                <p key={j} style={{ color: "#c8c8c8", fontSize: 17, lineHeight: 1.8, margin: "0 0 12px" }}>{t}</p>
+              ))}
+            </section>
+          ))}
+        </div>
+      )}
+
+      {/* Echte Google-Bewertungen */}
+      {service.stimmen && service.stimmen.length > 0 && (
+        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 56px" }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 20 }}>Das sagen Kundinnen und Kunden</h2>
+          <div style={{ display: "grid", gap: 14 }}>
+            {service.stimmen.map((r, i) => (
+              <figure key={i} style={{ margin: 0, padding: "20px 22px", background: "#141414", border: "1px solid rgba(187,53,153,.18)" }}>
+                <div style={{ color: "#f5b400", fontSize: 15, letterSpacing: 2, marginBottom: 8 }} aria-label="5 von 5 Sternen">★★★★★</div>
+                <blockquote style={{ margin: 0, color: "#ddd", fontSize: 16, lineHeight: 1.7 }}>&bdquo;{r.t}&ldquo;</blockquote>
+                <figcaption style={{ marginTop: 10, color: "#999", fontSize: 14 }}>{r.n} · Google-Bewertung, {r.d}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* FAQ */}

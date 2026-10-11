@@ -49,7 +49,7 @@ const wege = [
   },
   {
     titel: "Aus Linz",
-    zeit: "rund 25 Minuten mit dem Auto",
+    zeit: "20 bis 25 Minuten mit dem Auto",
     text: "Marchtrenk liegt an der Achse zwischen Linz und Wels, Anschluss über die A25 oder die B1. Mit den Öffis fährt die Buslinie 600 durchgehend von Linz über Hörsching bis Marchtrenk.",
   },
   {

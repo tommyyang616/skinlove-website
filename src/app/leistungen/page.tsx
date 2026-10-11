@@ -3,8 +3,8 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-    title: "Leistungen – SkinLove Tattoo & Piercing",
-    description: "Alle Leistungen von SkinLove: Tattoos, Piercings, Permanent Make-up, Lash Lifting & Workshops in Marchtrenk bei Wels.",
+    title: "Leistungen – Tattoo, Piercing & mehr bei Wels und Linz",
+    description: "Alle Leistungen von SkinLove in Marchtrenk zwischen Wels und Linz: Tattoos, Piercings, Permanent Make-up, Wimpernlifting, Ohrlöcher stechen für Kinder und Kurse.",
     alternates: { canonical: "/leistungen" },
 };
 
@@ -13,7 +13,7 @@ const services = [
     { slug: "piercings", icon: "💎", title: "Piercings", desc: "Nase, Ohr, Surface, Bauchnabel, Oral & mehr" },
     { slug: "permanent-make-up", icon: "💄", title: "Permanent Make-up", desc: "Augenbrauen & Lippen — natürlich betont" },
     { slug: "lash-brow-lifting", icon: "👁️", title: "Lash & Brow Lifting", desc: "Inkl. Färben & Keratin" },
-    { slug: "kinderohrringe", icon: "✨", title: "Kinderohrringe", desc: "Sanft & sicher mit dem Studex-System, ab 6 Monate" },
+    { slug: "kinderohrringe", icon: "✨", title: "Kinderohrringe", desc: "Ohrlöcher stechen mit dem Studex-System, ab 6 Monaten" },
     { slug: "spezialleistungen", icon: "⚡", title: "Spezialleistungen", desc: "Wildfleisch, Dermal Anker, Korrekturen & mehr" },
 ];
 
