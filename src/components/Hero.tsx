@@ -135,7 +135,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
         </div>
       </div>
       <div className="hero-overlay" />
-      <WalkInFriday />
+      <WalkInFriday onBook={onBook} />
       <div className="hero-content" style={{ margin: 0, paddingLeft: 48, paddingRight: 24, width: "100%" }}>
         <h1 className="hero-anim">
           <span className="ha-line">
