@@ -26,15 +26,15 @@ export default function LeistungenPage() {
             </div>
             <div style={{ padding: "48px 24px", maxWidth: 800, margin: "0 auto" }}>
                 <h1 style={{ fontSize: 36, fontWeight: 700, marginBottom: 8 }}>Unsere Leistungen</h1>
-                <p style={{ color: "#999", marginBottom: 48 }}>Alles unter einem Dach — von Eve Paule persönlich.</p>
+                <p style={{ color: "#aaa", fontSize: 17, marginBottom: 48 }}>Alles unter einem Dach — von Eve Paule persönlich.</p>
                 <div style={{ display: "grid", gap: 16 }}>
                     {services.map((s) => (
                         <Link key={s.slug} href={`/leistungen/${s.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                             <div style={{ padding: 24, background: "rgba(187,53,153,0.06)", border: "1px solid rgba(187,53,153,0.15)", borderRadius: 16, display: "flex", alignItems: "center", gap: 20, transition: "border-color 0.2s" }}>
                                 <div style={{ fontSize: 36 }}>{s.icon}</div>
                                 <div>
-                                    <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{s.title}</h2>
-                                    <p style={{ color: "#999", fontSize: 14 }}>{s.desc}</p>
+                                    <h2 style={{ fontSize: 21, fontWeight: 600, marginBottom: 4 }}>{s.title}</h2>
+                                    <p style={{ color: "#aaa", fontSize: 16 }}>{s.desc}</p>
                                 </div>
                                 <div style={{ marginLeft: "auto", color: "#BB3599", fontSize: 20 }}>→</div>
                             </div>

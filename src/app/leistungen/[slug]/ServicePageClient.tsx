@@ -32,7 +32,7 @@ export default function ServicePageClient({
         <Link href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 18, fontWeight: 600 }}>
           Skin<span style={{ color: "#bb3599" }}>Love</span>
         </Link>
-        <Link href="/#services" style={{ color: "#bb3599", textDecoration: "none", fontSize: 13, fontWeight: 500 }}>← Alle Leistungen</Link>
+        <Link href="/#services" style={{ color: "#bb3599", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
       </nav>
 
       {/* Hero */}
@@ -42,9 +42,9 @@ export default function ServicePageClient({
         transition={{ duration: 0.6 }}
         style={{ padding: "80px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
       >
-        <span style={{ fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#bb3599", fontWeight: 600 }}>{service.title}</span>
+        <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#bb3599", fontWeight: 600 }}>{service.title}</span>
         <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(28px,5vw,48px)", color: "#fff", fontWeight: 600, margin: "16px 0", lineHeight: 1.2 }}>{service.hero}</h1>
-        <p style={{ color: "#999", fontSize: 15, lineHeight: 1.7, maxWidth: 560, margin: "0 auto" }}>{service.description}</p>
+        <p style={{ color: "#aaa", fontSize: 18, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>{service.description}</p>
       </motion.div>
 
       {/* Details */}
@@ -56,10 +56,10 @@ export default function ServicePageClient({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * i, duration: 0.4 }}
-              style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "14px 18px", background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}
+              style={{ display: "flex", gap: 14, alignItems: "flex-start", padding: "16px 20px", background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}
             >
-              <span style={{ color: "#bb3599", fontSize: 14, flexShrink: 0, marginTop: 2 }}>✦</span>
-              <span style={{ color: "#ddd", fontSize: 14, lineHeight: 1.6 }}>{d}</span>
+              <span style={{ color: "#bb3599", fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
+              <span style={{ color: "#ddd", fontSize: 17, lineHeight: 1.6 }}>{d}</span>
             </motion.div>
           ))}
         </div>
@@ -73,12 +73,12 @@ export default function ServicePageClient({
       {/* FAQ */}
       {service.faq.length > 0 && (
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 64px" }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 24, color: "#fff", fontWeight: 600, marginBottom: 24 }}>Häufige Fragen</h2>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 24 }}>Häufige Fragen</h2>
           <div style={{ display: "grid", gap: 16 }}>
             {service.faq.map((f, i) => (
               <div key={i} style={{ padding: 20, background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}>
-                <h3 style={{ fontSize: 14, color: "#fff", fontWeight: 600, marginBottom: 8 }}>{f.q}</h3>
-                <p style={{ fontSize: 13, color: "#999", lineHeight: 1.6, margin: 0 }}>{f.a}</p>
+                <h3 style={{ fontSize: 17, color: "#fff", fontWeight: 600, marginBottom: 8 }}>{f.q}</h3>
+                <p style={{ fontSize: 16, color: "#aaa", lineHeight: 1.7, margin: 0 }}>{f.a}</p>
               </div>
             ))}
           </div>
@@ -89,7 +89,7 @@ export default function ServicePageClient({
 
       {weitere.length > 0 && (
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 48px" }}>
-          <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 600, marginBottom: 14 }}>
+          <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 600, marginBottom: 14 }}>
             Weitere Leistungen
           </h2>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -102,7 +102,7 @@ export default function ServicePageClient({
                   border: "1px solid rgba(255,255,255,.14)",
                   color: "#ddd",
                   borderRadius: 50,
-                  fontSize: 14,
+                  fontSize: 15,
                   textDecoration: "none",
                 }}
               >
@@ -116,7 +116,7 @@ export default function ServicePageClient({
                 border: "1px solid rgba(187,53,153,.5)",
                 color: "#bb3599",
                 borderRadius: 50,
-                fontSize: 14,
+                fontSize: 15,
                 textDecoration: "none",
               }}
             >
@@ -129,7 +129,7 @@ export default function ServicePageClient({
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 80px", textAlign: "center" }}>
         <button
           onClick={() => setFormOpen(true)}
-          style={{ padding: "14px 40px", background: "#bb3599", color: "#fff", border: "none", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "opacity .3s" }}
+          style={{ padding: "16px 44px", background: "#bb3599", color: "#fff", border: "none", fontSize: 16, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "opacity .3s" }}
         >
           Termin vereinbaren
         </button>

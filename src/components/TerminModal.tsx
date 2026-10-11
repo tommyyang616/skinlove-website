@@ -124,8 +124,7 @@ export default function TerminModal({
           <h3>Danke f&uuml;r deine Anfrage!</h3>
           <p>
             Du bekommst in K&uuml;rze eine Best&auml;tigungsmail.<br />
-            Eve meldet sich so schnell wie m&ouml;glich bei dir.<br />
-            Mo&ndash;Fr 9&ndash;18 &middot; Sa 10&ndash;17
+            Eve meldet sich so schnell wie m&ouml;glich bei dir.
           </p>
         </div>
       </div>

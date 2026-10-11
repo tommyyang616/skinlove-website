@@ -23,12 +23,6 @@ const services = [
 
 const guestArtists = [
   {
-    name: "Nikola",
-    style: "Gasttätowierer",
-    avatar: "/gallery/guests/guest1-profile.jpg",
-    works: ["/gallery/arbeit1.jpg", "/gallery/arbeit2-v2.webp", "/gallery/arbeit3-v2.webp", "/gallery/arbeit4-v2.webp", "/gallery/arbeit6.jpg", "/gallery/guests/guest1-work1-v2.webp", "/gallery/guests/guest1-work2-v2.webp", "/gallery/guests/guest1-work3-v2.webp", "/gallery/guests/guest1-work4-v2.webp"],
-  },
-  {
     name: "Nadija",
     style: "Gasttätowiererin",
     avatar: "/gallery/guests/nadija-profilbild-v2.webp",
@@ -154,10 +148,10 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists.map((a, i) => (
               <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
                 <div className="guest-card-mosaic">
-                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt="Arbeit von Gasttätowierer" width={320} height={320} sizes="(max-width: 768px) 45vw, 180px" loading="lazy" />)}
+                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt={`Tattoo von Gast-Artist ${a.name} bei SkinLove`} width={320} height={320} sizes="(max-width: 768px) 33vw, 150px" loading="lazy" />)}
                 </div>
                 <div className="guest-card-bottom">
-                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={60} height={60} sizes="60px" loading="lazy" />
+                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={80} height={80} sizes="80px" loading="lazy" />
                   <div className="guest-info">
                     <h4>{a.name}</h4>
                     <p>{a.style}</p>

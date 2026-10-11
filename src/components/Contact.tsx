@@ -53,14 +53,9 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
               <div className="contact-block">
                 <h3 style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                  Öffnungszeiten
+                  Termine
                 </h3>
-                <div className="hours-grid">
-                  <div className="hours-row"><span>Montag – Freitag</span><span>09:00 – 18:00</span></div>
-                  <div className="hours-row"><span>Samstag</span><span>10:00 – 17:00</span></div>
-                  <div className="hours-row"><span>Sonntag</span><span>Geschlossen</span></div>
-                </div>
-                <p style={{ marginTop: 12, fontSize: 13, color: "var(--pink-text)", fontWeight: 500 }}>⚠️ Termine nur nach vorheriger Vereinbarung!</p>
+                <p>Termine nach vorheriger Absprache — einfach anrufen oder online anfragen.</p>
               </div>
             </div>
           </div>

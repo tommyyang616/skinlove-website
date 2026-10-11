@@ -1096,14 +1096,14 @@ nav a:hover::after {
 
 .service-card h3 {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: 1.65rem;
   font-weight: 600;
   margin-bottom: 12px;
   color: #fff
 }
 
 .service-card p {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-dim);
   line-height: 1.7
 }
@@ -1116,7 +1116,7 @@ nav a:hover::after {
 }
 
 .service-card.open .service-detail {
-  max-height: 600px;
+  max-height: 800px;
   margin-top: 16px
 }
 
@@ -1126,7 +1126,7 @@ nav a:hover::after {
 }
 
 .service-detail li {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-dim);
   line-height: 1.7;
   padding-left: 16px;
@@ -1171,8 +1171,8 @@ nav a:hover::after {
 }
 
 .pricing-tab {
-  padding: 10px 24px;
-  font-size: 12px;
+  padding: 12px 26px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -1201,15 +1201,17 @@ nav a:hover::after {
 
 .price-list {
   display: grid;
-  gap: 0
+  gap: 0;
+  max-width: 860px
 }
 
 .price-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, .05)
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .08)
 }
 
 .price-item:last-child {
@@ -1217,13 +1219,14 @@ nav a:hover::after {
 }
 
 .price-name {
-  font-size: 15px;
+  font-size: 18px;
+  line-height: 1.5;
   color: var(--text)
 }
 
 .price-amount {
   font-family: var(--serif);
-  font-size: 1.2rem;
+  font-size: 1.65rem;
   font-weight: 600;
   color: var(--pink-text);
   white-space: nowrap
@@ -2057,13 +2060,13 @@ footer a {
   }
 
   .service-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     margin-bottom: 6px
   }
 
   .service-card p {
-    font-size: 13px;
-    line-height: 1.5
+    font-size: 15px;
+    line-height: 1.6
   }
 
   .about-stats {
@@ -2075,8 +2078,16 @@ footer a {
   }
 
   .pricing-tab {
-    padding: 8px 16px;
-    font-size: 11px
+    padding: 10px 16px;
+    font-size: 13px
+  }
+
+  .price-name {
+    font-size: 16px
+  }
+
+  .price-amount {
+    font-size: 1.4rem
   }
 
   .section {
@@ -2451,7 +2462,7 @@ footer a {
 }
 
 .guest-card {
-  width: min(300px, 100%);
+  width: min(420px, 100%);
   background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, .04);
   overflow: hidden;
@@ -2467,7 +2478,7 @@ footer a {
 .guest-card-mosaic {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 180px
+  height: 240px
 }
 
 .guest-card-mosaic img {
@@ -2487,31 +2498,31 @@ footer a {
 }
 
 .guest-avatar {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--bg-card);
-  margin-top: -44px;
+  margin-top: -56px;
   position: relative;
   z-index: 1
 }
 
 .guest-info h4 {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.45rem;
   color: #fff;
   margin: 0
 }
 
 .guest-info p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-dim);
   margin: 0
 }
 
 .guest-cta {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--pink-text);
   letter-spacing: 1px;
   text-transform: uppercase;

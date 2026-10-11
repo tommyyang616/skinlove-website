@@ -108,7 +108,7 @@ export default function AnfahrtPage() {
               4614 Marchtrenk, Oberösterreich
               <br />
               <br />
-              Termine ausschließlich nach Vereinbarung — Mo–Fr 9–18 Uhr, Sa 10–17 Uhr.
+              Termine nach vorheriger Absprache.
               <br />
               <a href="tel:+436607835346" style={{ color: "var(--pink-text)", fontWeight: 600 }}>
                 +43 660 78 353 46

@@ -55,7 +55,7 @@ export default function Pricing() {
         </div>
         {tabs.map(t => (
           <div key={t} className={`pricing-content${active === t ? " active" : ""}`}>
-            {prices[t].note && <p style={{ fontSize: 13, color: "var(--text-dim)", marginBottom: 16 }}>{prices[t].note}</p>}
+            {prices[t].note && <p style={{ fontSize: 15, color: "var(--text-dim)", marginBottom: 16 }}>{prices[t].note}</p>}
             <div className="price-list">
               {prices[t].items.map((item, j) => (
                 <div key={j} className="price-item">
@@ -65,7 +65,7 @@ export default function Pricing() {
               ))}
             </div>
             {prices[t].noteBottom?.map((nb, j) => (
-              <p key={j} style={{ marginTop: j === 0 ? 24 : 8, fontSize: 13, color: "var(--text-dim)" }}>{nb}</p>
+              <p key={j} style={{ marginTop: j === 0 ? 24 : 8, fontSize: 15, color: "var(--text-dim)" }}>{nb}</p>
             ))}
           </div>
         ))}

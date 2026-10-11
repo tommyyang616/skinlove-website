@@ -11,7 +11,7 @@ export const serviceData: Record<string, {
 }> = {
   tattoos: {
     title: "Tattoos",
-    metaTitle: "Tattoos in Marchtrenk | Fine-Line, Cover-Up & mehr",
+    metaTitle: "Tattoos in Marchtrenk bei Wels | Fine-Line & Cover-Up",
     description: "Professionelle Tattoos in Marchtrenk bei Wels: Fine-Line, Black & Grey, Mandala, Watercolor, Mini-Tattoos, Cover-Ups & Narbenüberdeckung von Eve Paule.",
     hero: "Dein Motiv. Deine Geschichte. Meine Kunst.",
     details: [
@@ -60,7 +60,7 @@ export const serviceData: Record<string, {
   },
   piercings: {
     title: "Piercings",
-    metaTitle: "Piercings in Marchtrenk | Nase, Ohr, Bauchnabel & mehr",
+    metaTitle: "Piercings in Marchtrenk bei Wels | Nase, Ohr & mehr",
     description: "Professionelle Piercings in Marchtrenk: Nase, Ohr, Septum, Helix, Tragus, Bauchnabel, Zunge, Lippe, Brustwarze & Intimbereich bei SkinLove.",
     hero: "Professionell gestochen. Mit Feingefühl.",
     details: [
@@ -85,7 +85,7 @@ export const serviceData: Record<string, {
   },
   "permanent-make-up": {
     title: "Permanent Make-up",
-    metaTitle: "Permanent Make-up Marchtrenk | Augenbrauen & Lippen",
+    metaTitle: "Permanent Make-up Marchtrenk bei Wels | Brauen & Lippen",
     description: "Permanent Make-up in Marchtrenk: Natürlich gezeichnete Augenbrauen & Lippen. Langanhaltend, individuell, von Eve Paule bei SkinLove.",
     hero: "Natürliche Schönheit. Dauerhaft betont.",
     details: [
@@ -106,7 +106,7 @@ export const serviceData: Record<string, {
   },
   "lash-brow-lifting": {
     title: "Lash & Brow Lifting",
-    metaTitle: "Lash & Brow Lifting Marchtrenk | inkl. Färben & Keratin",
+    metaTitle: "Lash & Brow Lifting Marchtrenk bei Wels",
     description: "Lash Lifting & Brow Lifting in Marchtrenk: Naturwimpern sanft geformt, inkl. Färben & Keratin. Ausdrucksstarke Augenbrauen bei SkinLove.",
     hero: "Dein Blick. Dein Statement.",
     details: [
@@ -127,7 +127,7 @@ export const serviceData: Record<string, {
   },
   kinderohrringe: {
     title: "Kinderohrringe",
-    metaTitle: "Kinderohrringe stechen Marchtrenk | Studex System, ab 6 Monate",
+    metaTitle: "Kinderohrringe stechen in Marchtrenk bei Wels | Studex",
     description: "Kinderohrringe stechen in Marchtrenk: Sanft, schmerzarm & sicher mit dem Studex-System. Ab 6 Monaten bei SkinLove.",
     hero: "Sanft & sicher. Für die Kleinsten.",
     details: [
@@ -148,7 +148,7 @@ export const serviceData: Record<string, {
   },
   spezialleistungen: {
     title: "Spezialleistungen",
-    metaTitle: "Spezialleistungen Marchtrenk | Wildfleisch, Dermal Anker & mehr",
+    metaTitle: "Spezialleistungen Marchtrenk bei Wels | Wildfleisch & mehr",
     description: "Spezialleistungen bei SkinLove in Marchtrenk: Wildfleischbehandlung, Dermal Anker Entfernung, Piercing-Korrekturen, Nachstechen & kostenlose Erstberatung.",
     hero: "Mehr als Tattoo & Piercing.",
     details: [

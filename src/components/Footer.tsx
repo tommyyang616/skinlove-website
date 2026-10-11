@@ -61,7 +61,7 @@ export default function Footer() {
           >
             Linzer Stra&szlig;e 35, 1.&nbsp;OG &middot; 4614 Marchtrenk
           </a>
-          <span>Mo&ndash;Fr 9&ndash;18 &middot; Sa 10&ndash;17 &middot; nach Vereinbarung</span>
+          <span>Termine nach vorheriger Absprache</span>
         </div>
         <div className="footer-links">
           <Link href="/leistungen">Leistungen</Link>

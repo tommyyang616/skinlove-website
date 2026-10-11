@@ -53,7 +53,7 @@ export default function LeistungsGalerie({
       <h2 style={{ color: "#fff", fontSize: 22, fontWeight: 600, textAlign: "center", marginBottom: 6 }}>
         Arbeiten aus dem Studio
       </h2>
-      <p style={{ color: "#888", fontSize: 14, textAlign: "center", marginBottom: 22 }}>
+      <p style={{ color: "#999", fontSize: 16, textAlign: "center", marginBottom: 22 }}>
         {`${bilder.length} Motive — alle von Eve Paule in Marchtrenk gestochen`}
       </p>
 
