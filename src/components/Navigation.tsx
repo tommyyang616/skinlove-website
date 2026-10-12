@@ -36,7 +36,9 @@ export default function Navigation({ onBook, unterseite = false }: { onBook?: ()
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   // Unterseiten haben kein Anfrage-Popup der Startseite - dann ein eigenes.
+  // Erst beim ersten Klick einhängen, damit es nicht zusätzlich im Code steht.
   const [eigenesFormular, setEigenesFormular] = useState(false);
+  const [formularBenutzt, setFormularBenutzt] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -50,7 +52,10 @@ export default function Navigation({ onBook, unterseite = false }: { onBook?: ()
     e.preventDefault();
     close();
     if (onBook) onBook();
-    else setEigenesFormular(true);
+    else {
+      setFormularBenutzt(true);
+      requestAnimationFrame(() => setEigenesFormular(true));
+    }
   };
 
   const eintraege = unterseite ? linksUnterseite : links;
@@ -106,7 +111,7 @@ export default function Navigation({ onBook, unterseite = false }: { onBook?: ()
     </header>
     {/* Platzhalter, damit die feste Kopfzeile auf Unterseiten nichts verdeckt */}
     {unterseite && <div className="kopf-abstand" aria-hidden="true" />}
-    {!onBook && <TerminModal open={eigenesFormular} onClose={() => setEigenesFormular(false)} />}
+    {!onBook && formularBenutzt && <TerminModal open={eigenesFormular} onClose={() => setEigenesFormular(false)} />}
     </>
   );
 }

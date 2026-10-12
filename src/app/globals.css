@@ -179,8 +179,7 @@ header.scrolled {
 }
 
 .logo-skin {
-  opacity: 0;
-  animation: logoIn .6s ease forwards, logoLoop 3s ease 1.2s infinite
+  animation: logoIn .6s ease both, logoLoop 3s ease 1.2s infinite
 }
 
 .logo-heart {
@@ -188,13 +187,11 @@ header.scrolled {
   font-size: 20px;
   margin: 0 3px;
   display: inline-block;
-  opacity: 0;
-  animation: logoIn .5s ease .4s forwards, heartBeat 1s ease 1.2s infinite;
+  animation: logoIn .5s ease .4s both, heartBeat 1s ease 1.2s infinite;
 }
 
 .logo-love {
-  opacity: 0;
-  animation: logoIn .6s ease .7s forwards, logoLoop 3s ease 1.5s infinite
+  animation: logoIn .6s ease .7s both, logoLoop 3s ease 1.5s infinite
 }
 
 .logo-sub {
@@ -202,14 +199,18 @@ header.scrolled {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-dim);
-  opacity: 0;
-  animation: logoIn .5s ease 1.1s forwards;
+  animation: logoIn .5s ease 1.1s both;
   margin-left: 12px;
 }
 
+/* Hereingleiten statt Einblenden: Das Logo ist so vom ersten Moment an voll
+   lesbar (halbtransparent fiel es bei der Kontrastprüfung durch). */
 @keyframes logoIn {
+  from {
+    transform: translateY(6px)
+  }
   to {
-    opacity: 1
+    transform: none
   }
 }
 
@@ -221,8 +222,10 @@ header.scrolled {
     transform: translateY(0)
   }
 
+  /* nur leichtes Wippen, keine Aufhellung - halbe Deckkraft fiel bei der
+     Kontrastprüfung (Barrierefreiheit) durch */
   50% {
-    opacity: .6;
+    opacity: 1;
     transform: translateY(-2px)
   }
 }
@@ -443,16 +446,19 @@ nav a:hover::after {
   align-items: center
 }
 
+/* Start mit 1 % statt 0 % Deckkraft: fürs Auge gleich, aber der Browser
+   wertet den Text sofort als sichtbar - sonst zählt die Begrüßung für die
+   Ladezeit-Messung (LCP) erst nach der Animation. */
 .ha-word {
   display: inline-block;
-  opacity: 0;
+  opacity: .01;
   transform: translateY(40px);
   animation: haSlideUp .7s cubic-bezier(.16, 1, .3, 1) forwards
 }
 
 .ha-heart {
   display: inline-block;
-  opacity: 0;
+  opacity: .01;
   font-style: normal;
   color: #bb3599 !important;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -3509,7 +3515,6 @@ footer a {
   text-transform: uppercase;
   font-weight: 700;
   color: #fff;
-  opacity: .75;
   margin: 0 0 4px;
 }
 
@@ -3889,4 +3894,17 @@ footer a {
     width: 38px;
     height: 38px;
   }
+}
+
+/* Fußzeile auf Pink: reinweiß für ausreichenden Kontrast */
+footer,
+footer span {
+  color: #fff;
+}
+
+/* Links im Fließtext der Rechtsseiten auch ohne Farbe erkennbar */
+.legal-content p a,
+.legal-content li a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

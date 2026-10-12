@@ -44,7 +44,7 @@ export default function ServicePageClient({
   const [formOpen, setFormOpen] = useState(false);
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", fontFamily: "'Outfit',sans-serif" }}>
-      <Navigation unterseite />
+      <Navigation unterseite onBook={() => setFormOpen(true)} />
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "16px 24px 0" }}>
         <Link href="/leistungen" style={{ color: "#d95dc0", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
       </div>

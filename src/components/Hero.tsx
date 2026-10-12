@@ -26,6 +26,9 @@ function HeroStrip() {
   useEffect(() => {
     const el = stripRef.current;
     if (!el) return;
+    // Nur laufen lassen, wo der Streifen zu sehen ist (ab 769 px). Am Handy
+    // ist er ausgeblendet und hat vorher trotzdem jedes Bild mitgerechnet.
+    if (!window.matchMedia("(min-width: 769px)").matches) return;
 
     const schritt = () => {
       offset.current += speed;

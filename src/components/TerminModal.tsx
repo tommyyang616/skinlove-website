@@ -75,7 +75,7 @@ export default function TerminModal({
     >
       <div className="modal">
         <button className="modal-close" onClick={closeModal} aria-label="Schlie&szlig;en">&times;</button>
-        <div className={`modal-form${success ? " hidden" : ""}`} id="bookingForm">
+        <div className={`modal-form${success ? " hidden" : ""}`}>
           <h3>Termin anfragen</h3>
           <p>
             {service
