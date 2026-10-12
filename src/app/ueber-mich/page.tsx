@@ -2,20 +2,21 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { teilenMeta } from "@/lib/teilen-meta";
 import { bewertungenVon } from "@/lib/bewertungen";
-import TerminKnopf from "./TerminKnopf";
+import TerminKnopf from "@/components/TerminKnopf";
 
 export const metadata: Metadata = {
   title: "Eve Paule – Tätowiererin & Piercerin in Marchtrenk",
   description: "Lerne Eve Paule kennen: Gründerin von SkinLove in Marchtrenk zwischen Wels und Linz – Tätowiererin, Piercerin und Permanent Make-up-Artistin.",
   alternates: { canonical: "/ueber-mich" },
-  openGraph: {
-    title: "Eve Paule – SkinLove Tattoo & Piercing",
-    description: "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk zwischen Wels und Linz.",
-    url: "/ueber-mich",
-    type: "profile",
-    images: [{ url: "/images/eve-about-v2.webp", width: 880, height: 1210, alt: "Eve Paule, Gründerin von SkinLove" }],
-  },
+  ...teilenMeta(
+    "Eve Paule – SkinLove Tattoo & Piercing",
+    "Lerne Eve Paule kennen – Gründerin von SkinLove Tattoo & Piercing in Marchtrenk zwischen Wels und Linz.",
+    "/ueber-mich",
+    { url: "/images/eve-about-v2.webp", width: 880, height: 1210, alt: "Eve Paule, Gründerin von SkinLove" },
+    "profile",
+  ),
 };
 
 // Werdegang so, wie Eve ihn auf der Startseite selbst beschreibt.

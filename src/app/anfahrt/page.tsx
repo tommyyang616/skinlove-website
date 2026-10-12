@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { teilenMeta } from "@/lib/teilen-meta";
+
+const TITEL = "Anfahrt aus Wels und Linz – Tattoo & Piercing in OÖ";
+const BESCHREIBUNG = "SkinLove liegt in Marchtrenk zwischen Wels und Linz: rund 10 Minuten aus Wels, 20 bis 25 aus Linz. Anfahrt mit Auto, Bus 600 und Westbahn, Fahrzeiten aus ganz OÖ.";
 
 export const metadata: Metadata = {
-  title: "Tattoo & Piercing in Oberösterreich – Anfahrt aus Wels und Linz",
-  description:
-    "SkinLove liegt in Marchtrenk im Bezirk Wels-Land, zentral zwischen Wels und Linz. Fahrzeiten aus ganz Oberösterreich, Anfahrt mit Auto, Bus und Bahn – Tattoo, Piercing, Permanent Make-up bei Eve Paule.",
+  title: TITEL,
+  description: BESCHREIBUNG,
   alternates: { canonical: "/anfahrt" },
-  openGraph: {
-    title: "Anfahrt zu SkinLove – aus Wels, Linz und ganz Oberösterreich",
-    description:
-      "Marchtrenk liegt zentral zwischen Wels und Linz. So kommst du zum Studio in der Linzer Straße 35.",
-    url: "/anfahrt",
-    type: "website",
-  },
+  ...teilenMeta(TITEL, BESCHREIBUNG, "/anfahrt"),
 };
 
 /**

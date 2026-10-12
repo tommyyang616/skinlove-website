@@ -1,11 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { teilenMeta } from "@/lib/teilen-meta";
+
+const TITEL = "Datenschutz – SkinLove Tattoo & Piercing";
+const BESCHREIBUNG = "Datenschutzerklärung von SkinLove Tattoo & Piercing in Marchtrenk. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.";
 
 export const metadata: Metadata = {
-  title: "Datenschutz – SkinLove Tattoo & Piercing",
-  description: "Datenschutzerklärung von SkinLove Tattoo & Piercing in Marchtrenk. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.",
+  title: TITEL,
+  description: BESCHREIBUNG,
   alternates: { canonical: "/datenschutz" },
   robots: { index: true, follow: true },
+  ...teilenMeta(TITEL, BESCHREIBUNG, "/datenschutz"),
 };
 
 export default function Datenschutz() {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serviceData, slugs } from "../data";
 import ServicePageClient from "./ServicePageClient";
+import { teilenMeta } from "@/lib/teilen-meta";
 
 export function generateStaticParams() {
   return slugs.map(slug => ({ slug }));
@@ -15,12 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: service.metaTitle,
     description: service.description,
     alternates: { canonical: `/leistungen/${slug}` },
-    openGraph: {
-      title: service.metaTitle,
-      description: service.description,
-      url: `/leistungen/${slug}`,
-      type: "website",
-    },
+    ...teilenMeta(service.metaTitle, service.description, `/leistungen/${slug}`),
   };
 }
 

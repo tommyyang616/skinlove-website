@@ -1,11 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { teilenMeta } from "@/lib/teilen-meta";
+
+const TITEL = "Impressum – SkinLove Tattoo & Piercing";
+const BESCHREIBUNG = "Impressum von SkinLove Tattoo & Piercing in Marchtrenk. Inhaberin Eve Paule. Angaben gemäß ECG § 5, Gewerbeordnung § 63, Mediengesetz § 25.";
 
 export const metadata: Metadata = {
-  title: "Impressum – SkinLove Tattoo & Piercing",
-  description: "Impressum von SkinLove Tattoo & Piercing in Marchtrenk. Inhaberin Eve Paule. Angaben gemäß ECG § 5, Gewerbeordnung § 63, Mediengesetz § 25.",
+  title: TITEL,
+  description: BESCHREIBUNG,
   alternates: { canonical: "/impressum" },
   robots: { index: true, follow: true },
+  ...teilenMeta(TITEL, BESCHREIBUNG, "/impressum"),
 };
 
 export default function Impressum() {

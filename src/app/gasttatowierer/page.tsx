@@ -1,122 +1,92 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import TerminKnopf from "@/components/TerminKnopf";
+import { teilenMeta } from "@/lib/teilen-meta";
+
+const TITEL = "Gasttätowierer bei SkinLove – Tattoo-Artists in Marchtrenk";
+const BESCHREIBUNG = "Gasttätowierer bei SkinLove in Marchtrenk zwischen Wels und Linz: Arbeiten von Nadija und Srdjan ansehen und einen Termin bei deinem Wunsch-Artist anfragen.";
 
 export const metadata: Metadata = {
-  title: "Gasttätowierer – Guest Artists bei SkinLove",
-  description: "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßige Guest Spots mit Top-Künstlern aus ganz Europa – jetzt Termin sichern!",
+  title: TITEL,
+  description: BESCHREIBUNG,
   alternates: { canonical: "/gasttatowierer" },
-  openGraph: {
-    title: "Gasttätowierer bei SkinLove Tattoo & Piercing",
-    description: "Internationale Gasttätowierer bei SkinLove in Marchtrenk. Regelmäßig wechselnde Guest Artists.",
-    url: "/gasttatowierer",
-    type: "website",
-  },
+  ...teilenMeta(TITEL, BESCHREIBUNG, "/gasttatowierer"),
 };
 
-export default function GasttatowiererPage() {
+// Dieselben Gäste und Bilder wie auf der Startseite (Services.tsx).
+const gaeste = [
+  {
+    name: "Nadija",
+    rolle: "Gasttätowiererin",
+    avatar: "/gallery/guests/nadija-profilbild-v2.webp",
+    bilder: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/gallery/guests/nadija${n}-v2.webp`),
+  },
+  {
+    name: "Srdjan",
+    rolle: "Gasttätowierer",
+    avatar: "/gallery/guests/srdjan-profilbild-v2.webp",
+    bilder: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/gallery/guests/srdjan${n}-v2.webp`),
+  },
+];
+
+export default function GasttaetowiererPage() {
   return (
     <>
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "var(--bg)",
-        color: "var(--text)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "80px 24px 60px",
-        textAlign: "center",
-      }}
-    >
-      <p
-        style={{
-          fontSize: 12,
-          letterSpacing: 3,
-          textTransform: "uppercase",
-          color: "var(--pink-text)",
-          fontWeight: 600,
-          marginBottom: 12,
-        }}
-      >
-        Guest Artists
-      </p>
-      <h1
-        style={{
-          fontFamily: "var(--serif)",
-          fontSize: "clamp(2rem, 5vw, 3.2rem)",
-          fontWeight: 600,
-          lineHeight: 1.15,
-          marginBottom: 20,
-        }}
-      >
-        Gasttätowierer bei SkinLove
-      </h1>
-      <p
-        style={{
-          maxWidth: 600,
-          lineHeight: 1.8,
-          fontSize: 16,
-          color: "var(--text-dim)",
-          marginBottom: 16,
-        }}
-      >
-        Regelmäßig begrüßen wir internationale Tattoo-Künstler als Gäste bei
-        SkinLove. Jeder bringt seinen eigenen Stil mit — von Fine Line über
-        Realistic bis hin zu Japanese und Neo-Traditional. Sichere dir deinen
-        exklusiven Termin mit einem unserer Guest Artists!
-      </p>
-      <p
-        style={{
-          maxWidth: 600,
-          lineHeight: 1.8,
-          fontSize: 15,
-          color: "var(--text-dim)",
-          marginBottom: 32,
-        }}
-      >
-        Die Guest Spots werden auf unserer Startseite und auf Instagram
-        angekündigt. Folge uns, um keinen Termin zu verpassen.
-      </p>
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
-        <Link
-          href="/#guest-artists"
-          style={{
-            padding: "14px 32px",
-            background: "var(--pink)",
-            color: "#fff",
-            borderRadius: 50,
-            fontWeight: 600,
-            fontSize: 14,
-            textDecoration: "none",
-            letterSpacing: 1,
-            textTransform: "uppercase",
-          }}
-        >
-          Aktuelle Guest Artists
-        </Link>
-        <Link
-          href="https://www.instagram.com/skinlove_tattoopiercing/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            padding: "14px 32px",
-            border: "1px solid rgba(255,255,255,.2)",
-            color: "var(--text)",
-            borderRadius: 50,
-            fontWeight: 500,
-            fontSize: 14,
-            textDecoration: "none",
-            letterSpacing: 1,
-            textTransform: "uppercase",
-          }}
-        >
-          Instagram folgen
-        </Link>
-      </div>
-    </main>
-    <Footer />
+      <main className="um">
+        <section className="um-block kurs-text" style={{ textAlign: "center" }}>
+          <p className="um-label">Guest Artists</p>
+          <h1 className="um-h1" style={{ fontSize: "clamp(2.4rem, 5vw, 3.6rem)" }}>Gasttätowierer bei SkinLove</h1>
+          <p className="um-rolle">Mehr Handschriften, ein Studio – zwischen Wels und Linz</p>
+          <p className="um-text" style={{ margin: "0 auto 16px" }}>
+            Neben Inhaberin Eve Paule tätowieren bei SkinLove regelmäßig Gasttätowierer mit ihrem
+            eigenen Stil. Für dich heißt das: mehr Auswahl, ohne das Studio zu wechseln – im
+            Marktcenter in Marchtrenk, rund zehn Minuten von Wels und 20 bis 25 Minuten von Linz.
+          </p>
+        </section>
+
+        {gaeste.map((g) => (
+          <section key={g.name} className="um-block">
+            <div className="gast-kopf">
+              <Image src={g.avatar} alt={`${g.rolle} ${g.name}`} width={96} height={96} className="gast-avatar" />
+              <div>
+                <h2 className="um-h2" style={{ margin: 0, textAlign: "left" }}>{g.name}</h2>
+                <p className="um-text" style={{ margin: 0 }}>{g.rolle} bei SkinLove</p>
+              </div>
+            </div>
+            <div className="um-arbeiten">
+              {g.bilder.map((b, i) => (
+                <div key={b} className="um-arbeit">
+                  <Image src={b} alt={`Tattoo von ${g.rolle} ${g.name} bei SkinLove in Marchtrenk, Arbeit ${i + 1}`} width={600} height={600} sizes="(max-width: 860px) 46vw, 260px" />
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        <section className="um-block kurs-text">
+          <h2 className="um-h2">So bekommst du einen Termin</h2>
+          <p className="um-text">
+            Wann die Gasttätowierer im Studio sind, wird auf der Startseite und auf Instagram
+            angekündigt. Frag einfach über das Formular an und schreib dazu, bei wem du tätowiert
+            werden möchtest – Motiv, Größe und Körperstelle helfen bei der Planung.
+          </p>
+          <p className="um-text">
+            Lieber zu Eve? Ihre Arbeiten findest du auf der Seite <Link href="/leistungen/tattoos" style={{ color: "var(--pink-text)" }}>Tattoos</Link>.
+          </p>
+        </section>
+
+        <section className="um-schluss">
+          <h2 className="um-h2">Termin bei einem Gast-Artist anfragen</h2>
+          <p className="um-text">Termine nach vorheriger Absprache – online anfragen oder anrufen.</p>
+          <div className="um-aktionen um-aktionen-mitte">
+            <TerminKnopf />
+            <a href="https://www.instagram.com/skinlove_tattoopiercing/" target="_blank" rel="noopener noreferrer" className="btn-outline">Instagram</a>
+          </div>
+        </section>
+      </main>
+      <Footer />
     </>
   );
 }

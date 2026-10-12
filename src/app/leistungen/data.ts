@@ -24,7 +24,7 @@ export const serviceData: Record<string, {
   tattoos: {
     title: "Tattoos",
     metaTitle: "Tattoostudio bei Wels & Linz | Fineline & Cover-up",
-    description: "Tattoos von Eve Paule für Wels, Linz und Umgebung: Fine-Line, Mini- und Finger-Tattoos, Black & Grey, Watercolor, Cover-Ups und Narbenüberdeckung. Kostenlose Beratung.",
+    description: "Tattoos für Wels & Linz: Fineline, Mini- und Finger-Tattoos, Black & Grey, Watercolor, Cover-ups und Narbenüberdeckung – kostenlose Beratung bei Eve Paule.",
     h1: "Tattoostudio in Marchtrenk – zwischen Wels und Linz",
     hero: "Dein Motiv. Deine Geschichte. Meine Kunst.",
     details: [
@@ -107,7 +107,7 @@ export const serviceData: Record<string, {
   piercings: {
     title: "Piercings",
     metaTitle: "Piercingstudio bei Wels & Linz | Piercer in Marchtrenk",
-    description: "Dein Piercer für Wels, Linz und Umgebung: Ohr, Nase, Septum, Helix, Tragus, Daith, Bauchnabel, Zunge, Lippe, Brustwarze und Intim – Erstschmuck und Kontrolltermin inklusive.",
+    description: "Dein Piercer für Wels & Linz: Ohr, Nase, Septum, Helix, Tragus, Daith, Bauchnabel, Zunge, Lippe und Intim – Erstschmuck und Kontrolltermin inklusive.",
     h1: "Piercingstudio in Marchtrenk – zwischen Wels und Linz",
     hero: "Professionell gestochen. Mit Feingefühl.",
     details: [
@@ -167,7 +167,7 @@ export const serviceData: Record<string, {
   },
   "permanent-make-up": {
     title: "Permanent Make-up",
-    metaTitle: "Permanent Make-up bei Wels & Linz | Augenbrauen & Lippen",
+    metaTitle: "Permanent Make-up bei Wels & Linz | Brauen & Lippen",
     description: "Permanent Make-up für Wels, Linz und Umgebung: natürlich pigmentierte Augenbrauen und dezent betonte Lippen – individuell beraten und gestochen von Eve Paule.",
     h1: "Permanent Make-up in Marchtrenk – Augenbrauen und Lippen",
     hero: "Natürliche Schönheit. Dauerhaft betont.",
@@ -255,7 +255,7 @@ export const serviceData: Record<string, {
   kinderohrringe: {
     title: "Kinderohrringe",
     metaTitle: "Ohrlöcher stechen für Kinder bei Wels & Linz | Studex",
-    description: "Ohrringe stechen für Kinder mit dem Studex-System: steril verpackte Erststecker, Ruhe statt Hektik und Pflegetipps für Eltern – im Studio in Marchtrenk zwischen Wels und Linz.",
+    description: "Ohrringe stechen für Kinder mit dem Studex-System: steril verpackte Erststecker, Ruhe statt Hektik, Pflegetipps – in Marchtrenk zwischen Wels und Linz.",
     h1: "Ohrlöcher stechen für Kinder – mit Studex, zwischen Wels und Linz",
     hero: "Sanft & sicher. Für die Kleinsten.",
     details: [

@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { teilenMeta } from "@/lib/teilen-meta";
+
+const TITEL = "Tattoo-Kurs & Piercing-Kurs in Oberösterreich";
+const BESCHREIBUNG = "Tätowieren und Piercen lernen bei Wels und Linz: Tattoo-Kurs und Piercing-Kurs in kleinen Gruppen mit Material und Zertifikat – bei Eve Paule in Marchtrenk.";
 
 export const metadata: Metadata = {
-  title: "Tattoo-Kurs & Piercing-Kurs in Oberösterreich",
-  description: "Tätowieren und Piercen lernen bei Wels und Linz: Tattoo-Kurs und Piercing-Kurs in kleinen Gruppen mit höchstens drei Teilnehmenden, Material und Zertifikat – bei Eve Paule in Marchtrenk.",
+  title: TITEL,
+  description: BESCHREIBUNG,
   alternates: { canonical: "/workshops" },
-  openGraph: {
-    title: "Tattoo-Kurs & Piercing-Kurs bei SkinLove",
-    description: "Tätowieren und Piercen lernen in kleinen Gruppen – in Marchtrenk zwischen Wels und Linz.",
-    url: "/workshops",
-    type: "website",
-  },
+  ...teilenMeta(TITEL, BESCHREIBUNG, "/workshops"),
 };
 
 // Inhalte wie im Verwaltungsbereich hinterlegt (Stand 12.10.2026). Termine,
