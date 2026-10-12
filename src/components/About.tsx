@@ -24,8 +24,8 @@ export default function About() {
                 <div className="stat-label">Linz · Wels · Region</div>
               </div>
             </div>
-            <Link href="/ueber-mich" className="about-cta">
-              Mehr über mich erfahren <span className="about-cta-pfeil" aria-hidden="true">→</span>
+            <Link href="/ueber-mich" className="leucht-knopf">
+              Mehr über mich erfahren <span className="leucht-knopf-pfeil" aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

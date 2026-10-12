@@ -3309,8 +3309,9 @@ footer a {
   max-width: 620px;
 }
 
-/* Knopf zur Über-mich-Seite: pink, leuchtend, pulsiert sanft */
-.about-cta {
+/* Leuchtknopf (Über-mich-Knopf, Terminknopf der Leistungsseiten):
+   pink, leuchtend, pulsiert sanft */
+.leucht-knopf {
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -3325,36 +3326,36 @@ footer a {
   text-decoration: none;
   border: 1px solid rgba(255, 140, 225, .6);
   box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3);
-  animation: about-cta-glow 2.6s ease-in-out infinite;
+  animation: leucht-knopf-glow 2.6s ease-in-out infinite;
   transition: transform .3s ease;
 }
 
-.about-cta:hover {
+.leucht-knopf:hover {
   transform: translateY(-2px) scale(1.03);
 }
 
-.about-cta-pfeil {
+.leucht-knopf-pfeil {
   display: inline-block;
   font-size: 18px;
   transition: transform .3s ease;
 }
 
-.about-cta:hover .about-cta-pfeil {
+.leucht-knopf:hover .leucht-knopf-pfeil {
   transform: translateX(6px);
 }
 
-@keyframes about-cta-glow {
+@keyframes leucht-knopf-glow {
   0%, 100% { box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3); }
   50% { box-shadow: 0 0 34px rgba(255, 64, 200, .85), 0 0 90px rgba(187, 53, 153, .5); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about-cta { animation: none; }
+  .leucht-knopf { animation: none; }
 }
 
 @media (max-width: 768px) {
   .about-text { font-size: 16.5px; }
-  .about-cta { width: 100%; justify-content: center; }
+  .leucht-knopf { width: 100%; justify-content: center; }
 }
 
 /* ====== Social-Media-Knöpfe (Galerie) ====== */
@@ -3560,4 +3561,170 @@ footer a {
   text-align: center;
   font-size: 13px;
   color: #888;
+}
+
+.leucht-knopf {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ====== Leistungsseiten: Abschnitte als Karten ====== */
+.lp-abschnitte {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 8px 24px 48px;
+  display: grid;
+  gap: 22px;
+}
+
+.lp-karte {
+  position: relative;
+  padding: 30px 32px 22px 36px;
+  background: linear-gradient(160deg, rgba(187, 53, 153, .09) 0%, rgba(20, 20, 20, .96) 45%);
+  border: 1px solid rgba(187, 53, 153, .2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* pinker Streifen links */
+.lp-karte::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #ff4fc8, var(--pink));
+  box-shadow: 0 0 14px rgba(255, 64, 200, .5);
+}
+
+.lp-nr {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--pink-text);
+  margin-bottom: 6px;
+}
+
+.lp-karte h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 3vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+  margin: 0 0 14px;
+}
+
+.lp-karte p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #d6d1cc;
+  margin: 0 0 12px;
+}
+
+.lp-karte p strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ====== Leistungsseiten: Fragen zum Aufklappen ====== */
+.lp-fragen {
+  display: grid;
+  gap: 12px;
+}
+
+.lp-frage {
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 14px;
+  transition: border-color .3s, box-shadow .3s;
+}
+
+.lp-frage[open] {
+  border-color: rgba(187, 53, 153, .45);
+  box-shadow: 0 0 22px rgba(187, 53, 153, .15);
+}
+
+.lp-frage summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.lp-frage summary::-webkit-details-marker {
+  display: none;
+}
+
+.lp-frage summary:hover {
+  color: #ffd6f2;
+}
+
+/* Plus, das beim Öffnen zum Minus wird */
+.lp-plus {
+  position: relative;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(187, 53, 153, .6);
+}
+
+.lp-plus::before,
+.lp-plus::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: var(--pink-text);
+  transform: translate(-50%, -50%);
+  transition: transform .3s;
+}
+
+.lp-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.lp-frage[open] .lp-plus::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.lp-frage p {
+  margin: 0;
+  padding: 0 20px 20px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #bdb8b3;
+  animation: lp-auf .3s ease;
+}
+
+@keyframes lp-auf {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+  .lp-karte {
+    padding: 24px 20px 16px 26px;
+  }
+  .lp-karte p {
+    font-size: 16.5px;
+  }
+  .lp-frage summary {
+    font-size: 16px;
+    padding: 16px;
+  }
+  .lp-frage p {
+    padding: 0 16px 18px;
+  }
 }

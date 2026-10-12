@@ -21,6 +21,18 @@ type Service = {
   bilder?: { src: string; alt: string }[];
 };
 
+/** Stichwort vor dem Doppelpunkt hervorheben ("Ohr: Helix, ..." -> **Ohr:**),
+ *  damit sich lange Aufzählungen schneller lesen lassen. */
+function mitStichwort(text: string) {
+  const m = text.match(/^([^:.!?]{2,32}):\s([\s\S]*)$/);
+  if (!m) return text;
+  return (
+    <>
+      <strong>{m[1]}:</strong> {m[2]}
+    </>
+  );
+}
+
 export default function ServicePageClient({
   service,
   weitere = [],
@@ -73,14 +85,15 @@ export default function ServicePageClient({
         <LeistungsGalerie bilder={service.bilder} titel={service.title} />
       )}
 
-      {/* Ausführliche Abschnitte */}
+      {/* Ausführliche Abschnitte als Karten */}
       {service.abschnitte && service.abschnitte.length > 0 && (
-        <div style={{ maxWidth: 720, margin: "0 auto", padding: "8px 24px 40px" }}>
+        <div className="lp-abschnitte">
           {service.abschnitte.map((a, i) => (
-            <section key={i} style={{ marginBottom: 36 }}>
-              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 12, lineHeight: 1.2 }}>{a.h}</h2>
+            <section key={i} className="lp-karte">
+              <span className="lp-nr" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <h2>{a.h}</h2>
               {a.text.map((t, j) => (
-                <p key={j} style={{ color: "#c8c8c8", fontSize: 17, lineHeight: 1.8, margin: "0 0 12px" }}>{t}</p>
+                <p key={j}>{mitStichwort(t)}</p>
               ))}
             </section>
           ))}
@@ -108,12 +121,15 @@ export default function ServicePageClient({
       {service.faq.length > 0 && (
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 64px" }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 24 }}>Häufige Fragen</h2>
-          <div style={{ display: "grid", gap: 16 }}>
+          <div className="lp-fragen">
             {service.faq.map((f, i) => (
-              <div key={i} style={{ padding: 20, background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}>
-                <h3 style={{ fontSize: 17, color: "#fff", fontWeight: 600, marginBottom: 8 }}>{f.q}</h3>
-                <p style={{ fontSize: 16, color: "#aaa", lineHeight: 1.7, margin: 0 }}>{f.a}</p>
-              </div>
+              <details key={i} className="lp-frage">
+                <summary>
+                  <span>{f.q}</span>
+                  <span className="lp-plus" aria-hidden="true" />
+                </summary>
+                <p>{f.a}</p>
+              </details>
             ))}
           </div>
 
@@ -161,11 +177,8 @@ export default function ServicePageClient({
       )}
 
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 80px", textAlign: "center" }}>
-        <button
-          onClick={() => setFormOpen(true)}
-          style={{ padding: "16px 44px", background: "#bb3599", color: "#fff", border: "none", fontSize: 16, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "opacity .3s" }}
-        >
-          Termin vereinbaren
+        <button type="button" className="leucht-knopf" onClick={() => setFormOpen(true)}>
+          Termin vereinbaren <span className="leucht-knopf-pfeil" aria-hidden="true">→</span>
         </button>
       </div>
       <TerminModal open={formOpen} onClose={() => setFormOpen(false)} service={service.title} />
