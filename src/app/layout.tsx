@@ -84,6 +84,8 @@ export default function RootLayout({
     <html lang="de-AT" className={`${inter.variable} ${cormorant.variable} ${outfit.variable}`}>
       <head>
         <meta name="google-site-verification" content="6yq00dU1qxKw-0D8xhAY9LVLDljmd4V2yhkABzoNa8E" />
+        {/* Bing Webmaster Tools, bestätigt 12.10.2026 - nicht entfernen, sonst ist der Zugang weg */}
+        <meta name="msvalidate.01" content="4E18888A71B17C2B258355C271D0069F" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
