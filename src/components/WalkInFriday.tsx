@@ -10,12 +10,11 @@ export default function WalkInFriday({ onBook }: { onBook?: () => void }) {
       <button
         className="walkin-badge"
         onClick={() => setOpen(true)}
-        aria-label="Walk-In Friday – Anklopfen! Angebot öffnen"
       >
         <span className="walkin-ring walkin-ring-1" />
         <span className="walkin-ring walkin-ring-2" />
 
-        <span className="walkin-scene">
+        <span className="walkin-scene" aria-hidden="true">
           {/* Ablauf in einem 6-Sekunden-Takt: dreimal klopfen, die Tür
               schwingt an der linken Angel nach innen auf (Klinke rechts),
               Licht fällt heraus, Tür schließt wieder. */}
@@ -84,7 +83,7 @@ export default function WalkInFriday({ onBook }: { onBook?: () => void }) {
           <span className="walkin-badge-sub">Anklopfen!</span>
         </span>
 
-        <span className="walkin-notes">
+        <span className="walkin-notes" aria-hidden="true">
           <span className="walkin-note walkin-note-1">🔔</span>
           <span className="walkin-note walkin-note-2">✨</span>
           <span className="walkin-note walkin-note-3">🔔</span>

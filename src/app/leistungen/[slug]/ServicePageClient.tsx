@@ -33,9 +33,9 @@ export default function ServicePageClient({
       {/* Nav */}
       <nav style={{ padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Link href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 18, fontWeight: 600 }}>
-          Skin<span style={{ color: "#bb3599" }}>Love</span>
+          Skin<span style={{ color: "#d95dc0" }}>Love</span>
         </Link>
-        <Link href="/#services" style={{ color: "#bb3599", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
+        <Link href="/#services" style={{ color: "#d95dc0", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
       </nav>
 
       {/* Hero */}
@@ -45,7 +45,7 @@ export default function ServicePageClient({
         transition={{ duration: 0.6 }}
         style={{ padding: "80px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
       >
-        <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#bb3599", fontWeight: 600 }}>{service.title}</span>
+        <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#d95dc0", fontWeight: 600 }}>{service.title}</span>
         <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(30px,5vw,50px)", color: "#fff", fontWeight: 600, margin: "16px 0 10px", lineHeight: 1.15 }}>{service.h1}</h1>
         <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", color: "#d77fc0", fontSize: "clamp(19px,2.6vw,24px)", margin: "0 0 20px", lineHeight: 1.3 }}>{service.hero}</p>
         <p style={{ color: "#aaa", fontSize: 18, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>{service.description}</p>
@@ -62,7 +62,7 @@ export default function ServicePageClient({
               transition={{ delay: 0.1 * i, duration: 0.4 }}
               style={{ display: "flex", gap: 14, alignItems: "flex-start", padding: "16px 20px", background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}
             >
-              <span style={{ color: "#bb3599", fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
+              <span aria-hidden="true" style={{ color: "#d95dc0", fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
               <span style={{ color: "#ddd", fontSize: 17, lineHeight: 1.6 }}>{d}</span>
             </motion.div>
           ))}
@@ -148,7 +148,7 @@ export default function ServicePageClient({
               style={{
                 padding: "10px 18px",
                 border: "1px solid rgba(187,53,153,.5)",
-                color: "#bb3599",
+                color: "#d95dc0",
                 borderRadius: 50,
                 fontSize: 15,
                 textDecoration: "none",
