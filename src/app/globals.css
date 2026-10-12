@@ -179,7 +179,7 @@ header.scrolled {
 }
 
 .logo-skin {
-  animation: logoIn .6s ease both, logoLoop 3s ease 1.2s infinite
+  animation: logoLoop 3s ease 1.2s infinite
 }
 
 .logo-heart {
@@ -187,11 +187,11 @@ header.scrolled {
   font-size: 20px;
   margin: 0 3px;
   display: inline-block;
-  animation: logoIn .5s ease .4s both, heartBeat 1s ease 1.2s infinite;
+  animation: heartBeat 1s ease 1.2s infinite;
 }
 
 .logo-love {
-  animation: logoIn .6s ease .7s both, logoLoop 3s ease 1.5s infinite
+  animation: logoLoop 3s ease 1.5s infinite
 }
 
 .logo-sub {
@@ -611,8 +611,20 @@ nav a:hover::after {
     0 0 20px rgba(187, 53, 153, .2),
     0 0 60px rgba(187, 53, 153, .06),
     inset 0 1px 0 rgba(255,255,255,.04);
-  animation: walkin-badge-glow 3s ease-in-out infinite;
   overflow: visible;
+}
+
+/* Pulsierendes Leuchten als eigene Ebene, die nur ihre Deckkraft ändert -
+   ein animierter box-shadow müsste bei jedem Bild neu gezeichnet werden. */
+.walkin-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 30px rgba(187, 53, 153, .35), 0 0 80px rgba(187, 53, 153, .1);
+  opacity: 0;
+  pointer-events: none;
+  animation: leucht-puls 3s ease-in-out infinite;
 }
 
 .walkin-badge:hover {
@@ -629,6 +641,7 @@ nav a:hover::after {
 .walkin-ring {
   position: absolute;
   inset: -3px;
+  will-change: transform, opacity;
   border-radius: 23px;
   border: 1px solid rgba(187, 53, 153, .25);
   pointer-events: none;
@@ -637,9 +650,11 @@ nav a:hover::after {
 .walkin-ring-1 { animation: walkin-ring-expand 4s ease-out infinite; }
 .walkin-ring-2 { animation: walkin-ring-expand 4s ease-out 2s infinite; }
 
+/* Nur transform/opacity: läuft auf der Grafikkarte. Vorher wurde "inset"
+   animiert - das erzwang bei jedem Bild ein neues Layout der Seite. */
 @keyframes walkin-ring-expand {
-  0% { inset: -2px; opacity: .5; }
-  100% { inset: -20px; opacity: 0; }
+  0% { transform: scale(1); opacity: .5; }
+  100% { transform: scale(1.1, 1.3); opacity: 0; }
 }
 
 /* Szene: Seitenverhaeltnis 60:80 wie die Grafik, damit die Tuer (eigenes
@@ -784,11 +799,6 @@ nav a:hover::after {
   44% { opacity: 1; transform: translateY(-10px) scale(1); }
   62% { opacity: .4; transform: translateY(-32px) scale(.7); }
   72%, 100% { opacity: 0; transform: translateY(-44px) scale(.4); }
-}
-
-@keyframes walkin-badge-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(187, 53, 153, .2), 0 0 60px rgba(187, 53, 153, .06), inset 0 1px 0 rgba(255,255,255,.04); }
-  50% { box-shadow: 0 0 30px rgba(187, 53, 153, .35), 0 0 80px rgba(187, 53, 153, .1), inset 0 1px 0 rgba(255,255,255,.06); }
 }
 
 /* WALK-IN FRIDAY MODAL */
@@ -3332,7 +3342,7 @@ footer a {
   text-decoration: none;
   border: 1px solid rgba(255, 140, 225, .6);
   box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3);
-  animation: leucht-knopf-glow 2.6s ease-in-out infinite;
+  position: relative;
   transition: transform .3s ease;
 }
 
@@ -3350,13 +3360,24 @@ footer a {
   transform: translateX(6px);
 }
 
-@keyframes leucht-knopf-glow {
-  0%, 100% { box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3); }
-  50% { box-shadow: 0 0 34px rgba(255, 64, 200, .85), 0 0 90px rgba(187, 53, 153, .5); }
+.leucht-knopf::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  box-shadow: 0 0 34px rgba(255, 64, 200, .85), 0 0 90px rgba(187, 53, 153, .5);
+  opacity: 0;
+  pointer-events: none;
+  animation: leucht-puls 2.6s ease-in-out infinite;
+}
+
+@keyframes leucht-puls {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .leucht-knopf { animation: none; }
+  .leucht-knopf::after,
+  .walkin-badge::after { animation: none; }
 }
 
 @media (max-width: 768px) {
@@ -3907,4 +3928,31 @@ footer span {
 .legal-content li a {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Leistungsseiten: Einblenden ohne JavaScript. Start bei 1 % Deckkraft, damit
+   der Browser den Inhalt sofort als sichtbar wertet (LCP). */
+.lp-hero {
+  animation: lpHoch .6s ease both;
+}
+
+.lp-detail {
+  animation: lpRein .4s ease both;
+}
+
+@keyframes lpHoch {
+  from { opacity: .01; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes lpRein {
+  from { opacity: .01; transform: translateX(-20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-hero,
+  .lp-detail {
+    animation: none;
+  }
 }

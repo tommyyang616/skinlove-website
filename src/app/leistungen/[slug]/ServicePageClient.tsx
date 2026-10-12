@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import LeistungsGalerie from "@/components/LeistungsGalerie";
@@ -50,32 +49,27 @@ export default function ServicePageClient({
       </div>
 
       {/* Hero */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{ padding: "40px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
-      >
+      {/* Einblenden per CSS statt framer-motion: kein zusätzliches JavaScript,
+          und die Überschrift steht sofort im HTML (für LCP/Google wichtig) */}
+      <div className="lp-hero" style={{ padding: "40px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#d95dc0", fontWeight: 600 }}>{service.title}</span>
         <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(30px,5vw,50px)", color: "#fff", fontWeight: 600, margin: "16px 0 10px", lineHeight: 1.15 }}>{service.h1}</h1>
         <p style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: "italic", color: "#d77fc0", fontSize: "clamp(19px,2.6vw,24px)", margin: "0 0 20px", lineHeight: 1.3 }}>{service.hero}</p>
         <p style={{ color: "#aaa", fontSize: 18, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>{service.description}</p>
-      </motion.div>
+      </div>
 
       {/* Details */}
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 48px" }}>
         <div style={{ display: "grid", gap: 12 }}>
           {service.details.map((d, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * i, duration: 0.4 }}
-              style={{ display: "flex", gap: 14, alignItems: "flex-start", padding: "16px 20px", background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}
+              className="lp-detail"
+              style={{ animationDelay: `${0.1 * i}s`, display: "flex", gap: 14, alignItems: "flex-start", padding: "16px 20px", background: "#141414", border: "1px solid rgba(255,255,255,.06)" }}
             >
               <span aria-hidden="true" style={{ color: "#d95dc0", fontSize: 16, flexShrink: 0, marginTop: 3 }}>✦</span>
               <span style={{ color: "#ddd", fontSize: 17, lineHeight: 1.6 }}>{d}</span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
