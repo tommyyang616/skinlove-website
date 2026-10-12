@@ -112,7 +112,7 @@ export default function Workshop() {
           <div style={{ position: "relative" }}>
             <div className="ws-grid" ref={gridRef}>
               {workshops.map(ws => {
-                const spotsLeft = ws.maxSpots;
+                const spotsLeft = Math.max(0, ws.maxSpots - (ws.takenSpots || 0));
                 return (
                   <div key={ws.id} className="ws-card reveal visible">
                     <div className="ws-card-img" style={{ backgroundImage: ws.img ? `url('${ws.img}')` : "linear-gradient(135deg,rgba(187,53,153,.3),rgba(10,10,10,.9))" }}>
@@ -121,9 +121,9 @@ export default function Workshop() {
                       <div className="ws-info-popup">
                         <button className="close-info" onClick={(e) => { e.stopPropagation(); (e.currentTarget.parentElement as HTMLElement).classList.remove("show"); }} aria-label="Info schließen">×</button>
                         <h4>Voraussetzungen</h4>
-                        <ul><li>Mindestalter: 18 Jahre</li><li>Keine Vorkenntnisse nötig</li><li>Material wird gestellt</li></ul>
-                        <h4 style={{ marginTop: 12 }}>Stornierung</h4>
-                        <ul><li>14+ Tage vorher: 100% Erstattung</li><li>7–14 Tage: 50% Erstattung</li><li>Unter 7 Tage: keine Erstattung</li></ul>
+                        <ul><li>Mindestalter: 18 Jahre</li><li>Keine Vorkenntnisse nötig</li><li>Übungsmaterial wird gestellt</li></ul>
+                        <h4 style={{ marginTop: 12 }}>Anmeldung &amp; Storno</h4>
+                        <p style={{ fontSize: 12, color: "var(--text-dim)" }}>Verbindlich wird die Anmeldung mit unterschriebenem Vertrag und Anzahlung im Studio. Alle Bedingungen bekommst du vorab per E-Mail.</p>
                         <h4 style={{ marginTop: 12 }}>Inkludiert</h4>
                         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>{ws.includes}</p>
                       </div>
@@ -138,12 +138,12 @@ export default function Workshop() {
                       </div>
                       <div className="ws-card-footer">
                         <div>
-                          <div className="ws-card-price">€ {ws.price} <small>inkl. Material</small></div>
+                          <div className="ws-card-price">€ {ws.price} <small>Endpreis</small></div>
                           <div className="ws-card-spots">Noch <strong>{spotsLeft} Plätze</strong> frei</div>
                         </div>
                       </div>
                       <button className="ws-card-btn" onClick={() => openModal(ws.id)}>
-                        Platz sichern
+                        Platz unverbindlich anfragen
                       </button>
                     </div>
                   </div>
@@ -179,14 +179,14 @@ export default function Workshop() {
               {error && (
                 <p style={{ color: "#ff8080", fontSize: 13, lineHeight: 1.5, margin: "12px 0 0 0" }}>{error}</p>
               )}
-              <button className="btn-primary" onClick={submit} disabled={sending} style={{ width: "100%", border: "none", cursor: sending ? "wait" : "pointer", opacity: sending ? 0.6 : 1, marginTop: 16 }}>{sending ? "Wird gesendet…" : "📅 Platz reservieren"}</button>
-              <p style={{ fontSize: 11, color: "var(--text-dim)", textAlign: "center", marginTop: 12 }}>Eve meldet sich bei dir zur Bestätigung</p>
+              <button className="btn-primary" onClick={submit} disabled={sending} style={{ width: "100%", border: "none", cursor: sending ? "wait" : "pointer", opacity: sending ? 0.6 : 1, marginTop: 16 }}>{sending ? "Wird gesendet…" : "Unverbindlich anfragen"}</button>
+              <p style={{ fontSize: 11, color: "var(--text-dim)", textAlign: "center", marginTop: 12 }}>Unverbindlich – verbindlich wird es erst mit Vertrag und Anzahlung im Studio. <Link href="/datenschutz" style={{ color: "var(--pink-text)" }}>Datenschutz</Link></p>
             </div>
           ) : success ? (
             <div style={{ textAlign: "center", padding: "20px 0" }}>
               <div style={{ fontSize: 48, color: "var(--pink)", marginBottom: 16 }}>✓</div>
-              <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "#fff", marginBottom: 12 }}>Buchung bestätigt!</h3>
-              <p style={{ fontSize: 14, color: "var(--text-dim)", lineHeight: 1.7, marginBottom: 24 }}>Dein Platz ist reserviert. Eve meldet sich bei dir zur Bestätigung.</p>
+              <h3 style={{ fontFamily: "var(--serif)", fontSize: "1.6rem", color: "#fff", marginBottom: 12 }}>Danke für deine Anfrage!</h3>
+              <p style={{ fontSize: 14, color: "var(--text-dim)", lineHeight: 1.7, marginBottom: 24 }}>Eve meldet sich bei dir mit allen Details. Verbindlich wird die Anmeldung mit unterschriebenem Vertrag und Anzahlung im Studio.</p>
               <button className="btn-primary" onClick={closeModal} style={{ border: "none", cursor: "pointer", display: "inline-flex" }}>Schließen</button>
             </div>
           ) : null}

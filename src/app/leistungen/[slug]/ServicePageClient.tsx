@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import LeistungsGalerie from "@/components/LeistungsGalerie";
 import TerminModal from "@/components/TerminModal";
+import { kurzName, BEWERTUNGS_HINWEIS } from "@/lib/bewertungen";
 
 type Service = {
   title: string;
@@ -95,10 +96,11 @@ export default function ServicePageClient({
               <figure key={i} style={{ margin: 0, padding: "20px 22px", background: "#141414", border: "1px solid rgba(187,53,153,.18)" }}>
                 <div style={{ color: "#f5b400", fontSize: 15, letterSpacing: 2, marginBottom: 8 }} aria-label="5 von 5 Sternen">★★★★★</div>
                 <blockquote style={{ margin: 0, color: "#ddd", fontSize: 16, lineHeight: 1.7 }}>&bdquo;{r.t}&ldquo;</blockquote>
-                <figcaption style={{ marginTop: 10, color: "#999", fontSize: 14 }}>{r.n} · Google-Bewertung, {r.d}</figcaption>
+                <figcaption style={{ marginTop: 10, color: "#999", fontSize: 14 }}>{kurzName(r.n)} · Google-Bewertung</figcaption>
               </figure>
             ))}
           </div>
+          <p style={{ marginTop: 12, color: "#888", fontSize: 13, lineHeight: 1.6 }}>{BEWERTUNGS_HINWEIS}</p>
         </div>
       )}
 

@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 
 const TITEL = "Impressum – SkinLove Tattoo & Piercing";
@@ -15,13 +16,9 @@ export const metadata: Metadata = {
 
 export default function Impressum() {
   return (
+    <>
+    <Navigation unterseite />
     <div className="legal-page">
-      <header className="legal-header">
-        <div className="legal-header-inner">
-          <Link href="/" className="legal-logo">SkinLove</Link>
-          <Link href="/" className="legal-back">← Zurück</Link>
-        </div>
-      </header>
       <div className="legal-content">
         <h1>Impressum</h1>
 
@@ -35,36 +32,29 @@ export default function Impressum() {
 
         <section className="legal-section">
           <h2>Unternehmensgegenstand</h2>
-          <p>Tätowieren, Piercen, Permanent Make-up, Lash &amp; Brow Lifting, kosmetische Dienstleistungen, Tattoo-Workshops</p>
+          <p>Tätowieren, Piercen, Permanent Make-up, Lash &amp; Brow Lifting, Ohrlochstechen, Tattoo- und Piercing-Kurse</p>
         </section>
 
 
         <section className="legal-section">
-          <h2>Gewerberechtliche Angaben gemäß GewO § 63</h2>
-          <p><strong>Gewerbewortlaut:</strong></p>
-          <ul>
-            <li>Freies Gewerbe: Körperschmuck (Tätowieren, Piercen)</li>
-            <li>Reglementiertes Gewerbe: Kosmetik (Schminken, dekorative Pflege)</li>
-          </ul>
+          <h2>Gewerberechtliche Angaben gemäß GewO § 63 und ECG § 5</h2>
+          <p><strong>Gewerbe:</strong> Kosmetik (Schönheitspflege) – reglementiertes Gewerbe, verliehen in Österreich</p>
           <p><strong>Gewerbebehörde:</strong> Bezirkshauptmannschaft Wels-Land</p>
-          <p><strong>Verleihungsbehörde:</strong> Bezirkshauptmannschaft Wels-Land</p>
         </section>
 
         <section className="legal-section">
           <h2>Kammerzugehörigkeit</h2>
-          <p>Mitglied der Wirtschaftskammer Oberösterreich<br />Fachgruppe der Fußpfleger, Kosmetiker und Masseure</p>
+          <p>Mitglied der Wirtschaftskammer Oberösterreich<br />Landesinnung der Fußpfleger, Kosmetiker und Masseure</p>
         </section>
 
         <section className="legal-section">
           <h2>Anwendbare Rechtsvorschriften</h2>
-          <p>Gewerbeordnung 1994 (GewO): <a href="https://www.ris.bka.gv.at" target="_blank" rel="noopener noreferrer">www.ris.bka.gv.at</a></p>
-          <p>Kosmetikverordnung</p>
-          <p>E-Commerce-Gesetz (ECG)</p>
+          <p>Gewerbeordnung 1994 (GewO) sowie Verordnung über Ausübungsregeln für das Piercen und Tätowieren (BGBl. II Nr. 141/2003 idF BGBl. II Nr. 261/2008), abrufbar unter <a href="https://www.ris.bka.gv.at" target="_blank" rel="noopener noreferrer">www.ris.bka.gv.at</a></p>
         </section>
 
         <section className="legal-section">
           <h2>Aufsichtsbehörde</h2>
-          <p>Bezirkshauptmannschaft Wels-Land<br />Dr.-Schaüer-Straße 4<br />4600 Wels<br />Österreich</p>
+          <p>Bezirkshauptmannschaft Wels-Land<br />Herrengasse 8<br />4600 Wels<br />Österreich</p>
         </section>
 
         <section className="legal-section">
@@ -72,14 +62,12 @@ export default function Impressum() {
           <p><strong>Medieninhaber:</strong> Eve Paule</p>
           <p><strong>Sitz:</strong> 4614 Marchtrenk</p>
           <p><strong>Unternehmensgegenstand:</strong> Präsentation des Unternehmens und seiner Dienstleistungen</p>
-          <p><strong>Grundlegende Richtung:</strong> Information über das Leistungsangebot von SkinLove Tattoo &amp; Piercing (Tattoos, Piercings, Permanent Make-up, Lash &amp; Brow Lifting, Workshops) sowie Kontaktmöglichkeiten für Kunden.</p>
+          <p><strong>Grundlegende Richtung:</strong> Information über das Leistungsangebot von SkinLove Tattoo &amp; Piercing (Tattoos, Piercings, Permanent Make-up, Lash &amp; Brow Lifting, Kurse) sowie Kontaktmöglichkeiten für Kundinnen und Kunden.</p>
         </section>
 
         <section className="legal-section">
-          <h2>Online-Streitbeilegung (ODR)</h2>
-          <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:</p>
-          <p><a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a></p>
-          <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+          <h2>Verbraucherschlichtung</h2>
+          <p>Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Anliegen und Beschwerden richten Sie bitte direkt an <a href="mailto:eve@skinlove-tattoo-piercing.at">eve@skinlove-tattoo-piercing.at</a>.</p>
         </section>
 
         <section className="legal-section">
@@ -99,9 +87,11 @@ export default function Impressum() {
         </section>
 
         <div className="legal-footer">
-          <p>Stand: März 2026</p>
+          <p>Stand: Oktober 2026</p>
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

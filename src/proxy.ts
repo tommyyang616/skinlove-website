@@ -53,6 +53,12 @@ async function istWartung(): Promise<boolean> {
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    // Alte Startadresse der früheren Seite (Search Console: 404). Die Umleitung
+    // in next.config greift dafür nicht, weil Pfade mit Punkt als Datei gelten.
+    if (pathname === "/index.html") {
+        return NextResponse.redirect(new URL("/", request.url), 308);
+    }
+
     if (
         pathname.startsWith("/_next") ||
         pathname.startsWith("/api") ||

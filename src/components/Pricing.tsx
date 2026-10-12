@@ -9,7 +9,7 @@ const prices: Record<string,{ note?: string; noteBottom?: string[]; items: {n:st
     {n:"Nasenflügel (Nostril) einfach",p:"53 €"},{n:"Bridge",p:"84 €"},{n:"Septum",p:"65 €"},{n:"Nassallang (mittig durchgehend) / Austin Bar",p:"132 €"},
   ]},
   ohr: { items: [
-    {n:"Lobe / Horizontal Lobe / Standard Lobe / Upper Lobe",p:"42 €"},{n:"Forward Helix / Helix Rim / Helix / AntiHelix-Sung",p:"55 €"},{n:"Tragus / Anti Tragus",p:"60 €"},{n:"Rook / Conch / Flat / Orbital / Snug / Inner Conch",p:"65 €"},{n:"Industrial / Vertikal Industrial",p:"75 €"},{n:"Daith (Migräne Piercing) / Surface Tragus / Trimix",p:"70 €"},
+    {n:"Lobe / Horizontal Lobe / Standard Lobe / Upper Lobe",p:"42 €"},{n:"Forward Helix / Helix Rim / Helix / AntiHelix-Sung",p:"55 €"},{n:"Tragus / Anti Tragus",p:"60 €"},{n:"Rook / Conch / Flat / Orbital / Snug / Inner Conch",p:"65 €"},{n:"Industrial / Vertikal Industrial",p:"75 €"},{n:"Daith / Surface Tragus / Trimix",p:"70 €"},
   ]},
   surface: { items: [
     {n:"Augenbraue",p:"60 €"},{n:"Anti Eyebrow",p:"62 €"},{n:"Oberflächenpiercings (Nacken, Bauch, Brustbein, Finger, Arme...)",p:"72 €"},
@@ -37,7 +37,7 @@ const prices: Record<string,{ note?: string; noteBottom?: string[]; items: {n:st
   ], noteBottom: ["Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 € · Empfohlen alle 6–9 Wochen"]},
   pflege: { items: [
     {n:"Prontolind Spray",p:"10 €"},{n:"Prontolind Gel",p:"7 €"},{n:"Stecker kürzen",p:"6 €"},{n:"Fremdschmuck wechseln",p:"15 €"},{n:"Dehnen bis 4 mm",p:"35 €"},{n:"Wildfleischbehandlung inkl. Spezialmaterial",p:"40 €"},{n:"Dermal Anker Entfernung (exkl. Schmuck & Pflege)",p:"60 €"},
-  ], noteBottom: ["Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahren mit schriftlicher Einverständniserklärung und in Anwesenheit eines Erziehungsberechtigten, ab 18 Jahren alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
+  ], noteBottom: ["Alle Preise sind Endpreise in Euro inkl. aller Steuern und Abgaben. Leistungen und Pflegeprodukte gibt es nur im Studio – es fallen keine Versandkosten an.","Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahren mit schriftlicher Einverständniserklärung und in Anwesenheit eines Erziehungsberechtigten, ab 18 Jahren alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
 };
 
 export default function Pricing() {

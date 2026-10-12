@@ -4,7 +4,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
-import { bewertungenVon } from "@/lib/bewertungen";
+import { bewertungenVon, kurzName, BEWERTUNGS_HINWEIS } from "@/lib/bewertungen";
 import TerminKnopf from "@/components/TerminKnopf";
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ const weg = [
 const werte = [
   { titel: "Zeit für deine Geschichte", text: "Jedes Tattoo ist für mich eine Herzensangelegenheit. Ich nehme mir Zeit für deine Idee und gestalte ein Motiv, das zu dir passt." },
   { titel: "Beratung ohne Druck", text: "Das Beratungsgespräch ist kostenlos. Gestochen wird erst, wenn Motiv, Stelle und Vorlage für dich stimmen." },
-  { titel: "Sauber und sorgfältig", text: "Ein hygienischer Arbeitsplatz und eine ruhige Hand – das schreiben mir Kundinnen und Kunden immer wieder in ihren Bewertungen." },
+  { titel: "Sauber und sorgfältig", text: "Ein hygienischer Arbeitsplatz und eine ruhige Hand – das lese ich immer wieder in den Bewertungen meiner Kundinnen und Kunden." },
 ];
 
 const arbeiten = [
@@ -142,10 +142,11 @@ export default function UeberMichPage() {
               <figure key={r.n} className="um-stimme">
                 <div className="um-sterne" aria-label="5 von 5 Sternen">★★★★★</div>
                 <blockquote>&bdquo;{r.t}&ldquo;</blockquote>
-                <figcaption>{r.n} · Google-Bewertung</figcaption>
+                <figcaption>{kurzName(r.n)} · Google-Bewertung</figcaption>
               </figure>
             ))}
           </div>
+          <p className="um-hinweis">{BEWERTUNGS_HINWEIS}</p>
         </section>
 
         {/* Abschluss */}

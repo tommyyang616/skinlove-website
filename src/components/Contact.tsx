@@ -20,7 +20,7 @@ export default function Contact({ bookingOpen, bookingService, onClose }: { book
             ) : (
               <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, background: "linear-gradient(135deg, rgba(187,53,153,.12), rgba(10,10,10,.92))", border: "1px solid rgba(255,255,255,.08)" }}>
                 <strong style={{ color: "#fff", fontSize: 18 }}>Karte laden</strong>
-                <p style={{ color: "var(--text-dim)", fontSize: 13, margin: 0, textAlign: "center", maxWidth: 320 }}>Google Maps wird erst geladen, wenn du die Karte wirklich öffnen willst.</p>
+                <p style={{ color: "var(--text-dim)", fontSize: 13, margin: 0, textAlign: "center", maxWidth: 320 }}>Beim Laden der Karte werden Daten (u.&nbsp;a. deine IP-Adresse) an Google übertragen, auch in die USA. Mehr dazu in der <Link href="/datenschutz" style={{ color: "var(--pink-text)" }}>Datenschutzerklärung</Link>.</p>
                 <button className="btn-outline" type="button" onClick={() => setMapLoaded(true)} style={{ display: "inline-flex" }}>Karte anzeigen</button>
               </div>
             )}

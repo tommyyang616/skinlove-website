@@ -6,7 +6,7 @@ import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 
 const TITEL = "Tattoo-Kurs & Piercing-Kurs in Oberösterreich";
-const BESCHREIBUNG = "Tätowieren und Piercen lernen bei Wels und Linz: Tattoo-Kurs und Piercing-Kurs in kleinen Gruppen mit Material und Zertifikat – bei Eve Paule in Marchtrenk.";
+const BESCHREIBUNG = "Tätowieren und Piercen lernen bei Wels und Linz: Tattoo-Kurs und Piercing-Kurs in kleinen Gruppen mit Teilnahmebestätigung – bei Eve Paule in Marchtrenk.";
 
 export const metadata: Metadata = {
   title: TITEL,
@@ -21,23 +21,23 @@ const kurse = [
   {
     titel: "Tattoo-Kurs",
     text: "Tätowieren lernen von Grund auf: Theorie, Hygiene, Technik und Praxis. Du arbeitest zuerst auf Übungshaut und lernst Schritt für Schritt, wie aus einer Vorlage ein sauberes Tattoo wird.",
-    punkte: ["Theorie, Hygiene, Technik und Praxis", "Material und Übungshaut inklusive", "Zertifikat zum Abschluss", "Abends unter der Woche, fortlaufend"],
+    punkte: ["Theorie, Hygiene, Technik und Praxis", "Übungshaut und Verbrauchsmaterial inklusive, eigene Tattoo-Maschine mitbringen", "Teilnahmebestätigung zum Abschluss", "Abends unter der Woche, fortlaufend"],
   },
   {
     titel: "Piercing-Kurs",
     text: "Für alle, die ins Piercen einsteigen wollen: Hygiene, Anatomie, Materialien und die ersten Stiche unter Anleitung – geübt wird am Modell.",
-    punkte: ["Hygiene, Anatomie und Materialien", "Erste Stiche unter Anleitung", "Praxis am Modell, Zertifikat zum Abschluss", "Abends unter der Woche"],
+    punkte: ["Hygiene, Anatomie und Materialien", "Erste Stiche unter Anleitung", "Praxis am Modell, Teilnahmebestätigung zum Abschluss", "Abends unter der Woche"],
   },
 ];
 
 const fragen = [
   { q: "Brauche ich Vorkenntnisse?", a: "Nein. Die Kurse beginnen bei den Grundlagen und sind für Anfängerinnen und Anfänger gedacht. Wer schon Erfahrung hat, steigt auf dem eigenen Stand ein." },
   { q: "Wie groß sind die Gruppen?", a: "Höchstens drei Teilnehmende pro Kurs. So bleibt Zeit, jedem Einzelnen über die Schulter zu schauen." },
-  { q: "Was ist im Kurs enthalten?", a: "Beim Tattoo-Kurs Material, Übungshaut und ein Zertifikat, beim Piercing-Kurs Modell-Praxis und ein Zertifikat." },
+  { q: "Was ist im Kurs enthalten?", a: "Beim Tattoo-Kurs Übungshaut, Verbrauchsmaterial und eine Teilnahmebestätigung – die eigene Tattoo-Maschine bringst du mit. Beim Piercing-Kurs Praxis am Modell und eine Teilnahmebestätigung. Alle Bedingungen bekommst du vorab per E-Mail." },
   { q: "Gibt es ein Mindestalter?", a: "Ja, die Kurse sind ab 18 Jahren." },
   { q: "Darf ich nach dem Kurs als Tätowiererin oder Tätowierer arbeiten?", a: "Wer in Österreich gewerblich tätowiert oder piercet, braucht eine Gewerbeberechtigung – dafür sind ein anerkannter Lehrgang und eine Befähigungsprüfung nötig. Der Kurs bei SkinLove ist ein praxisnaher Einstieg und ersetzt diese Ausbildung nicht." },
   { q: "Wo finden die Kurse statt?", a: "Im Studio SkinLove, Linzer Straße 35 im Marktcenter Marchtrenk. Aus Wels bist du in rund zehn Minuten da, aus Linz in 20 bis 25 Minuten – auch mit Bus 600 oder der Westbahn." },
-  { q: "Wann sind die nächsten Termine und was kostet der Kurs?", a: "Aktuelle Termine, Preise und freie Plätze stehen im Kursbereich auf der Startseite. Dort kannst du dich auch gleich anmelden." },
+  { q: "Wann sind die nächsten Termine und was kostet der Kurs?", a: "Aktuelle Termine, Preise und freie Plätze stehen im Kursbereich auf der Startseite. Dort kannst du unverbindlich anfragen – verbindlich wird die Anmeldung mit unterschriebenem Vertrag und Anzahlung im Studio." },
 ];
 
 export default function WorkshopsPage() {
@@ -66,7 +66,7 @@ export default function WorkshopsPage() {
               ersten eigenen Stichen. In kleinen Gruppen mit höchstens drei Teilnehmenden.
             </p>
             <div className="um-chips">
-              <span>max. 3 Teilnehmende</span><span>ab 18 Jahren</span><span>mit Zertifikat</span>
+              <span>max. 3 Teilnehmende</span><span>ab 18 Jahren</span><span>mit Teilnahmebestätigung</span>
             </div>
             <div className="um-aktionen">
               <Link href="/#workshop" className="btn-primary">Termine &amp; Anmeldung</Link>

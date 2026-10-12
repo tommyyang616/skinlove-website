@@ -2737,7 +2737,7 @@ footer a {
 .legal-content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 120px 24px 80px
+  padding: 48px 24px 80px
 }
 
 .legal-content h1 {
@@ -3553,4 +3553,11 @@ footer a {
 .mehr-link a:hover {
   background: rgba(187, 53, 153, .12);
   box-shadow: 0 0 22px rgba(187, 53, 153, .35);
+}
+
+.um-hinweis {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: #888;
 }

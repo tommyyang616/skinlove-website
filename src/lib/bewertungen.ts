@@ -27,3 +27,15 @@ export function bewertungenVon(namen: string[]): Bewertung[] {
     .map((n) => bewertungen.find((b) => b.n === n))
     .filter((b): b is Bewertung => Boolean(b));
 }
+
+/** Vorname + Initial des Nachnamens ("Natasa Savic" -> "Natasa S.") -
+ *  weniger Personendaten auf der Seite, die Bewertung bleibt zuordenbar. */
+export function kurzName(name: string): string {
+  const teile = name.trim().split(/\s+/);
+  if (teile.length < 2 || teile[1].endsWith(".")) return name;
+  return `${teile[0]} ${teile[1][0].toUpperCase()}.`;
+}
+
+/** Pflichthinweis nach UWG § 2 Abs. 6b: ob und wie Bewertungen geprüft werden. */
+export const BEWERTUNGS_HINWEIS =
+  "Auszug aus unseren Google-Bewertungen, wörtlich übernommen. Eine eigene Prüfung, ob sie von Kundinnen und Kunden stammen, findet nicht statt.";
