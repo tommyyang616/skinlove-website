@@ -25,13 +25,15 @@ const guestArtists = [
   {
     name: "Nadija",
     style: "Gasttätowiererin",
-    avatar: "/gallery/guests/nadija-profilbild-v2.webp",
+    avatar: "/gallery/guests/nadija-profilbild-klein.webp",
+    vorschau: [1, 2, 3].map((n) => `/gallery/guests/nadija${n}-vorschau.webp`),
     works: Array.from({ length: 17 }, (_, i) => `/gallery/guests/nadija${i + 1}-v2.webp`),
   },
   {
     name: "Srdjan",
     style: "Gasttätowierer",
-    avatar: "/gallery/guests/srdjan-profilbild-v2.webp",
+    avatar: "/gallery/guests/srdjan-profilbild-klein.webp",
+    vorschau: [1, 2, 3].map((n) => `/gallery/guests/srdjan${n}-vorschau.webp`),
     works: Array.from({ length: 15 }, (_, i) => `/gallery/guests/srdjan${i + 1}-v2.webp`),
   },
 ];
@@ -157,7 +159,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists.map((a, i) => (
               <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
                 <div className="guest-card-mosaic">
-                  {a.works.slice(0, 3).map((w, j) => <Image key={j} src={w} alt={`Tattoo von Gast-Artist ${a.name} bei SkinLove`} width={320} height={320} sizes="(max-width: 768px) 33vw, 150px" loading="lazy" />)}
+                  {a.vorschau.map((w, j) => <Image key={j} src={w} alt={`Tattoo von Gast-Artist ${a.name} bei SkinLove`} width={320} height={320} sizes="(max-width: 768px) 33vw, 150px" loading="lazy" />)}
                 </div>
                 <div className="guest-card-bottom">
                   <Image className="guest-avatar" src={a.avatar} alt={a.name} width={80} height={80} sizes="80px" loading="lazy" />

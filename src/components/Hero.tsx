@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { preload } from "react-dom";
 import WalkInFriday from "./WalkInFriday";
 
 const heroImages = [
@@ -9,6 +10,9 @@ const heroImages = [
   { src: "/images/hero-strip3-v2.webp", alt: "Eve Paule Tattoo", w: 969, h: 1200 },
   { src: "/images/hero-strip4-v2.webp", alt: "SkinLove Piercing", w: 1001, h: 1200 },
 ];
+
+/** 1×1 transparentes GIF - Platzhalter, wenn keine <source> passt. */
+const LEER = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
 function HeroStrip() {
   const stripRef = useRef<HTMLDivElement>(null);
@@ -41,19 +45,31 @@ function HeroStrip() {
   // Render 3x for plenty of buffer
   const loopImages = [...heroImages, ...heroImages, ...heroImages];
 
+  // Der Streifen ist nur am Rechner sichtbar (ab 769 px). Vorladen deshalb
+  // nur dort - vorher holte jedes Handy vier große Bilder (~470 KB), die es
+  // nie anzeigte.
+  heroImages.slice(0, 2).forEach((img) =>
+    preload(img.src, { as: "image", media: "(min-width: 769px)", fetchPriority: "high" }),
+  );
+
   return (
     <div className="hero-strip" ref={stripRef}>
       {loopImages.map((img, i) => (
         <div key={i} className="hero-strip-item" style={{ aspectRatio: `${img.w}/${img.h}` }}>
-          <Image
-            src={img.src}
-            alt={img.alt}
-            fill
-            sizes="50vw"
-            quality={90}
-            priority={i < 4}
-            style={{ objectFit: "cover" }}
-          />
+          {/* <picture> statt next/image: Am Handy greift die <source> nicht,
+              dann lädt nur der 1-Pixel-Platzhalter. */}
+          <picture>
+            <source media="(min-width: 769px)" srcSet={img.src} />
+            <img
+              src={LEER}
+              alt={i < heroImages.length ? img.alt : ""}
+              aria-hidden={i >= heroImages.length}
+              loading={i < 4 ? "eager" : "lazy"}
+              fetchPriority={i < 4 ? "high" : "auto"}
+              decoding="async"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </picture>
         </div>
       ))}
     </div>
@@ -69,6 +85,12 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     if (typeof window === "undefined") return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
+    // Die Videos gibt es nur in der Handy-Ansicht. Am Rechner und bei
+    // Datensparmodus oder langsamer Verbindung bleibt es beim Standbild -
+    // die zwei Videos wiegen zusammen über 5 MB.
+    if (!window.matchMedia("(max-width: 768px)").matches) return;
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData || (conn?.effectiveType && conn.effectiveType !== "4g")) return;
     const timer = setTimeout(() => setVideosReady(true), 2500);
     return () => clearTimeout(timer);
   }, []);
@@ -107,7 +129,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
         {/* Mobile: video swap */}
         <div className="hero-mobile-media">
           <Image
-            src="/images/hero.jpg"
+            src="/images/hero-mobil.webp"
             alt="SkinLove Tattoo & Piercing Studio"
             priority
             fill
@@ -122,11 +144,11 @@ export default function Hero({ onBook }: { onBook: () => void }) {
           />
           {videosReady && (
             <>
-              <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="metadata" poster="/images/hero.jpg">
+              <video ref={vid1} className="hero-bg-vid active" muted playsInline preload="metadata" poster="/images/hero-mobil.webp">
                 <source src="/images/hero-video1.mp4" type="video/mp4" />
                 <track kind="descriptions" label="Dekoratives Hintergrundvideo" />
               </video>
-              <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none" poster="/images/hero2.jpg">
+              <video ref={vid2} className="hero-bg-vid" muted playsInline preload="none" poster="/images/hero2-mobil.webp">
                 <source src="/images/hero-video2.mp4" type="video/mp4" />
                 <track kind="descriptions" label="Dekoratives Hintergrundvideo" />
               </video>

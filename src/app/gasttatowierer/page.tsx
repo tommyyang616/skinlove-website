@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import TerminKnopf from "@/components/TerminKnopf";
 import { teilenMeta } from "@/lib/teilen-meta";
 
-const TITEL = "Gasttätowierer bei SkinLove – Tattoo-Artists in Marchtrenk";
+const TITEL = "Gasttätowierer bei SkinLove in Marchtrenk";
 const BESCHREIBUNG = "Gasttätowierer bei SkinLove in Marchtrenk zwischen Wels und Linz: Arbeiten von Nadija und Srdjan ansehen und einen Termin bei deinem Wunsch-Artist anfragen.";
 
 export const metadata: Metadata = {
@@ -20,13 +20,13 @@ const gaeste = [
   {
     name: "Nadija",
     rolle: "Gasttätowiererin",
-    avatar: "/gallery/guests/nadija-profilbild-v2.webp",
+    avatar: "/gallery/guests/nadija-profilbild-klein.webp",
     bilder: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/gallery/guests/nadija${n}-v2.webp`),
   },
   {
     name: "Srdjan",
     rolle: "Gasttätowierer",
-    avatar: "/gallery/guests/srdjan-profilbild-v2.webp",
+    avatar: "/gallery/guests/srdjan-profilbild-klein.webp",
     bilder: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/gallery/guests/srdjan${n}-v2.webp`),
   },
 ];

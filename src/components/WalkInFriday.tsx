@@ -10,7 +10,7 @@ export default function WalkInFriday({ onBook }: { onBook?: () => void }) {
       <button
         className="walkin-badge"
         onClick={() => setOpen(true)}
-        aria-label="Walk-In Friday Angebot öffnen"
+        aria-label="Walk-In Friday – Anklopfen! Angebot öffnen"
       >
         <span className="walkin-ring walkin-ring-1" />
         <span className="walkin-ring walkin-ring-2" />
