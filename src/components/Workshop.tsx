@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 interface WS { id: string; title: string; desc: string; date: string; time: string; price: number; deposit: number; maxSpots: number; takenSpots: number; category: string; includes: string; img: string; }
@@ -155,6 +156,7 @@ export default function Workshop() {
             </div>
           </div>
           )}
+          <p className="mehr-link"><Link href="/workshops">Alles zu Tattoo- und Piercing-Kurs →</Link></p>
         </div>
       </section>
 

@@ -63,13 +63,32 @@ export default function Footer() {
           </a>
           <span>Termine nach vorheriger Absprache</span>
         </div>
-        <div className="footer-links">
-          <Link href="/leistungen">Leistungen</Link>
-          <Link href="/anfahrt">Anfahrt</Link>
-          <Link href="/ueber-mich">&Uuml;ber mich</Link>
-          <Link href="/impressum">Impressum</Link>
-          <Link href="/datenschutz">Datenschutz</Link>
-          <Link href="/#workshop">Workshop</Link>
+        {/* Jede Seite von überall erreichbar - für Besucher und für Google/Bing.
+            Bewusst kein <nav>: die globale nav-Regel der Kopfzeile blendet
+            nav am Handy aus. */}
+        <div className="footer-spalten" role="navigation" aria-label="Alle Seiten">
+          <div>
+            <p className="footer-kopf">Leistungen</p>
+            <Link href="/leistungen/tattoos">Tattoos</Link>
+            <Link href="/leistungen/piercings">Piercings</Link>
+            <Link href="/leistungen/permanent-make-up">Permanent Make-up</Link>
+            <Link href="/leistungen/lash-brow-lifting">Lash &amp; Brow Lifting</Link>
+            <Link href="/leistungen/kinderohrringe">Kinderohrringe</Link>
+            <Link href="/leistungen/spezialleistungen">Spezialleistungen</Link>
+          </div>
+          <div>
+            <p className="footer-kopf">Studio</p>
+            <Link href="/ueber-mich">&Uuml;ber Eve Paule</Link>
+            <Link href="/gasttatowierer">Gasttätowierer</Link>
+            <Link href="/workshops">Tattoo- &amp; Piercing-Kurse</Link>
+            <Link href="/#pricing">Preise</Link>
+            <Link href="/anfahrt">Anfahrt aus Wels &amp; Linz</Link>
+          </div>
+          <div>
+            <p className="footer-kopf">Rechtliches</p>
+            <Link href="/impressum">Impressum</Link>
+            <Link href="/datenschutz">Datenschutz</Link>
+          </div>
         </div>
         <p>© 2026 SkinLove Tattoo &amp; Piercing · Inhaberin Eve Paule</p>
       </div>

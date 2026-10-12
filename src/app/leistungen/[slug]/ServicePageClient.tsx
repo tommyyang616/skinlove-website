@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import LeistungsGalerie from "@/components/LeistungsGalerie";
 import TerminModal from "@/components/TerminModal";
 
@@ -30,20 +31,17 @@ export default function ServicePageClient({
   const [formOpen, setFormOpen] = useState(false);
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", fontFamily: "'Outfit',sans-serif" }}>
-      {/* Nav */}
-      <nav style={{ padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/" style={{ color: "#fff", textDecoration: "none", fontSize: 18, fontWeight: 600 }}>
-          Skin<span style={{ color: "#d95dc0" }}>Love</span>
-        </Link>
-        <Link href="/#services" style={{ color: "#d95dc0", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
-      </nav>
+      <Navigation unterseite />
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "16px 24px 0" }}>
+        <Link href="/leistungen" style={{ color: "#d95dc0", textDecoration: "none", fontSize: 15, fontWeight: 500 }}>← Alle Leistungen</Link>
+      </div>
 
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ padding: "80px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
+        style={{ padding: "40px 24px 48px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}
       >
         <span style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#d95dc0", fontWeight: 600 }}>{service.title}</span>
         <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(30px,5vw,50px)", color: "#fff", fontWeight: 600, margin: "16px 0 10px", lineHeight: 1.15 }}>{service.h1}</h1>

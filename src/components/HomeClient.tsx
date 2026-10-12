@@ -16,6 +16,12 @@ const Reviews = dynamic(() => import("@/components/Reviews"));
 
 export default function HomeClient() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  // Leistung, die im Anfrage-Popup schon ausgewählt ist (aus einer Leistungskarte)
+  const [bookingService, setBookingService] = useState<string | undefined>();
+  const openBooking = (service?: string) => {
+    setBookingService(service);
+    setBookingOpen(true);
+  };
   const [deferredSectionsReady, setDeferredSectionsReady] = useState(false);
 
   useEffect(() => {
@@ -35,16 +41,16 @@ export default function HomeClient() {
 
   return (
     <>
-      <Navigation onBook={() => setBookingOpen(true)} />
-      <Hero onBook={() => setBookingOpen(true)} />
+      <Navigation onBook={() => openBooking()} />
+      <Hero onBook={() => openBooking()} />
       <About />
-      <Services onBook={() => setBookingOpen(true)} />
+      <Services onBook={openBooking} />
       <Pricing />
       {deferredSectionsReady ? <Gallery /> : null}
       {deferredSectionsReady ? <Workshop /> : null}
       <Info />
       {deferredSectionsReady ? <Reviews /> : null}
-      <Contact bookingOpen={bookingOpen} onOpen={() => setBookingOpen(true)} onClose={() => setBookingOpen(false)} />
+      <Contact bookingOpen={bookingOpen} bookingService={bookingService} onOpen={() => openBooking()} onClose={() => setBookingOpen(false)} />
       <Footer />
     </>
   );

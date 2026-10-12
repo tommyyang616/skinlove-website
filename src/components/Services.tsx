@@ -38,7 +38,7 @@ const guestArtists = [
   },
 ];
 
-export default function Services({ onBook }: { onBook: () => void }) {
+export default function Services({ onBook }: { onBook: (service?: string) => void }) {
   const [openCards, setOpenCards] = useState<Set<number>>(new Set());
   const [guestLbOpen, setGuestLbOpen] = useState(false);
   const [guestLbIdx, setGuestLbIdx] = useState(0);
@@ -140,7 +140,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
                   </Link>
                   <button
                     type="button"
-                    onClick={(e) => { e.stopPropagation(); onBook(); }}
+                    onClick={(e) => { e.stopPropagation(); onBook(s.title); }}
                     className="service-btn"
                   >
                     Termin vereinbaren
@@ -150,6 +150,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
             </div>
           ))}
         </div>
+        <p className="mehr-link"><Link href="/leistungen">Alle Leistungen im Überblick →</Link></p>
 
         {/* GASTTÄTOWIERER */}
         <div className="guest-section reveal" id="guest-artists" style={{ marginTop: 80 }}>
@@ -159,10 +160,10 @@ export default function Services({ onBook }: { onBook: () => void }) {
             {guestArtists.map((a, i) => (
               <div key={i} className="guest-card" onClick={() => openGuestLb(i)}>
                 <div className="guest-card-mosaic">
-                  {a.vorschau.map((w, j) => <Image key={j} src={w} alt={`Tattoo von Gast-Artist ${a.name} bei SkinLove`} width={320} height={320} sizes="(max-width: 768px) 33vw, 150px" loading="lazy" />)}
+                  {a.vorschau.map((w, j) => <Image key={j} src={w} alt={`Tattoo von Gast-Artist ${a.name} bei SkinLove`} width={320} height={320} sizes="(max-width: 768px) 33vw, 170px" loading="lazy" />)}
                 </div>
                 <div className="guest-card-bottom">
-                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={80} height={80} sizes="80px" loading="lazy" />
+                  <Image className="guest-avatar" src={a.avatar} alt={a.name} width={92} height={92} sizes="92px" loading="lazy" />
                   <div className="guest-info">
                     <h4>{a.name}</h4>
                     <p>{a.style}</p>
@@ -172,6 +173,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
               </div>
             ))}
           </div>
+          <p className="mehr-link"><Link href="/gasttatowierer">Mehr über die Gasttätowierer →</Link></p>
         </div>
 
         {/* Guest Artist Lightbox */}
@@ -197,7 +199,7 @@ export default function Services({ onBook }: { onBook: () => void }) {
                     <Image key={j} src={w} alt={`Arbeit von ${guestArtists[guestLbIdx].name}`} width={420} height={420} sizes="(max-width: 768px) 44vw, 240px" loading="lazy" onClick={() => openWorkLb(guestArtists[guestLbIdx].works, j)} />
                   ))}
                 </div>
-                <a href="#" onClick={(e) => { e.preventDefault(); closeGuestLb(); setTimeout(onBook, 300); }} style={{ display: "block", textAlign: "center", marginTop: 20, padding: "12px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "opacity .3s" }}>Termin vereinbaren</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); const name = guestArtists[guestLbIdx]?.name; closeGuestLb(); setTimeout(() => onBook(name ? `Tattoo bei ${name}` : undefined), 300); }} style={{ display: "block", textAlign: "center", marginTop: 20, padding: "12px 24px", background: "var(--pink)", color: "#fff", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "opacity .3s" }}>Termin vereinbaren</a>
               </>
             )}
           </div>

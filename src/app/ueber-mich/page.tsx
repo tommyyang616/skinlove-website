@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 import { bewertungenVon } from "@/lib/bewertungen";
 import TerminKnopf from "@/components/TerminKnopf";
@@ -53,6 +54,7 @@ const stimmen = bewertungenVon(["Sarah Kost", "Julia Reifinger", "Kerstin"]);
 export default function UeberMichPage() {
   return (
     <>
+      <Navigation unterseite />
       <main className="um">
         {/* Kopf: Porträt + Vorstellung */}
         <section className="um-kopf">
@@ -74,7 +76,7 @@ export default function UeberMichPage() {
               Wels und Linz, für Kundinnen und Kunden aus ganz Oberösterreich.
             </p>
             <div className="um-chips">
-              <span>Tattoo</span><span>Piercing</span><span>Permanent Make-up</span><span>Lash &amp; Brow</span>
+              <span>7+ Jahre Erfahrung</span><span>Tattoo</span><span>Piercing</span><span>Permanent Make-up</span><span>Lash &amp; Brow</span>
             </div>
             <div className="um-aktionen">
               <TerminKnopf />

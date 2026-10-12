@@ -1,8 +1,9 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import TerminModal from "@/components/TerminModal";
 
-export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean; onOpen: () => void; onClose: () => void }) {
+export default function Contact({ bookingOpen, bookingService, onClose }: { bookingOpen: boolean; bookingService?: string; onOpen: () => void; onClose: () => void }) {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   return (
@@ -47,6 +48,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
                   Adresse
                 </h3>
                 <p>Linzer Straße 35, 1. OG<br />4614 Marchtrenk, Österreich</p>
+                <p style={{ marginTop: 8 }}><Link href="/anfahrt" style={{ color: "var(--pink-text)" }}>Anfahrt aus Wels, Linz &amp; ganz OÖ →</Link></p>
               </div>
             </div>
             <div>
@@ -62,7 +64,7 @@ export default function Contact({ bookingOpen, onClose }: { bookingOpen: boolean
         </div>
       </section>
 
-      <TerminModal open={bookingOpen} onClose={onClose} />
+      <TerminModal open={bookingOpen} onClose={onClose} service={bookingService} />
     </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import TerminKnopf from "@/components/TerminKnopf";
 import { teilenMeta } from "@/lib/teilen-meta";
 
@@ -34,6 +35,7 @@ const gaeste = [
 export default function GasttaetowiererPage() {
   return (
     <>
+      <Navigation unterseite />
       <main className="um">
         <section className="um-block kurs-text" style={{ textAlign: "center" }}>
           <p className="um-label">Guest Artists</p>

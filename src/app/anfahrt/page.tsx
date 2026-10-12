@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 
 const TITEL = "Anfahrt aus Wels und Linz – Tattoo & Piercing in OÖ";
@@ -75,7 +76,8 @@ const karte: React.CSSProperties = {
 export default function AnfahrtPage() {
   return (
     <>
-      <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)", padding: "80px 24px 60px" }}>
+      <Navigation unterseite />
+      <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)", padding: "48px 24px 60px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontSize: 12, letterSpacing: 3, textTransform: "uppercase", color: "var(--pink-text)", fontWeight: 600, marginBottom: 12, textAlign: "center" }}>
             Anfahrt
@@ -152,7 +154,7 @@ export default function AnfahrtPage() {
             Was dich hier erwartet
           </h2>
           <p style={{ color: "#bbb", fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
-            Eve Paule tätowiert und piercet seit über zehn Jahren. Jeder Termin wird vorher
+            Eve Paule tätowiert und piercet seit sieben Jahren. Jeder Termin wird vorher
             besprochen, gearbeitet wird ausschließlich nach Vereinbarung — keine Laufkundschaft,
             keine Hektik. Regelmäßig arbeiten Gasttätowierer mit eigenen Stilrichtungen im Studio.
           </p>

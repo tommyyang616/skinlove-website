@@ -1,5 +1,7 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import TerminModal from "@/components/TerminModal";
 
 const HeartSVG = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="#bb3599" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
@@ -7,6 +9,7 @@ const HeartSVG = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
+// Startseite: Sprungmarken zu den Abschnitten.
 const links = [
   { href: "#about", label: "Über mich" },
   { href: "#services", label: "Leistungen" },
@@ -17,9 +20,23 @@ const links = [
   { href: "#contact", label: "Kontakt" },
 ];
 
-export default function Navigation({ onBook }: { onBook?: () => void }) {
+// Unterseiten: dieselbe Leiste, aber auf die eigenen Seiten - damit jede Seite
+// von jeder anderen aus erreichbar ist (für Besucher und für Google/Bing).
+const linksUnterseite = [
+  { href: "/ueber-mich", label: "Über mich" },
+  { href: "/leistungen", label: "Leistungen" },
+  { href: "/#pricing", label: "Preise" },
+  { href: "/#gallery", label: "Galerie" },
+  { href: "/workshops", label: "Kurse" },
+  { href: "/anfahrt", label: "Anfahrt" },
+  { href: "/#contact", label: "Kontakt" },
+];
+
+export default function Navigation({ onBook, unterseite = false }: { onBook?: () => void; unterseite?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  // Unterseiten haben kein Anfrage-Popup der Startseite - dann ein eigenes.
+  const [eigenesFormular, setEigenesFormular] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -33,23 +50,31 @@ export default function Navigation({ onBook }: { onBook?: () => void }) {
     e.preventDefault();
     close();
     if (onBook) onBook();
+    else setEigenesFormular(true);
   };
 
+  const eintraege = unterseite ? linksUnterseite : links;
+
   return (
-    <header id="header" className={scrolled ? "scrolled" : ""}>
+    <>
+    <header id="header" className={scrolled || unterseite ? "scrolled" : ""}>
       <div className="header-inner">
-        <a href="#hero" className="logo-wrap">
+        <Link href={unterseite ? "/" : "#hero"} className="logo-wrap" aria-label="SkinLove – zur Startseite">
           <span className="logo-text">
             <span className="logo-skin">Skin</span>
             <span className="logo-heart"><HeartSVG /></span>
             <span className="logo-love">Love</span>
           </span>
           <span className="logo-sub">Tattoo &amp; Piercing</span>
-        </a>
+        </Link>
         <nav id="nav" className={navOpen ? "open" : ""}>
-          {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={close}>{l.label}</a>
-          ))}
+          {eintraege.map((l) =>
+            unterseite ? (
+              <Link key={l.href} href={l.href} onClick={close}>{l.label}</Link>
+            ) : (
+              <a key={l.href} href={l.href} onClick={close}>{l.label}</a>
+            ),
+          )}
           <button type="button" onClick={handleBook} className="nav-booking-btn">Termin anfragen</button>
           <div className="nav-social">
             <a href="https://www.instagram.com/skinlove_tattoopiercing/" target="_blank" rel="noopener noreferrer" onClick={close} aria-label="Instagram" style={{ transition: "opacity 0.2s" }}>
@@ -79,5 +104,9 @@ export default function Navigation({ onBook }: { onBook?: () => void }) {
         </button>
       </div>
     </header>
+    {/* Platzhalter, damit die feste Kopfzeile auf Unterseiten nichts verdeckt */}
+    {unterseite && <div className="kopf-abstand" aria-hidden="true" />}
+    {!onBook && <TerminModal open={eigenesFormular} onClose={() => setEigenesFormular(false)} />}
+    </>
   );
 }

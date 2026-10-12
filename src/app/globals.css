@@ -2476,12 +2476,12 @@ footer a {
   justify-content: center;
   align-items: stretch;
   flex-wrap: wrap;
-  max-width: 972px;
+  max-width: 1040px;
   margin: 0 auto
 }
 
 .guest-card {
-  width: min(420px, 100%);
+  width: min(500px, 100%);
   background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, .04);
   overflow: hidden;
@@ -2497,7 +2497,7 @@ footer a {
 .guest-card-mosaic {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 240px
+  height: 290px
 }
 
 .guest-card-mosaic img {
@@ -2517,19 +2517,19 @@ footer a {
 }
 
 .guest-avatar {
-  width: 80px;
-  height: 80px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--bg-card);
-  margin-top: -56px;
+  margin-top: -62px;
   position: relative;
   z-index: 1
 }
 
 .guest-info h4 {
   font-family: var(--serif);
-  font-size: 1.45rem;
+  font-size: 1.6rem;
   color: #fff;
   margin: 0
 }
@@ -3301,4 +3301,256 @@ footer a {
   object-fit: cover;
   border: 2px solid var(--pink);
   box-shadow: 0 0 24px rgba(187, 53, 153, .3);
+}
+
+/* ====== Startseite: Eve-Abschnitt ====== */
+.about-text {
+  font-size: 17.5px;
+  max-width: 620px;
+}
+
+/* Knopf zur Über-mich-Seite: pink, leuchtend, pulsiert sanft */
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 18px 36px;
+  background: linear-gradient(135deg, #ff4fc8 0%, var(--pink) 55%, #8e2475 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255, 140, 225, .6);
+  box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3);
+  animation: about-cta-glow 2.6s ease-in-out infinite;
+  transition: transform .3s ease;
+}
+
+.about-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.about-cta-pfeil {
+  display: inline-block;
+  font-size: 18px;
+  transition: transform .3s ease;
+}
+
+.about-cta:hover .about-cta-pfeil {
+  transform: translateX(6px);
+}
+
+@keyframes about-cta-glow {
+  0%, 100% { box-shadow: 0 0 22px rgba(255, 64, 200, .55), 0 0 60px rgba(187, 53, 153, .3); }
+  50% { box-shadow: 0 0 34px rgba(255, 64, 200, .85), 0 0 90px rgba(187, 53, 153, .5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-cta { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .about-text { font-size: 16.5px; }
+  .about-cta { width: 100%; justify-content: center; }
+}
+
+/* ====== Social-Media-Knöpfe (Galerie) ====== */
+.gallery-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.social-reihe {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  font-family: var(--sans);
+  font-style: normal;
+}
+
+.gallery-note .social-knopf,
+.social-knopf {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 250px;
+  padding: 12px 24px 12px 12px;
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid var(--rand);
+  border-radius: 18px;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 0 18px var(--glow), inset 0 0 0 1px rgba(255, 255, 255, .02);
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.social-knopf:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, .06);
+  box-shadow: 0 0 34px var(--glow), 0 0 70px var(--glow2);
+}
+
+.social-logo {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px var(--glow);
+}
+
+.social-logo svg {
+  width: 30px;
+  height: 30px;
+}
+
+.social-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+}
+
+.social-text strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.social-text small {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* Instagram: das bunte Original-Kachel-Logo */
+.social-ig {
+  --rand: rgba(214, 41, 118, .55);
+  --glow: rgba(214, 41, 118, .45);
+  --glow2: rgba(250, 126, 30, .25);
+}
+.social-ig .social-logo {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+/* Facebook: weisser Grund, blauer Kreis mit f */
+.social-fb {
+  --rand: rgba(24, 119, 242, .55);
+  --glow: rgba(24, 119, 242, .45);
+  --glow2: rgba(24, 119, 242, .25);
+}
+.social-fb .social-logo {
+  background: #fff;
+}
+.social-fb .social-logo svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* TikTok: schwarze Kachel, Note in Türkis und Rot */
+.social-tt {
+  --rand: rgba(37, 244, 238, .45);
+  --glow: rgba(254, 44, 85, .4);
+  --glow2: rgba(37, 244, 238, .25);
+}
+.social-tt .social-logo {
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+@media (max-width: 600px) {
+  .social-reihe {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+  }
+  .gallery-note .social-knopf,
+  .social-knopf {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Platz unter der festen Kopfzeile auf Unterseiten */
+.kopf-abstand {
+  height: 64px;
+}
+
+/* Fußzeile: alle Seiten, nach Themen */
+.footer-spalten {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 240px));
+  justify-content: center;
+  align-items: start;
+  gap: 24px 48px;
+  margin: 8px auto 28px;
+  text-align: left;
+}
+
+.footer-spalten div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: start;
+  gap: 8px;
+  margin: 0;
+}
+
+.footer-kopf {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  opacity: .75;
+  margin: 0 0 4px;
+}
+
+.footer-spalten a {
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.footer-spalten a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .footer-spalten {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    gap: 22px 28px;
+    max-width: 360px;
+  }
+}
+
+/* Verweis von einem Startseiten-Abschnitt auf die passende Unterseite */
+.mehr-link {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.mehr-link a {
+  display: inline-block;
+  padding: 12px 26px;
+  border: 1px solid rgba(187, 53, 153, .55);
+  color: var(--pink-text);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .3s, box-shadow .3s;
+}
+
+.mehr-link a:hover {
+  background: rgba(187, 53, 153, .12);
+  box-shadow: 0 0 22px rgba(187, 53, 153, .35);
 }

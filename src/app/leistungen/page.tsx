@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 
 const TITEL = "Leistungen – Tattoo, Piercing & mehr bei Wels und Linz";
@@ -27,6 +28,7 @@ const services = [
 export default function LeistungenPage() {
     return (
       <>
+        <Navigation unterseite />
         <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff", fontFamily: "'Outfit',sans-serif" }}>
             <div style={{ padding: "24px 24px 0", maxWidth: 800, margin: "0 auto" }}>
                 <Link href="/" style={{ color: "#BB3599", textDecoration: "none", fontSize: 14 }}>← Startseite</Link>

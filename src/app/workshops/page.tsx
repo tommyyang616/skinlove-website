@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { teilenMeta } from "@/lib/teilen-meta";
 
 const TITEL = "Tattoo-Kurs & Piercing-Kurs in Oberösterreich";
@@ -49,6 +50,7 @@ export default function WorkshopsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <Navigation unterseite />
       <main className="um">
         <section className="um-kopf">
           <div className="um-portrait">
