@@ -66,6 +66,17 @@ const nextConfig: NextConfig = {
       { source: "/piercing", destination: "/leistungen/piercings", permanent: true },
       { source: "/permanent-makeup", destination: "/leistungen/permanent-make-up", permanent: true },
       { source: "/lash-lifting", destination: "/leistungen/lash-brow-lifting", permanent: true },
+      // Search Console 12.10.2026: alte Adressen der früheren Seite - /index.html
+      // meldete 404, /custom/aktionen "Soft 404". Die Aktion steht heute auf der
+      // Startseite (Walk-In Friday).
+      { source: "/index.html", destination: "/", permanent: true },
+      { source: "/custom/:path*", destination: "/", permanent: true },
+      // Naheliegende Kurzadressen, die Leute eintippen oder verlinken
+      { source: "/workshop", destination: "/workshops", permanent: true },
+      { source: "/kurse", destination: "/workshops", permanent: true },
+      { source: "/ueber-uns", destination: "/ueber-mich", permanent: true },
+      { source: "/kinderohrringe", destination: "/leistungen/kinderohrringe", permanent: true },
+      { source: "/gasttaetowierer", destination: "/gasttatowierer", permanent: true },
     ];
   },
 };
