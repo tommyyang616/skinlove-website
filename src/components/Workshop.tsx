@@ -123,7 +123,13 @@ export default function Workshop() {
                         <h4>Voraussetzungen</h4>
                         <ul><li>Mindestalter: 18 Jahre</li><li>Keine Vorkenntnisse nötig</li><li>Übungsmaterial wird gestellt</li></ul>
                         <h4 style={{ marginTop: 12 }}>Anmeldung &amp; Storno</h4>
-                        <p style={{ fontSize: 12, color: "var(--text-dim)" }}>Verbindlich wird die Anmeldung mit unterschriebenem Vertrag und Anzahlung im Studio. Alle Bedingungen bekommst du vorab per E-Mail.</p>
+                        {/* Bedingungen wie in der Kursmail (src/lib/email.ts), von Luky am 12.10.2026 bestätigt */}
+                        {ws.category === "Piercing" ? (
+                          <ul><li>€ 900 Anzahlung bei Anmeldung im Studio, Rest vor Kursbeginn</li><li>Die Anzahlung ist verbindlich</li><li>Modelle bringst du selbst mit (€ 35 Umkostenbeitrag je Modell)</li></ul>
+                        ) : (
+                          <ul><li>€ 900 Anzahlung bei Anmeldung im Studio, Rest bei Kursbeginn</li><li>Umbuchung bis 3 Wochen vor Kursbeginn möglich</li><li>Bei Absage innerhalb von 3 Wochen oder Nichterscheinen verfällt die Anzahlung</li><li>Eigene Tattoo-Maschine mitbringen</li></ul>
+                        )}
+                        <p style={{ fontSize: 12, color: "var(--text-dim)" }}>Verbindlich wird die Anmeldung mit unterschriebenem Vertrag und Anzahlung im Studio.</p>
                         <h4 style={{ marginTop: 12 }}>Inkludiert</h4>
                         <p style={{ fontSize: 12, color: "var(--text-dim)" }}>{ws.includes}</p>
                       </div>
@@ -138,7 +144,7 @@ export default function Workshop() {
                       </div>
                       <div className="ws-card-footer">
                         <div>
-                          <div className="ws-card-price">€ {ws.price} <small>Endpreis</small></div>
+                          <div className="ws-card-price">€ {ws.price} <small>Endpreis, keine USt.</small></div>
                           <div className="ws-card-spots">Noch <strong>{spotsLeft} Plätze</strong> frei</div>
                         </div>
                       </div>

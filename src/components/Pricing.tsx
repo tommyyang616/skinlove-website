@@ -37,7 +37,7 @@ const prices: Record<string,{ note?: string; noteBottom?: string[]; items: {n:st
   ], noteBottom: ["Preise gültig ab 1.1.2026 · Anzahlung für Kombi Lash & Brow: 40 € · Empfohlen alle 6–9 Wochen"]},
   pflege: { items: [
     {n:"Prontolind Spray",p:"10 €"},{n:"Prontolind Gel",p:"7 €"},{n:"Stecker kürzen",p:"6 €"},{n:"Fremdschmuck wechseln",p:"15 €"},{n:"Dehnen bis 4 mm",p:"35 €"},{n:"Wildfleischbehandlung inkl. Spezialmaterial",p:"40 €"},{n:"Dermal Anker Entfernung (exkl. Schmuck & Pflege)",p:"60 €"},
-  ], noteBottom: ["Alle Preise sind Endpreise in Euro inkl. aller Steuern und Abgaben. Leistungen und Pflegeprodukte gibt es nur im Studio – es fallen keine Versandkosten an.","Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahren mit schriftlicher Einverständniserklärung und in Anwesenheit eines Erziehungsberechtigten, ab 18 Jahren alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
+  ], noteBottom: ["Alle Preise sind Endpreise in Euro. Als Kleinunternehmerin (§ 6 Abs. 1 Z 27 UStG) verrechne ich keine Umsatzsteuer. Leistungen und Pflegeprodukte gibt es nur im Studio – es fallen keine Versandkosten an.","Alle Piercings inkl. Schmuck & Kontrolltermin · Gültig ab 1.1.2026","Piercen ab 14 Jahren mit schriftlicher Einverständniserklärung und in Anwesenheit eines Erziehungsberechtigten, ab 18 Jahren alleine.","Falls du ein Piercing möchtest, was hier nicht aufgezählt ist, ruf mich gerne an!"]},
 };
 
 export default function Pricing() {

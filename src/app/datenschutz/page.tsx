@@ -28,7 +28,7 @@ export default function Datenschutz() {
 
           <section className="legal-section">
             <h2>1. Verantwortliche</h2>
-            <p><strong>SkinLove Tattoo &amp; Piercing</strong><br />Eve Paule<br />Linzer Straße 35, 1. OG<br />4614 Marchtrenk, Österreich</p>
+            <p><strong>SkinLove Tattoo &amp; Piercing</strong><br />Evelyn (Eve) Paule<br />Linzer Straße 35, 1. OG<br />4614 Marchtrenk, Österreich</p>
             <p>Telefon: <a href="tel:+436607835346">+43 660 783 5346</a><br />E-Mail: <a href="mailto:eve@skinlove-tattoo-piercing.at">eve@skinlove-tattoo-piercing.at</a></p>
           </section>
 

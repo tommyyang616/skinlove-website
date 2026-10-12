@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import LeistungsGalerie from "@/components/LeistungsGalerie";
 import TerminModal from "@/components/TerminModal";
-import { kurzName, BEWERTUNGS_HINWEIS } from "@/lib/bewertungen";
+import BewertungsLeiste from "@/components/BewertungsLeiste";
 
 type Service = {
   title: string;
@@ -100,22 +100,8 @@ export default function ServicePageClient({
         </div>
       )}
 
-      {/* Echte Google-Bewertungen */}
-      {service.stimmen && service.stimmen.length > 0 && (
-        <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 56px" }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: "#fff", fontWeight: 600, marginBottom: 20 }}>Das sagen Kundinnen und Kunden</h2>
-          <div style={{ display: "grid", gap: 14 }}>
-            {service.stimmen.map((r, i) => (
-              <figure key={i} style={{ margin: 0, padding: "20px 22px", background: "#141414", border: "1px solid rgba(187,53,153,.18)" }}>
-                <div style={{ color: "#f5b400", fontSize: 15, letterSpacing: 2, marginBottom: 8 }} aria-label="5 von 5 Sternen">★★★★★</div>
-                <blockquote style={{ margin: 0, color: "#ddd", fontSize: 16, lineHeight: 1.7 }}>&bdquo;{r.t}&ldquo;</blockquote>
-                <figcaption style={{ marginTop: 10, color: "#999", fontSize: 14 }}>{kurzName(r.n)} · Google-Bewertung</figcaption>
-              </figure>
-            ))}
-          </div>
-          <p style={{ marginTop: 12, color: "#888", fontSize: 13, lineHeight: 1.6 }}>{BEWERTUNGS_HINWEIS}</p>
-        </div>
-      )}
+      {/* Echte Google-Bewertungen als wischbare Endlos-Leiste */}
+      {service.stimmen && service.stimmen.length > 0 && <BewertungsLeiste stimmen={service.stimmen} />}
 
       {/* FAQ */}
       {service.faq.length > 0 && (

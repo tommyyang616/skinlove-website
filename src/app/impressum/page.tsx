@@ -25,7 +25,7 @@ export default function Impressum() {
         <section className="legal-section">
           <h2>Informationspflicht gemäß ECG § 5</h2>
           <p><strong>SkinLove Tattoo &amp; Piercing</strong></p>
-          <p><strong>Eve Paule</strong> (Inhaberin)</p>
+          <p><strong>Evelyn (Eve) Paule</strong> (Inhaberin)</p>
           <p>Linzer Straße 35, 1. OG<br />4614 Marchtrenk<br />Österreich</p>
           <p>Telefon: <a href="tel:+436607835346">+43 660 783 5346</a><br />E-Mail: <a href="mailto:eve@skinlove-tattoo-piercing.at">eve@skinlove-tattoo-piercing.at</a><br />Website: <a href="https://skinlove-tattoo-piercing.at">skinlove-tattoo-piercing.at</a></p>
         </section>
@@ -38,7 +38,8 @@ export default function Impressum() {
 
         <section className="legal-section">
           <h2>Gewerberechtliche Angaben gemäß GewO § 63 und ECG § 5</h2>
-          <p><strong>Gewerbe:</strong> Kosmetik (Schönheitspflege) – reglementiertes Gewerbe, verliehen in Österreich</p>
+          <p><strong>Gewerbe:</strong> Kosmetik, eingeschränkt auf Permanent Make-up, Tätowieren und Piercen (reglementiertes Gewerbe), verliehen in Österreich</p>
+          <p><strong>GISA-Zahl:</strong> 32437188</p>
           <p><strong>Gewerbebehörde:</strong> Bezirkshauptmannschaft Wels-Land</p>
         </section>
 
@@ -59,7 +60,7 @@ export default function Impressum() {
 
         <section className="legal-section">
           <h2>Offenlegung gemäß Mediengesetz § 25</h2>
-          <p><strong>Medieninhaber:</strong> Eve Paule</p>
+          <p><strong>Medieninhaberin:</strong> Evelyn Paule</p>
           <p><strong>Sitz:</strong> 4614 Marchtrenk</p>
           <p><strong>Unternehmensgegenstand:</strong> Präsentation des Unternehmens und seiner Dienstleistungen</p>
           <p><strong>Grundlegende Richtung:</strong> Information über das Leistungsangebot von SkinLove Tattoo &amp; Piercing (Tattoos, Piercings, Permanent Make-up, Lash &amp; Brow Lifting, Kurse) sowie Kontaktmöglichkeiten für Kundinnen und Kunden.</p>
